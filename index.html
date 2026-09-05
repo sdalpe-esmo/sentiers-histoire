@@ -3202,8 +3202,8 @@ $("prof-lien").addEventListener("click",()=>{
   toast("Lien du tableau copié — projette-le ou partage-le à ton groupe !");
   rendPanorama(codes);
 });
-const CLE_PROF_HASH="1dfa26ff297cd720005fa1c3bc745e63d3ab4d54143228dacfef1a212af64057";
-async function sha256hex(s){
+const CLE_PROF_HASH="2ee0060f4b99a517051e0f6f892da4cd9fe876d3921787f7fb54b2b12e65985e";
+  async function sha256hex(s){
   const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));
   return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("");
 }
