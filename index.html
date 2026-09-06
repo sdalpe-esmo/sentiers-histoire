@@ -512,6 +512,30 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 .banniere-retente{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;background:var(--m100);border:1px solid var(--color-accent-2);border-radius:var(--radius);padding:.7rem .95rem;margin:1rem 0 .2rem;animation:apparait .4s both;font-size:.95rem}
 #revoir-calc em{font-style:normal;font-weight:700;color:var(--a700)}
 #revoir-calc .btn{margin-left:.25rem}
+
+/* ============ V6.3 : verrous d'atelier ============ */
+.opt.verrouille{opacity:.5;position:relative;padding-right:1.6rem}
+.opt.verrouille::after{content:"🔒";position:absolute;right:.4rem;top:50%;transform:translateY(-50%);font-size:.7rem}
+
+/* ============ V6.4 : Paroles d'histoire ============ */
+.dial-persos{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:.4rem}
+.dial-carte{display:flex;flex-direction:column;align-items:center;gap:.3rem;padding:1.1rem 1rem;background:#fff;border:2px solid var(--color-text);border-radius:8px;font-family:inherit;font-size:1rem;cursor:pointer;transition:transform .18s,box-shadow .18s}
+.dial-carte:hover{transform:translateY(-4px);box-shadow:var(--ombre)}
+.dial-carte strong{font-size:1.15rem}
+.dial-carte em{font-style:normal;color:var(--n600);font-size:.88rem}
+.dial-tete-perso{display:flex;align-items:center;gap:.8rem;margin-bottom:.6rem;flex-wrap:wrap}
+.dial-fil{background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius);padding:.9rem;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:.55rem}
+.bulle-dial{max-width:85%;padding:.55rem .8rem;border-radius:12px;border:1.6px solid var(--color-text);line-height:1.45;font-size:.97rem;animation:apparait .35s both}
+.bulle-dial.toi{align-self:flex-end;background:var(--a100);border-bottom-right-radius:3px}
+.bulle-dial.perso{align-self:flex-start;background:var(--color-bg);border-bottom-left-radius:3px}
+
+/* ============ V6.5 : puces géographiques ============ */
+.geo-chip{display:inline-block;margin:.4rem .35rem 0 0;padding:.16rem .6rem;border:1.6px solid var(--color-accent);border-radius:999px;background:var(--a100);color:var(--a700);font-weight:700;font-size:.82rem;text-decoration:none;line-height:1.4}
+.geo-chip:hover{background:var(--color-accent);color:#fff}
+
+/* ============ V6.6 : cartes-div accessibles ============ */
+.trouvaille:focus-visible{outline:3px solid var(--color-accent);outline-offset:2px}
+.trouvaille .tr-verso .geo-chip{margin-top:.5rem}
 </style>
 </head>
 <body>
@@ -629,6 +653,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 
     <div class="atelier">
       <h2>Prépare ton personnage</h2>
+      <p style="font-size:.92rem;color:var(--n700);margin:.2rem 0 .4rem">Certains chapeaux et objets 🔒 se débloquent avec tes points et tes trouvailles — reviens les réclamer en cours de randonnée !</p>
       <div class="atelier-grille">
         <div class="carte-identite"><div class="ci-tete"><svg width="14" height="12" viewBox="0 0 14 12" aria-hidden="true"><path d="M1,11 L7,2 L13,11 Z" fill="#e0aa14"/></svg>CARTE DE RANDONNÉE</div><div class="avatar-scene ci-photo"><div class="scene-fond" aria-hidden="true"><svg viewBox="0 0 240 210" width="100%" height="100%" preserveAspectRatio="xMidYMax slice">
 <rect x="0" y="0" width="240" height="210" fill="#e6f2f0"/>
@@ -681,7 +706,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
           <span class="prog-jalon" style="left:22.4%"></span><span class="prog-jalon" style="left:40.8%"></span><span class="prog-jalon" style="left:59.2%"></span><span class="prog-jalon" style="left:77.6%"></span>
           <span class="prog-perso" id="prog-perso" style="left:4%"></span>
         </div>
-        <p class="prog-texte"><strong><span id="prog-pts-txt">0</span> / 500 points</strong> — <span id="prog-msg">Le sentier t'attend !</span></p>
+        <p class="prog-texte"><strong><span id="prog-pts-txt">0</span> / 750 points</strong> — <span id="prog-msg">Le sentier t'attend !</span></p>
       </div>
       <p style="margin:.7rem 0 0"><button class="btn contour" id="btn-eclair">Randonnée éclair · 5 questions en 3 minutes</button></p>
     </div>
@@ -706,6 +731,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
         <div class="arret jeu"><span class="borne">D</span><button class="carte-arret" data-ecran="ecran-feu"><span><span class="titre-arret">Le défi du feu de camp</span><span class="sous-arret">Raconte la chaîne du peuplement dans tes mots</span></span><span class="etat" data-etat="feu">—</span></button></div>
         <div class="arret jeu"><span class="borne">E</span><button class="carte-arret" data-ecran="ecran-quisuis"><span><span class="titre-arret">Qui suis-je&nbsp;?</span><span class="sous-arret">10 énigmes à indices — moins tu en demandes, plus tu gagnes</span></span><span class="etat" data-etat="quisuis">—</span></button></div>
         <div class="arret jeu"><span class="borne">F</span><button class="carte-arret" data-ecran="ecran-intrus"><span><span class="titre-arret">Chasse à l'intrus</span><span class="sous-arret">Dans chaque groupe de quatre, un élément détonne</span></span><span class="etat" data-etat="intrus">—</span></button></div>
+        <div class="arret jeu"><span class="borne">G</span><button class="carte-arret" data-ecran="ecran-dial"><span><span class="titre-arret">Paroles d'histoire</span><span class="sous-arret">Discute avec Cartier ou Donnacona — sans anachronismes&nbsp;!</span></span><span class="etat" data-etat="dial">—</span></button></div>
       </div>
     </div>
 
@@ -720,7 +746,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
     <div class="section-carte">
       <span class="sur-titre"><span class="mot-sommet">Terminer</span></span>
       <div class="sentier">
-        <div class="arret"><span class="borne" style="background:var(--color-yellow);color:var(--color-text)">★</span><button class="carte-arret" data-ecran="ecran-album"><span><span class="titre-arret">L'album de découvertes</span><span class="sous-arret">12 trouvailles à débloquer par tes exploits</span></span><span class="etat" data-etat="album">—</span></button></div>
+        <div class="arret"><span class="borne" style="background:var(--color-yellow);color:var(--color-text)">★</span><button class="carte-arret" data-ecran="ecran-album"><span><span class="titre-arret">L'album de découvertes</span><span class="sous-arret">23 trouvailles — exploits et merveilles du Québec (une par 100 points)</span></span><span class="etat" data-etat="album">—</span></button></div>
         <div class="arret sommet-b"><span class="borne">▲</span><button class="carte-arret" data-ecran="ecran-sommet"><span><span class="titre-arret">Le sommet — ton bilan</span><span class="sous-arret">Tes résultats, ta fiche à envoyer et ton code de validation</span></span><span class="etat">→</span></button></div>
       </div>
     </div>
@@ -741,7 +767,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
       <div class="frise-item"><div class="quand">il y a 32 000 ans</div><div>Période glaciaire. Le niveau de l'eau baisse et la plaine de la <strong>Béringie</strong> émerge entre l'Asie et l'Alaska. Des chasseurs nomades suivent les troupeaux vers l'Amérique.</div></div>
       <div class="frise-item"><div class="quand">il y a 12 600 ans</div><div>Fonte des glaciers&nbsp;: ouverture d'un <strong>corridor libre de glace</strong> à l'est des Rocheuses. Selon une autre hypothèse, la <strong>migration côtière</strong>, on aurait longé en embarcation les côtes de la Colombie-Britannique.</div></div>
       <div class="frise-item"><div class="quand">il y a 12 000 ans</div><div>Le sud du Québec se couvre d'une toundra favorable à la vie animale. Des populations arrivent par le sud en suivant les troupeaux.</div></div>
-      <div class="frise-item"><div class="quand">vers l'an 1000</div><div>Les glaciers ont disparu. Les <strong>Thuléens</strong>, ancêtres des Inuit, s'installent dans le nord du Québec. Au 11ᵉ siècle, installation viking à L'Anse aux Meadows.</div></div>
+      <div class="frise-item"><div class="quand">vers l'an 1000</div><div>Les glaciers ont disparu. Les <strong>Thuléens</strong>, ancêtres directs des Inuit, amorcent leur migration depuis l'Alaska; ils atteignent le nord du Québec au cours des siècles suivants. Au 11ᵉ siècle, installation viking à L'Anse aux Meadows.</div></div>
       <div class="frise-item"><div class="quand">vers 1500</div><div>Une diversité de nations occupe le territoire, regroupées en <strong>trois familles linguistiques</strong>&nbsp;: algonquienne, iroquoienne et esquimo-aléoute.</div></div>
     </div>
 
@@ -774,7 +800,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
       <div><span class="no">2</span><div>Caribous et bisons se déplacent sur la plaine&nbsp;; des chasseurs nomades les suivent.</div></div>
       <div><span class="no">3</span><div>Les glaciers bloquent la route vers le sud&nbsp;: les populations restent des millénaires dans les plaines de l'Alaska et du Yukon.</div></div>
       <div><span class="no">4</span><div>Deux hypothèses expliquent la descente vers le sud&nbsp;: le <strong>corridor libre de glace</strong> et la <strong>migration côtière</strong>.</div></div>
-      <div><span class="no">5</span><div>Il y a 12 000 ans, des populations occupent le sud du Québec&nbsp;; vers l'an 1000, les Thuléens s'installent dans le Nord.</div></div>
+      <div><span class="no">5</span><div>Il y a 12 000 ans, des populations occupent le sud du Québec&nbsp;; vers l'an 1000, les Thuléens — ancêtres directs des Inuit — migrent depuis l'Alaska vers l'Arctique de l'Est.</div></div>
     </div>
 
     <h2>Trois familles linguistiques vers 1500</h2>
@@ -918,7 +944,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
     <div class="jeu-tete">
       <p class="sur-titre">Jeu A</p>
       <h1>La Grande Randonnée</h1>
-      <p class="consigne">8 niveaux, 3 vies par niveau. Choix multiples, vrai ou faux, phrases à trous, associations et remises en ordre&nbsp;: tout le chapitre y passe. Bonne réponse = 10 points.</p>
+      <p class="consigne">8 niveaux, 3 vies par niveau. Choix multiples, vrai ou faux, phrases à trous, associations et remises en ordre&nbsp;: tout le chapitre y passe. Bonne réponse = 10 points, lors de ta première réussite du niveau — ensuite, on rejoue pour le plaisir.</p>
     </div>
     <div class="tuiles" data-rangs="2" data-theme="rando" aria-hidden="true"></div>
     <div id="rando-choix-niveau" class="niveaux-liste"></div>
@@ -942,7 +968,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
     <div class="jeu-tete">
       <p class="sur-titre">Jeu B</p>
       <h1>Cartes mémoire</h1>
-      <p class="consigne">Réponds dans ta tête <em>avant</em> de retourner la carte. Les cartes «&nbsp;à revoir&nbsp;» reviendront à la fin du paquet. Carte sue du premier coup = 5 points.</p>
+      <p class="consigne">Réponds dans ta tête <em>avant</em> de retourner la carte. Les cartes «&nbsp;à revoir&nbsp;» reviendront à la fin du paquet. Carte sue du premier coup = 5 points (au premier paquet).</p>
     </div>
     <div class="tuiles" data-rangs="2" data-theme="cartes" aria-hidden="true"></div>
     <div class="zone-jeu">
@@ -974,7 +1000,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
     <div class="jeu-tete">
       <p class="sur-titre">Jeu C</p>
       <h1>À chaque famille son mode de vie</h1>
-      <p class="consigne">Un indice apparaît&nbsp;: à quelle famille appartient-il&nbsp;? Bien classé du premier coup = 5 points. À la fin, tu auras reconstruit le tableau du dossier&nbsp;1&nbsp;!</p>
+      <p class="consigne">Un indice apparaît&nbsp;: à quelle famille appartient-il&nbsp;? Bien classé du premier coup = 5 points (au premier tableau). À la fin, tu auras reconstruit le tableau du dossier&nbsp;1&nbsp;!</p>
     </div>
     <div class="tuiles" data-rangs="2" data-theme="familles" aria-hidden="true"></div>
     <div class="zone-jeu">
@@ -1043,7 +1069,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
     <div class="jeu-tete">
       <p class="sur-titre">Jeu E</p>
       <h1>Qui suis-je&nbsp;?</h1>
-      <p class="consigne">Dix énigmes du chapitre. Chacune vaut 10 points&nbsp;: demander un indice de plus ou te tromper en coûte 3. Sauras-tu deviner dès le premier indice&nbsp;?</p>
+      <p class="consigne">Dix énigmes du chapitre. Chacune vaut 10 points à ta première tournée&nbsp;: demander un indice de plus ou te tromper en coûte 3. Sauras-tu deviner dès le premier indice&nbsp;?</p>
     </div>
     <div class="tuiles" data-rangs="2" data-theme="quisuis" aria-hidden="true"></div>
     <div class="zone-jeu">
@@ -1070,7 +1096,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
     <div class="jeu-tete">
       <p class="sur-titre">Jeu F</p>
       <h1>Chasse à l'intrus</h1>
-      <p class="consigne">Quatre éléments, un imposteur. Repère l'intrus de chaque groupe — du premier coup, c'est 5 points. Et surtout&nbsp;: sache dire pourquoi&nbsp;!</p>
+      <p class="consigne">Quatre éléments, un imposteur. Repère l'intrus de chaque groupe — du premier coup, c'est 5 points (à la première chasse). Et surtout&nbsp;: sache dire pourquoi&nbsp;!</p>
     </div>
     <div class="tuiles" data-rangs="2" data-theme="intrus" aria-hidden="true"></div>
     <div class="zone-jeu">
@@ -1136,6 +1162,41 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
   </div>
 </section>
 
+<!-- ======================= ÉCRAN : PAROLES D'HISTOIRE ======================= -->
+<section class="ecran" id="ecran-dial">
+  <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
+    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+  <div class="page">
+    <div class="jeu-tete">
+      <p class="sur-titre">Jeu G</p>
+      <h1>Paroles d'histoire</h1>
+      <p class="consigne">Interroge un personnage de 1534-1541. Deux défis en alternance&nbsp;: choisir <strong>ce qu'il aurait répondu</strong>, ou retrouver <strong>la question qui a suscité sa réponse</strong>. Gare aux <strong>anachronismes</strong>&nbsp;: certaines répliques sont impossibles à leur époque&nbsp;! Bonne réplique du premier coup = 5 points (au premier entretien).</p>
+      <p style="font-size:.85rem;color:var(--n600);margin-top:.5rem">Note d'historien·ne&nbsp;: personne ne connaît les mots exacts de ces personnes. Les répliques sont des <strong>reconstitutions plausibles</strong>, appuyées sur les sources et les fiches du chapitre — c'est ça, une interprétation.</p>
+    </div>
+    <div class="tuiles" data-rangs="2" data-theme="quisuis" aria-hidden="true"></div>
+    <div id="dial-selection">
+      <p style="font-weight:700;margin-bottom:.7rem">Choisis ton interlocuteur ou ton interlocutrice&nbsp;:</p>
+      <div class="dial-persos">
+        <button class="dial-carte" data-perso="cartier"><span class="dial-vignette"></span><strong>Jacques Cartier</strong><em>1491–1557 · navigateur de Saint-Malo</em></button>
+        <button class="dial-carte" data-perso="donnacona"><span class="dial-vignette"></span><strong>Donnacona</strong><em>?–v. 1539 · chef de Stadaconé</em></button>
+      </div>
+    </div>
+    <div class="zone-jeu" id="dial-zone" hidden>
+      <div class="dial-tete-perso"><span id="dial-portrait"></span><span><strong id="dial-nom"></strong><br><em id="dial-dates" style="font-style:normal;color:var(--n600);font-size:.88rem"></em></span><strong id="dial-prog" style="margin-left:auto"></strong></div>
+      <div class="dial-fil" id="dial-fil"></div>
+      <p style="font-weight:700;margin:.7rem 0 .4rem" id="dial-consigne-echange"></p>
+      <div class="choix" id="dial-choix"></div>
+      <div class="retro" id="dial-retro" role="status"></div>
+      <div class="nav-jeu"><button class="btn" id="dial-suivant" hidden>Échange suivant →</button></div>
+    </div>
+    <div id="dial-fin" hidden style="text-align:center;padding:.8rem 0">
+      <p style="font-size:1.4rem;font-weight:700">Entretien terminé&nbsp;!</p>
+      <p id="dial-bilan" style="margin-top:.4rem"></p>
+      <p style="margin-top:.9rem"><button class="btn contour" id="dial-retour-persos">Interroger l'autre personnage</button> <button class="btn" data-ecran="ecran-carte">Retour à la carte</button></p>
+    </div>
+  </div>
+</section>
+
 <!-- ======================= ÉCRAN : RANDONNÉE ÉCLAIR ======================= -->
 <section class="ecran" id="ecran-eclair">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
@@ -1170,8 +1231,8 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
     <div class="jeu-tete">
       <p class="sur-titre">Collection</p>
       <h1>L'album de découvertes</h1>
-      <p class="consigne">Certaines réussites précises débloquent une <strong>trouvaille</strong> du chapitre. Les cartes grises gardent leur mystère — leur indice te dit quel exploit accomplir. Clique sur une carte gagnée pour lire son histoire.</p>
-      <p style="margin-top:.6rem;font-size:1.05rem"><strong id="album-compte">0 / 12</strong> trouvailles</p>
+      <p class="consigne">Deux collections t'attendent&nbsp;: les <strong>trouvailles d'exploits</strong>, gagnées par des réussites précises, et les <strong>merveilles naturelles du Québec</strong> — une nouvelle merveille à <strong>chaque tranche de 100 points</strong>, peu importe le chemin pris pour les gagner. Les cartes grises gardent leur mystère — leur indice te dit quel exploit accomplir. Clique sur une carte gagnée pour lire son histoire.</p>
+      <p style="margin-top:.6rem;font-size:1.05rem"><strong id="album-compte">0 / 23</strong> trouvailles</p>
     </div>
     <div class="tuiles" data-rangs="2" data-theme="album" aria-hidden="true"></div>
     <div class="album-grille" id="album-grille"></div>
@@ -1185,7 +1246,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
   <div class="page">
     <p class="sur-titre">Chapitre 1 · Des origines à 1608</p>
     <h1 style="font-size:clamp(1.6rem,5vw,2.3rem)">Le tableau d'honneur des sommets</h1>
-    <p style="color:var(--n700);margin-top:.3rem">Celles et ceux qui ont atteint les 500 points du sentier — chapeau (de feutre, de castor ou tricorne)&nbsp;!</p>
+    <p style="color:var(--n700);margin-top:.3rem">Celles et ceux qui ont atteint les 750 points du sentier — chapeau (de feutre, de castor ou tricorne)&nbsp;!</p>
     <div class="panorama">
       <div class="panorama-fond" aria-hidden="true"><svg viewBox="0 0 600 240" width="100%" height="100%" preserveAspectRatio="xMidYMax slice">
         <rect width="600" height="240" fill="#e6f2f0"/>
@@ -1334,7 +1395,8 @@ const etat = {
   quisuis:{pts:0,total:0,fait:false},
   intrus:{premier:0,total:0,fait:false},
   pei:{faits:{}, premier:0},
-  eclair:{faites:0},
+  eclair:{faites:0,jourPts:0},
+  dialogues:{faits:{},premier:0},
   visites:[],
   erreurs:{d1:0,d2:0,d3:0,d4:0},
   lus:{}, meta:{feel:null,revoir:null}
@@ -1512,7 +1574,7 @@ function montre(id){
   document.querySelectorAll(".ecran").forEach(e=>e.classList.remove("actif"));
   $(id).classList.add("actif");
   window.scrollTo({top:0,behavior:"auto"});
-  if(["ecran-rando","ecran-cartes","ecran-familles","ecran-feu","ecran-quisuis","ecran-intrus","ecran-oi","ecran-pei","ecran-eclair"].indexOf(id)>=0){pluieFeuilles();}
+  if(["ecran-rando","ecran-cartes","ecran-familles","ecran-feu","ecran-quisuis","ecran-intrus","ecran-oi","ecran-pei","ecran-eclair","ecran-dial"].indexOf(id)>=0){pluieFeuilles();}
   $("marque-fixe").hidden=(id==="ecran-vestibule");
   const vieuxBan=$("retente-banniere");
   if(vieuxBan)vieuxBan.remove();
@@ -1533,6 +1595,7 @@ function montre(id){
   if(id==="ecran-carte") majEtatsCarte();
   if(id==="ecran-sommet") majSommet();
   if(id==="ecran-album") rendAlbum();
+  if(id==="ecran-accueil"){construitOptions();majAvatars();}
 }
 document.addEventListener("click",e=>{
   const b=e.target.closest("[data-ecran]");
@@ -1550,12 +1613,14 @@ function majEtatsCarte(){
     if(k==="quisuis"&&etat.quisuis.fait){el.textContent=etat.quisuis.pts+" pts ✓";el.classList.add("ok");}
     if(k==="intrus"&&etat.intrus.fait){el.textContent=etat.intrus.premier+"/"+etat.intrus.total+" ✓";el.classList.add("ok");}
     if(k==="pei"){const n=Object.keys(etat.pei.faits).length;if(n){el.textContent=n+"/4 ✓";el.classList.add("ok");}}
-    if(k==="album"){const n=compteDecouvertes();if(n){el.textContent=n+"/12";el.classList.add("ok");}}
+    if(k==="dial"){const n=Object.keys(etat.dialogues.faits).length;if(n){el.textContent=n+"/2 ✓";el.classList.add("ok");}}
+    if(k==="album"){const n=compteDecouvertes();if(n){el.textContent=n+"/"+DECOUVERTES.length;el.classList.add("ok");}}
     const complet={"frise":!!etat.lus.frise,"d1":!!etat.lus.d1,"d2":!!etat.lus.d2,"d3":!!etat.lus.d3,"d4":!!etat.lus.d4,
       "rando":etat.rando.reussis>=8,"cartes":etat.cartes.fait,"familles":etat.familles.fait,"feu":etat.feu.fait,
       "quisuis":etat.quisuis.fait,"intrus":etat.intrus.fait,
       "oi":Object.keys(etat.oi.faits).length>=7,"pei":Object.keys(etat.pei.faits).length>=4,
-      "album":compteDecouvertes()>=12}[k];
+      "dial":Object.keys(etat.dialogues.faits).length>=2,
+      "album":compteDecouvertes()>=DECOUVERTES.length}[k];
     const ar=el.closest(".arret");
     const bo=ar?ar.querySelector(".borne"):null;
     if(bo)bo.classList.toggle("faite",!!complet);
@@ -1686,14 +1751,32 @@ function majAvatars(){
   $("mini-avatar-1").innerHTML = mini;
   const pp=$("prog-perso");if(pp){pp.innerHTML=dessineAvatar(avatar,34);}
 }
+const DEBLOCAGES={
+ chapeau:{castor:{pts:100,txt:"100 points"},tricorne:{tr:10,txt:"la trouvaille « Le tricorne » (250 points)"}},
+ acc:{pipe:{pts:150,txt:"150 points"},raquettes:{tr:1,txt:"la trouvaille « Le canot d'écorce » (jeu des familles)"},pagaie:{pts:350,txt:"350 points"},fleche:{pts:500,txt:"500 points"}}
+};
+function estDebloque(cle,id){
+  const r=DEBLOCAGES[cle]&&DEBLOCAGES[cle][id];
+  if(!r)return true;
+  if(r.pts!==undefined)return etat.points>=r.pts;
+  if(r.tr!==undefined)return DECOUVERTES[r.tr].cond();
+  return true;
+}
 function construitOptions(){
   const fabrique=(cible,liste,cle,pastilles)=>{
     const zone=$(cible);zone.innerHTML="";
     liste.forEach(o=>{
       const b=document.createElement("button");
+      const verrou=!pastilles&&!estDebloque(cle,o.id);
       if(pastilles){b.className="pastille"+(avatar[cle]===o.id?" choisi":"");b.style.background=o.c;b.setAttribute("aria-label",o.id);}
-      else{b.className="opt"+(avatar[cle]===o.id?" choisi":"");b.textContent=o.nom;}
-      b.addEventListener("click",()=>{avatar[cle]=o.id;construitOptions();majAvatars();
+      else{
+        b.className="opt"+(avatar[cle]===o.id?" choisi":"")+(verrou?" verrouille":"");
+        b.textContent=o.nom;
+        if(verrou)b.title="Se débloque avec "+DEBLOCAGES[cle][o.id].txt;
+      }
+      b.addEventListener("click",()=>{
+        if(verrou){toast("À débloquer : "+DEBLOCAGES[cle][o.id].txt+" !");return;}
+        avatar[cle]=o.id;construitOptions();majAvatars();
         const sc=document.querySelector(".avatar-scene");
         if(sc){sc.classList.remove("pop");void sc.offsetWidth;sc.classList.add("pop");}});
       zone.appendChild(b);
@@ -1711,8 +1794,10 @@ $("btn-hasard").addEventListener("click",()=>{
   avatar.style=AV_STYLES[Math.floor(Math.random()*AV_STYLES.length)].id;
   avatar.cheveux=AV_CHEVEUX[Math.floor(Math.random()*AV_CHEVEUX.length)].id;
   avatar.chandail=AV_CHANDAILS[Math.floor(Math.random()*AV_CHANDAILS.length)].id;
-  avatar.chapeau=AV_CHAPEAUX[Math.floor(Math.random()*AV_CHAPEAUX.length)].id;
-  avatar.acc=AV_ACCS[Math.floor(Math.random()*AV_ACCS.length)].id;
+  const chOK=AV_CHAPEAUX.filter(o=>estDebloque("chapeau",o.id));
+  avatar.chapeau=chOK[Math.floor(Math.random()*chOK.length)].id;
+  const acOK=AV_ACCS.filter(o=>estDebloque("acc",o.id));
+  avatar.acc=acOK[Math.floor(Math.random()*acOK.length)].id;
   construitOptions();majAvatars();
 });
 $("prenom").addEventListener("input",()=>{
@@ -1817,6 +1902,19 @@ window.CH1_DATA = { niveaux: [
 ]}
 ]};
 const NIVEAUX = window.CH1_DATA.niveaux;
+const VARIANTES=[
+ {niv:5,idx:0,v:["À quoi servent d'abord les échanges entre nations autochtones?","Dans les réseaux de troc, les nations échangent surtout pour…"]},
+ {niv:5,idx:2,v:["Quel endroit sert souvent de lieu de rendez-vous pour les échanges?","Les nations se retrouvent souvent pour échanger…"]},
+ {niv:5,idx:3,v:["Pour sceller une entente, on remet un ____ : l'accepter, c'est accepter l'alliance.","Refuser une alliance, c'est refuser le ____ offert."]},
+ {niv:5,idx:4,v:["Une alliance conclue entre nations autochtones dure pour toujours.","Les alliances entre nations ne peuvent jamais être défaites."]},
+ {niv:5,idx:5,v:["Pourquoi certaines nations mènent-elles des « guerres de capture »?","Dans une « guerre de capture », quel est le but recherché?"]},
+ {niv:5,idx:6,v:["Un guerrier fait prisonnier prouve son courage en ne montrant ni peur ni douleur.","Rester impassible devant ses capteurs est une marque de bravoure pour un guerrier."]},
+ {niv:6,idx:0,v:["À la fin du 15ᵉ siècle, pourquoi les États européens envoient-ils des explorateurs en mer?","Quel objectif pousse d'abord les explorateurs européens à traverser l'Atlantique?"]},
+ {niv:6,idx:2,v:["Avant les grandes explorations, quelle installation européenne existe déjà en Amérique?","Quel site témoigne d'une présence européenne dès le début du 11ᵉ siècle?"]},
+ {niv:6,idx:3,v:["Qu'est-ce qui explique la forte demande de morue en Europe?","La morue se vend très bien en Europe. Pour quelle raison?"]},
+ {niv:6,idx:4,v:["Pour chauffer et éclairer les maisons, on fait fondre la graisse de baleine en ____.","Les baleiniers transforment la graisse en ____ pour le chauffage et l'éclairage."]}
+];
+VARIANTES.forEach(x=>{const q=NIVEAUX[x.niv]&&NIVEAUX[x.niv].questions[x.idx];if(q)q.var=x.v;});
 
 /* =================== Grande Randonnée — moteur =================== */
 const rn = {niv:null,qIdx:0,vies:3,repondu:false,assoc:null,ordre:null};
@@ -1832,11 +1930,83 @@ function construitListeNiveaux(){
     zone.appendChild(b);
   });
 }
+let essaisNiveau={};
 function lanceNiveau(i){
+  essaisNiveau[i]=(essaisNiveau[i]||0)+1;
   rn.niv=i;rn.qIdx=0;rn.vies=3;
+  rn.gratuit=etat.rando.etoiles[i]!==undefined;
+  let base=NIVEAUX[i].questions.slice();
+  if(essaisNiveau[i]>1){
+    base=base.map(q=>{
+      if(q.var&&q.var.length&&Math.random()<.8){
+        return Object.assign({},q,{q:q.var[Math.floor(Math.random()*q.var.length)]});
+      }
+      return q;
+    });
+    const nf=NIVEAU_FICHE[i];
+    const dernier=(i===NIVEAUX.length-1);
+    const dispo=melange(ECLAIR_POOL.filter(p=>{
+      if(p.niv===i)return false;
+      if(dernier)return true;
+      const pf=NIVEAU_FICHE[p.niv];
+      return nf&&pf&&pf.d===nf.d;
+    }));
+    let ech=0;
+    const maxEch=Math.floor(base.length/2);
+    base=base.map(q=>{
+      if(ech<maxEch&&dispo.length&&(q.t==="qcm"||q.t==="vf"||q.t==="trous")&&Math.random()<.6){
+        const n2=dispo.pop();ech++;
+        return {t:"qcm",q:n2.q,options:n2.options,bonne:n2.bonne,expl:n2.expl};
+      }
+      return q;
+    });
+  }
+  rn.qs=melange(base);
+  if(rn.gratuit)toast("Niveau déjà réussi — on joue pour le plaisir (aucun point).");
   $("rando-choix-niveau").style.display="none";
   $("rando-zone").hidden=false;
   afficheQuestion();
+}
+const LIEUX=[
+ ["Gaspé","Gaspé",48.831,-64.487,9],
+ ["Tadoussac","Tadoussac",48.144,-69.712,10],
+ ["Hochelaga","Hochelaga (Montréal)",45.507,-73.587,11],
+ ["mont Royal","Hochelaga (Montréal)",45.507,-73.587,11],
+ ["Stadaconé","Stadaconé (Québec)",46.813,-71.208,11],
+ ["Béringie","Détroit de Béring (Béringie)",65.6,-168.9,4],
+ ["Grands Bancs","Grands Bancs de Terre-Neuve",46.0,-52.0,5],
+ ["Anse aux Meadows","L'Anse aux Meadows",51.595,-55.532,10],
+ ["Terre-Neuve","Terre-Neuve",48.5,-56.0,5],
+ ["lac Supérieur","Lac Supérieur",47.7,-87.5,5],
+ ["Saguenay","Rivière Saguenay",48.25,-70.0,8],
+ ["île de Sable","Île de Sable",43.93,-59.91,8],
+ ["Sainte-Croix","Île Sainte-Croix",45.128,-67.133,10],
+ ["Port-Royal","Port-Royal",44.711,-65.614,10],
+ ["Charlesbourg-Royal","Charlesbourg-Royal (Cap-Rouge)",46.752,-71.35,12],
+ ["Outaouais","Rivière des Outaouais",45.9,-76.5,7],
+ ["Grands Lacs","Grands Lacs",45.0,-84.0,5],
+ ["Alaska","Alaska",64.0,-152.0,4],
+ ["golfe du Mexique","Golfe du Mexique",25.0,-90.0,4],
+ ["Saint-Malo","Saint-Malo (France)",48.649,-2.026,11],
+ ["Percé","Rocher Percé",48.523,-64.213,13],
+ ["Montmorency","Chutes Montmorency",46.890,-71.147,14],
+ ["Mingan","Îles de Mingan",50.22,-63.61,10],
+ ["Anticosti","Île d'Anticosti",49.5,-63.0,7],
+ ["Torngat","Monts Torngat",59.0,-63.7,7],
+ ["Pingualuit","Cratère des Pingualuit",61.275,-73.66,11]
+];
+function chipsGeo(texte){
+  let out="";const vus={};
+  for(const lieu of LIEUX){
+    const cle=lieu[2]+","+lieu[3];
+    if(vus[cle])continue;
+    if(texte.indexOf(lieu[0])>=0){
+      vus[cle]=1;
+      out+=' <a class="geo-chip" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat='+lieu[2]+'&mlon='+lieu[3]+'#map='+lieu[4]+'/'+lieu[2]+'/'+lieu[3]+'">📍 '+lieu[1]+'</a>';
+      if(Object.keys(vus).length>=2)break;
+    }
+  }
+  return out;
 }
 const NIVEAU_FICHE=[
  {ecran:"ecran-d1",nom:"Le peuplement de l'Amérique et les modes de vie",d:"d1"},
@@ -1853,9 +2023,9 @@ function coeurs(){return "●".repeat(rn.vies)+"○".repeat(3-rn.vies);}
 const TYPE_NOMS={qcm:"Choix multiple",vf:"Vrai ou faux",trous:"Phrase à trous",assoc:"Association",ordre:"Remise en ordre"};
 function afficheQuestion(){
   rn.repondu=false;rn.assoc=null;rn.ordre=null;
-  const n=NIVEAUX[rn.niv],q=n.questions[rn.qIdx];
+  const n=NIVEAUX[rn.niv],q=rn.qs[rn.qIdx];
   $("rn-titre").textContent="Niveau "+(rn.niv+1)+" — "+n.titre;
-  $("rn-prog").textContent="Question "+(rn.qIdx+1)+" / "+n.questions.length;
+  $("rn-prog").textContent="Question "+(rn.qIdx+1)+" / "+rn.qs.length;
   $("rn-vies").textContent=coeurs();
   const r=$("rn-retro");r.className="retro";r.innerHTML="";
   $("rn-suivant").hidden=true;
@@ -1935,8 +2105,8 @@ function reponseSimple(btn,ok,q){
 }
 function bonneReponse(q){
   rn.repondu=true;
-  majPoints(10);
-  const r=$("rn-retro");r.className="retro ok visible";r.innerHTML="<strong>Bien vu&nbsp;!</strong> "+q.expl;
+  if(!rn.gratuit)majPoints(10);
+  const r=$("rn-retro");r.className="retro ok visible";r.innerHTML="<strong>Bien vu&nbsp;!</strong> "+q.expl+chipsGeo(q.q+" "+q.expl);
   suiteOuFin();
 }
 function mauvaiseReponse(q,btn){
@@ -1970,9 +2140,8 @@ function mauvaiseReponse(q,btn){
   }
 }
 function suiteOuFin(){
-  const n=NIVEAUX[rn.niv];
   $("rn-suivant").hidden=false;
-  if(rn.qIdx<n.questions.length-1){
+  if(rn.qIdx<rn.qs.length-1){
     $("rn-suivant").textContent="Question suivante →";
     $("rn-suivant").onclick=()=>{rn.qIdx++;afficheQuestion();};
   }else{
@@ -2044,7 +2213,7 @@ $("fc").addEventListener("click",()=>{
 });
 function fcSuiv(su){
   const c=deck[fcIdx];
-  if(!c.revue){fcVues++;if(su){fcSues++;majPoints(5);}}
+  if(!c.revue){fcVues++;if(su){fcSues++;if(!etat.cartes.fait)majPoints(5);}}
   if(!su){deck.push({...c,revue:true});if(!c.revue)fcARevoir++;}
   else if(c.revue&&fcARevoir>0){fcARevoir--;}
   fcIdx++;
@@ -2095,7 +2264,7 @@ document.querySelectorAll(".fam-btn").forEach(b=>b.addEventListener("click",()=>
   if($("fam-jeu").style.display==="none")return;
   const ind=fOrdre[fIdx],r=$("fam-retro");
   if(b.dataset.fam===ind.r){
-    if(fPropre){fPremier++;majPoints(5);}
+    if(fPropre){fPremier++;if(!etat.familles.fait)majPoints(5);}
     const j=document.createElement("span");j.className="jeton";j.textContent=ind.t;
     $("panier-"+ind.r).appendChild(j);
     r.textContent="Bien classé chez "+NOMS_FAM[ind.r]+" !";r.className="fam-retro ok";
@@ -2205,10 +2374,10 @@ function qsRep(b,ok){
   if(ok){
     b.classList.add("bonne");
     document.querySelectorAll("#qs-choix button").forEach(x=>{x.disabled=true;if(x!==b)x.classList.add("estompe");});
-    const g=qsValeur();qsPts+=g;majPoints(g);
+    const g=qsValeur();qsPts+=g;if(!etat.quisuis.fait)majPoints(g);
     $("qs-plus").disabled=true;
     $("qs-retro").className="retro ok visible";
-    $("qs-retro").innerHTML="<strong>+"+g+" points&nbsp;!</strong> "+e.expl;
+    $("qs-retro").innerHTML="<strong>+"+g+" points&nbsp;!</strong> "+e.expl+chipsGeo(e.expl+" "+e.ind.join(" "));
     $("qs-suivant").hidden=false;
     $("qs-suivant").textContent=(qsIdx<ENIGMES.length-1)?"Énigme suivante →":"Voir mon résultat →";
     $("qs-suivant").onclick=()=>{if(qsIdx<ENIGMES.length-1){qsIdx++;qsCharge();}else{qsFin();}};
@@ -2275,11 +2444,11 @@ function inCharge(){
     b.addEventListener("click",()=>{
       if(b.disabled)return;
       if(ch.ok){
-        if(inPropre){inPremier++;majPoints(5);}
+        if(inPropre){inPremier++;if(!etat.intrus.fait)majPoints(5);}
         b.style.borderColor="var(--vert)";b.style.background="#e8f3ea";
         document.querySelectorAll("#in-choix button").forEach(x=>x.disabled=true);
         $("in-retro").className="retro ok visible";
-        $("in-retro").innerHTML="<strong>Intrus démasqué"+(inPropre?" (+5 pts)":"")+"&nbsp;!</strong> "+g.expl;
+        $("in-retro").innerHTML="<strong>Intrus démasqué"+(inPropre?" (+5 pts)":"")+"&nbsp;!</strong> "+g.expl+chipsGeo(g.expl);
         $("in-suivant").hidden=false;
         $("in-suivant").textContent=(inIdx<INTRUS.length-1)?"Groupe suivant →":"Voir mon résultat →";
         $("in-suivant").onclick=()=>{if(inIdx<INTRUS.length-1){inIdx++;inCharge();}else{inFin();}};
@@ -2617,7 +2786,7 @@ function oiPhase(){
 function oiEtapeReussie(expl){
   const r=$("oi-retro");
   if(oiEtat.phasePropre){majPoints(5);}
-  r.className="retro ok visible";r.innerHTML="<strong>Bien vu"+(oiEtat.phasePropre?" (+5 pts)":"")+"&nbsp;!</strong> "+expl;
+  r.className="retro ok visible";r.innerHTML="<strong>Bien vu"+(oiEtat.phasePropre?" (+5 pts)":"")+"&nbsp;!</strong> "+expl+chipsGeo(expl);
   $("oi-suivant").hidden=false;
   $("oi-suivant").textContent="Continuer →";
   $("oi-suivant").onclick=()=>{oiEtat.phase++;oiPhase();};
@@ -2683,7 +2852,7 @@ function majSommet(){
   $("stat-cartes").textContent=etat.cartes.fait?(etat.cartes.sues+"/"+etat.cartes.total):"–";
   $("stat-fam").textContent=etat.familles.fait?(etat.familles.premier+"/"+etat.familles.total):"–";
   $("stat-oi").textContent=oiNb+"/"+OI.length;
-  $("stat-album").textContent=compteDecouvertes()+"/12";
+  $("stat-album").textContent=compteDecouvertes()+"/"+DECOUVERTES.length;
   $("stat-pts").textContent=etat.points;
   const bh=$("bloc-honneur");
   if(bh){bh.hidden=etat.points<OBJECTIF_PTS;if(!bh.hidden){$("code-honneur").textContent=codeHonneur();}}
@@ -2704,7 +2873,8 @@ function majSommet(){
     "Chasse à l'intrus : "+(etat.intrus.fait?(etat.intrus.premier+"/"+etat.intrus.total+" du premier coup"):"non complété"),
     "Atelier des opérations intellectuelles (documents RÉCIT) : "+oiNb+"/"+OI.length+" exercice(s), "+etat.oi.premier+" meilleure(s) réponse(s) trouvée(s) du premier coup",
     "Défi PEI (concepts clés) : "+peiNb+"/4 concept(s) relié(s), "+etat.pei.premier+" bonus du premier coup",
-    "Album de découvertes : "+compteDecouvertes()+"/12 trouvailles",
+    "Album de découvertes : "+compteDecouvertes()+"/"+DECOUVERTES.length+" trouvailles",
+    "Paroles d'histoire : "+Object.keys(etat.dialogues.faits).length+"/2 entretien(s), "+etat.dialogues.premier+" échange(s) du premier coup",
     "Randonnée éclair : "+etat.eclair.faites+" série(s) de 5 questions, "+etat.visites.length+" jour(s) de visite",
     "Boussole des erreurs : "+(totErr?(DOSSIERS_NOMS[topD]+" ("+er[topD]+" erreur"+(er[topD]>1?"s":"")+" sur "+totErr+")"):"aucun dossier en difficulté"),
     "",
@@ -2729,134 +2899,50 @@ $("btn-copier").addEventListener("click",()=>{
 
 
 /* =================== Progression vers le sommet =================== */
-const OBJECTIF_PTS=500;
+const OBJECTIF_PTS=750;
 let sommetFete=false;
 const ENCOURAGEMENTS={
   50:"Déjà 50 points — beau départ, continue comme ça !",
-  100:"100 points ! M. Dalpé lève sa tuque bien haut.",
-  150:"150 points — ta mémoire du chapitre se solidifie.",
-  200:"200 points ! Le sentier grimpe et toi aussi.",
-  250:"250 points — mi-parcours ! Le sommet se rapproche.",
-  300:"300 points ! Rien ne t'arrête, on dirait.",
-  350:"350 points — les réseaux de ta mémoire s'étendent comme les routes du troc.",
-  400:"400 points ! Le fanion du sommet est presque à portée.",
-  450:"450 points — dernier droit avant le sommet !"
+  100:"100 points ! Le rocher Percé entre dans ton album — et le chapeau de feutre, à l'atelier.",
+  150:"150 points — la pipe s'ajoute à ton atelier. Ta mémoire chauffe !",
+  200:"200 points ! Les chutes Montmorency rejoignent ton album.",
+  250:"250 points — le tricorne rejoint ton album ET ton atelier !",
+  300:"300 points ! Le fjord du Saguenay est à toi, bélugas compris.",
+  350:"350 points — la pagaie est débloquée à l'atelier. Presque la moitié !",
+  400:"400 points ! Les îles de Mingan s'ajoutent — la moitié du sentier est franchie.",
+  450:"450 points — les réseaux de ta mémoire s'étendent comme les routes du troc.",
+  500:"500 points ! Anticosti entre à l'album, la ceinture fléchée à l'atelier.",
+  550:"550 points — belle constance, randonneur·euse.",
+  600:"600 points ! Les monts Torngat veillent maintenant sur ton album.",
+  650:"650 points — on aperçoit le drapeau là-haut.",
+  700:"700 points ! Le cratère des Pingualuit — l'œil de cristal — et dernier droit avant le sommet."
 };
+
+/* =================== Piste de progression =================== */
 function majProgression(){
   const z=$("prog-perso");if(!z)return;
   const bo=$("bulle-obj");if(bo&&!bo.textContent)bo.textContent="Objectif : "+OBJECTIF_PTS+" points";
-  const pct=Math.min(100,etat.points/OBJECTIF_PTS*100);
-  z.style.left=(4+pct*0.92)+"%";
-  $("prog-pts-txt").textContent=etat.points;
-  const msgs=["Le sentier t'attend !","Bon départ, continue !","Belle cadence !","Tu gagnes de l'altitude !","Le sommet est en vue !","Sommet atteint — bravo !"];
-  $("prog-msg").textContent=msgs[Math.min(5,Math.floor(pct/20))];
-  if(pct>=100&&!sommetFete){sommetFete=true;confettis(22);toast("Objectif atteint : "+OBJECTIF_PTS+" points ! Ton personnage est arrivé au sommet.");}
+  const frac=Math.max(0,Math.min(1,etat.points/OBJECTIF_PTS));
+  z.style.left=(5+90*frac)+"%";
+  z.innerHTML=dessineAvatar(avatar,34);
+  const pt=$("prog-pts-txt");if(pt)pt.textContent=etat.points;
+  const msg=$("prog-msg");
+  if(msg){
+    let m="Le sentier t'attend !";
+    if(frac>=1)m="Sommet atteint — bravo !";
+    else if(frac>=.8)m="Le sommet est en vue !";
+    else if(frac>=.5)m="Tu gagnes de l'altitude !";
+    else if(frac>=.25)m="Belle cadence !";
+    else if(etat.points>0)m="Bon départ, continue !";
+    msg.textContent=m;
+  }
+  if(etat.points>=OBJECTIF_PTS&&!sommetFete){
+    sommetFete=true;
+    confettis(40);
+    pluieFeuilles(14);
+    toast("Objectif atteint : "+OBJECTIF_PTS+" points ! Ton personnage est au sommet — va chercher ton bilan !");
+  }
 }
-
-/* =================== Défi PEI : les concepts clés d'Individus et sociétés =================== */
-const PEI_CONCEPTS=[
-{nom:"Changement",def:"Passer d'une forme ou d'un état à un autre. Pour le voir, il faut comparer un avant et un après.",
- q:"Quel exemple du chapitre illustre le mieux le concept de changement ?",
- options:[
-  {t:"À Hochelaga, Cartier rencontre des centaines d'Iroquoiens du Saint-Laurent en 1535; des décennies plus tard, Champlain n'y trouve plus personne.",ok:true,
-   expl:"Deux moments, un avant et un après, une transformation entre les deux : c'est exactement la structure du changement. Bien vu !"},
-  {t:"Les Iroquoiens vivent dans des maisons longues pouvant abriter de 25 à 60 personnes.",
-   expl:"C'est un fait — le portrait d'un seul moment. Sans avant/après, on ne peut pas parler de changement."},
-  {t:"L'été, les Algonquiens installent leur camp au bord de l'eau pour pêcher.",
-   expl:"C'est un cycle saisonnier qui se répète chaque année, pas une transformation d'un état vers un autre."},
-  {t:"La morue des Grands Bancs est très demandée en Europe.",
-   expl:"C'est une situation stable, pas un passage d'un état à un autre."}]},
-{nom:"Systèmes",def:"Des éléments reliés entre eux qui forment un tout : si l'un bouge, les autres sont touchés.",
- q:"Quel exemple du chapitre illustre le mieux le concept de systèmes ?",
- options:[
-  {t:"Les réseaux d'échanges autochtones : chaque nation produit selon les ressources de son territoire, et le troc fait circuler le cuivre du lac Supérieur jusque chez les Innus.",ok:true,
-   expl:"Des nations interreliées, des routes, des produits qui circulent, des fonctions économiques et politiques : un véritable système d'interdépendance."},
-  {t:"Le scorbut tue 25 des 110 hommes de Cartier pendant l'hivernage à Stadaconé.",
-   expl:"C'est un événement dramatique, mais isolé — on n'y voit pas d'éléments interreliés qui forment un tout."},
-  {t:"Cartier plante une croix à Gaspé au nom du roi de France.",
-   expl:"C'est un geste ponctuel de prise de possession, pas un ensemble d'éléments interdépendants."},
-  {t:"L'igloo est l'habitation d'hiver des Inuit.",
-   expl:"Pris seul, c'est un élément isolé. Relié au climat et au mode de vie nomade, il pourrait entrer dans un système — mais l'énoncé n'établit pas ces liens."}]},
-{nom:"Interactions mondiales",def:"Les liens et les contacts entre des sociétés éloignées — et ce que ces contacts transforment de part et d'autre.",
- q:"Quel exemple du chapitre illustre le mieux le concept d'interactions mondiales ?",
- options:[
-  {t:"Dès le début du 16e siècle, des pêcheurs basques traversent l'Atlantique chaque printemps et échangent à l'occasion avec les nations autochtones de la côte.",ok:true,
-   expl:"Deux mondes que l'océan séparait entrent en contact et échangent des produits : l'interaction devient mondiale — et elle transformera les deux sociétés."},
-  {t:"Un village iroquoien déménage lorsque la terre des environs s'appauvrit.",
-   expl:"C'est une dynamique locale, interne à une société — aucun contact entre sociétés éloignées."},
-  {t:"Les mères de clan proposent les chefs civils de leur clan.",
-   expl:"C'est l'organisation politique interne d'une société, sans interaction avec une société lointaine."},
-  {t:"Le wigwam se monte en une heure environ.",
-   expl:"C'est un savoir-faire technique local — rien n'y relie des sociétés éloignées."}]},
-{nom:"Temps, lieu et espace",def:"Le « où » et le « quand » : comment le territoire et l'époque façonnent les façons de vivre.",
- q:"Quel exemple du chapitre illustre le mieux le concept de temps, lieu et espace ?",
- options:[
-  {t:"Dans la vallée du Saint-Laurent, les terres fertiles permettent l'agriculture : les Iroquoiens y développent un mode de vie sédentaire.",ok:true,
-   expl:"Le lieu — les terres fertiles de la vallée — explique le mode de vie. C'est le cœur de ce concept : l'espace façonne les sociétés."},
-  {t:"Le wampum scelle les alliances entre les nations.",
-   expl:"C'est une pratique diplomatique; le lien avec un territoire précis n'est pas l'élément central ici."},
-  {t:"Les chamanes interprètent les visions et les rêves.",
-   expl:"C'est une pratique spirituelle, sans lien direct avec le territoire ou l'époque."},
-  {t:"Cartier rapporte en France de la pyrite de fer en croyant avoir trouvé de l'or.",
-   expl:"C'est une anecdote d'exploration — le lieu n'y façonne pas une façon de vivre."}]}
-];
-function peiListe(){
-  const z=$("pei-liste");z.innerHTML="";
-  PEI_CONCEPTS.forEach((c,i)=>{
-    const b=document.createElement("button");b.className="carte-niveau";
-    const fait=etat.pei.faits[i];
-    b.innerHTML='<span><span class="nom-niv">'+c.nom+'</span><span class="sous-niv" style="display:block">'+c.def+'</span></span>'
-      +'<span style="font-size:.85rem;white-space:nowrap;'+(fait?"color:var(--vert);font-weight:700":"color:var(--n700)")+'">'+(fait?"relié ✓":"+5 bonus")+'</span>';
-    b.addEventListener("click",()=>lancePei(i));
-    z.appendChild(b);
-  });
-}
-let peiIdx=0,peiPropre=true;
-function lancePei(i){
-  peiIdx=i;peiPropre=true;
-  const c=PEI_CONCEPTS[i];
-  $("pei-liste").style.display="none";
-  $("pei-zone").hidden=false;
-  $("pei-badge").textContent="Concept clé du PEI · "+c.nom;
-  $("pei-def").textContent=c.def;
-  $("pei-question").textContent=c.q;
-  const r=$("pei-retro");r.className="retro";r.innerHTML="";
-  $("pei-suivant").hidden=true;
-  const z=$("pei-choix");z.innerHTML="";
-  melange(c.options).forEach(o=>{
-    const b=document.createElement("button");b.textContent=o.t;
-    b.addEventListener("click",()=>{
-      if(b.disabled)return;
-      if(o.ok){
-        b.classList.add("bonne");
-        document.querySelectorAll("#pei-choix button").forEach(x=>x.disabled=true);
-        const deja=etat.pei.faits[peiIdx];
-        if(!deja){
-          etat.pei.faits[peiIdx]=true;
-          if(peiPropre){etat.pei.premier++;majPoints(5);}
-        }
-        r.className="retro ok visible";
-        r.innerHTML="<strong>Lien réussi"+((!deja&&peiPropre)?" (+5 points bonus)":"")+"&nbsp;!</strong> "+o.expl;
-        $("pei-suivant").hidden=false;
-      }else{
-        peiPropre=false;
-        b.classList.add("mauvaise");b.disabled=true;
-        r.className="retro oups visible";
-        r.innerHTML="<strong>Pas le meilleur exemple.</strong> "+o.expl+" Essaie une autre réponse.";
-      }
-    });
-    z.appendChild(b);
-  });
-}
-$("pei-suivant").addEventListener("click",()=>{
-  $("pei-zone").hidden=true;
-  $("pei-liste").style.display="";
-  peiListe();
-  if(Object.keys(etat.pei.faits).length===PEI_CONCEPTS.length){confettis(16);}
-});
-peiListe();
-majProgression();
-
 
 /* =================== Randonnée éclair (répétition espacée) =================== */
 const ECLAIR_POOL=[];
@@ -2865,9 +2951,12 @@ NIVEAUX.forEach((n,i)=>{n.questions.forEach(q=>{
   else if(q.t==="vf"){ECLAIR_POOL.push({q:q.q,options:["Vrai","Faux"],bonne:q.bonne,expl:q.expl,niv:i});}
 });});
 let ecQs=[],ecIdx=0,ecPropre=true,ecPremier=0;
+let ecGratuit=false;
 function eclairInit(){
   ecQs=melange(ECLAIR_POOL.slice()).slice(0,5);
   ecIdx=0;ecPremier=0;
+  ecGratuit=(etat.eclair.jourPts===Math.floor(Date.now()/86400000));
+  if(ecGratuit)toast("Série bonus du jour déjà jouée — celle-ci est pour le plaisir.");
   $("ec-fin").hidden=true;
   $("ec-q").style.display="";$("ec-choix").style.display="";
   document.querySelector("#ecran-eclair .hud-niveau").style.display="";
@@ -2888,9 +2977,9 @@ function ecCharge(){
       if(ch.ok){
         b.classList.add("bonne");
         document.querySelectorAll("#ec-choix button").forEach(x=>{x.disabled=true;if(x!==b)x.classList.add("estompe");});
-        if(ecPropre){ecPremier++;majPoints(5);}
+        if(ecPropre){ecPremier++;if(!ecGratuit)majPoints(5);}
         r.className="retro ok visible";
-        r.innerHTML="<strong>"+(ecPropre?"+5 points&nbsp;!":"Bien.")+"</strong> "+q.expl;
+        r.innerHTML="<strong>"+(ecPropre?"+5 points&nbsp;!":"Bien.")+"</strong> "+q.expl+chipsGeo(q.q+" "+q.expl);
         $("ec-suivant").hidden=false;
         $("ec-suivant").textContent=(ecIdx<4)?"Question suivante →":"Voir mon éclair →";
         $("ec-suivant").onclick=()=>{if(ecIdx<4){ecIdx++;ecCharge();}else{ecFin();}};
@@ -2909,6 +2998,7 @@ function ecCharge(){
 function ecFin(){
   etat.eclair.faites++;
   const jour=Math.floor(Date.now()/86400000);
+  if(!ecGratuit)etat.eclair.jourPts=jour;
   let msg=ecPremier+" sur 5 du premier coup.";
   if(etat.visites.indexOf(jour)<0){
     etat.visites.push(jour);
@@ -2932,6 +3022,209 @@ function ecFin(){
 $("ec-rejouer").addEventListener("click",eclairInit);
 $("btn-eclair").addEventListener("click",()=>{montre("ecran-eclair");eclairInit();});
 
+
+/* =================== Jeu G : Paroles d'histoire (dialogues sans anachronismes) =================== */
+const DIAL_PERSOS={
+ cartier:{nom:"Jacques Cartier",dates:"1491–1557 · navigateur de Saint-Malo",amorce:"Vous m'interrogez sur mes trois voyages? Posez vos questions."},
+ donnacona:{nom:"Donnacona",dates:"?–v. 1539 · chef de Stadaconé",amorce:"Je parlerai. Que veux-tu comprendre de ce qui est arrivé à mon peuple?"}
+};
+const DIALOGUES={
+ cartier:[
+  {mode:"rep",d:"d4",q:"Pourquoi traversez-vous l'Atlantique en 1534?",
+   options:[
+    {t:"Le roi François 1ᵉʳ m'envoie chercher des richesses et un passage vers l'Asie.",ok:true},
+    {t:"Je pars fonder la Nouvelle-France avec mon ami Champlain.",why:"⚠ Anachronisme : Champlain ne naîtra que vers 1570, et la Nouvelle-France attendra 1608."},
+    {t:"Je fuis les guerres de capture qui menacent mon village.",why:"Erreur d'acteur : les guerres de capture concernent des nations autochtones, pas les navigateurs malouins."}
+   ],expl:"Mission de François 1ᵉʳ : trouver des richesses et une route maritime vers l'Asie."},
+  {mode:"rep",d:"d4",q:"Que s'est-il passé à Gaspé avec la croix?",
+   options:[
+    {t:"J'ai pris possession du territoire au nom du roi — le chef Donnacona est venu protester.",ok:true},
+    {t:"J'y ai hissé le drapeau du Canada devant les colons.",why:"⚠ Anachronisme : ni pays nommé Canada avec drapeau, ni colons en 1534."},
+    {t:"Les Iroquoiens m'avaient demandé de la planter pour sceller notre alliance.",why:"Contresens : la croix est plantée sans le consentement des Iroquoiens présents — Donnacona proteste."}
+   ],expl:"24 juillet 1534 : prise de possession au nom du roi, contestée sur-le-champ par Donnacona."},
+  {mode:"quest",d:"d4",r:"Les rapides ont arrêté mes navires — je n'ai jamais pu dépasser ce grand village au pied de la montagne.",
+   options:[
+    {t:"Jusqu'où avez-vous remonté le fleuve en 1535?",ok:true},
+    {t:"Comment s'est passée votre traversée de l'Atlantique?",why:"La réponse parle du fleuve et d'Hochelaga, pas de l'océan."},
+    {t:"Pourquoi avez-vous quitté Stadaconé en canot d'écorce?",why:"Cartier navigue sur des navires européens; et la réponse décrit un arrêt forcé, pas un départ."}
+   ],expl:"En 1535, Cartier atteint Hochelaga; les rapides (les futurs rapides de Lachine) stoppent la remontée."},
+  {mode:"rep",d:"d4",q:"Comment vos hommes ont-ils traversé l'hiver 1535-1536?",
+   options:[
+    {t:"Terriblement : le scorbut a emporté 25 des 110. Un remède d'écorce, montré par les gens de Stadaconé, a sauvé les autres.",ok:true},
+    {t:"Sans mal : nos serres chauffées nous donnaient des oranges fraîches.",why:"⚠ Anachronisme : aucune serre chauffée ni orange sur le Saint-Laurent au 16ᵉ siècle."},
+    {t:"Nous avons hiverné confortablement au poste de Tadoussac.",why:"⚠ Anachronisme : le poste de Tadoussac ne sera fondé qu'en 1600, par Pierre Chauvin."}
+   ],expl:"L'hivernage à Stadaconé tourne mal : 25 morts, surtout du scorbut. Le savoir des Iroquoiens du Saint-Laurent sauve l'équipage."},
+  {mode:"rep",d:"d4",q:"Qu'avez-vous rapporté en France après 1541?",
+   options:[
+    {t:"Ce que je croyais être de l'or et des diamants… ce n'était que pyrite de fer et quartz.",ok:true},
+    {t:"Des pommes de terre pour les jardins du roi.",why:"⚠ Anachronisme : la pomme de terre, venue des Andes, n'entre dans les usages français que bien plus tard."},
+    {t:"Le wampum d'alliance que m'avait remis le roi d'Espagne.",why:"Double erreur : le wampum est un objet diplomatique autochtone — et l'Espagne est la rivale de la France."}
+   ],expl:"Cartier croit avoir trouvé or et diamants : ce n'était que pyrite et quartz. La colonie est abandonnée en 1543."},
+  {mode:"quest",d:"d4",r:"Convertir les peuples au christianisme et établir une colonie : voilà ce qui s'ajoutait à mes ordres, sous la direction de Roberval.",
+   options:[
+    {t:"Quels nouveaux objectifs s'ajoutent au voyage de 1541?",ok:true},
+    {t:"Que cherchiez-vous lors de votre premier voyage, en 1534?",why:"En 1534, les objectifs étaient richesses et passage vers l'Asie — pas encore la colonie."},
+    {t:"Pourquoi les pêcheurs basques venaient-ils aux Grands Bancs?",why:"Erreur d'acteur : les Basques venaient pour la morue et la baleine, sans mission royale."}
+   ],expl:"En 1541, sous Roberval, deux objectifs s'ajoutent : évangéliser et fonder une colonie (Charlesbourg-Royal)."}
+ ],
+ donnacona:[
+  {mode:"rep",d:"d4",q:"Que pensez-vous de la croix plantée à Gaspé?",
+   options:[
+    {t:"Je suis allé protester : cette terre est la nôtre, et personne n'a demandé notre accord.",ok:true},
+    {t:"Je l'ai acceptée avec joie : c'était un beau cadeau de bienvenue.",why:"Contresens : les sources rapportent la protestation de Donnacona — la croix signifiait une prise de possession."},
+    {t:"J'ai déposé une plainte écrite au gouverneur de la Nouvelle-France.",why:"⚠ Anachronisme : aucun gouverneur ni Nouvelle-France en 1534 — et la tradition iroquoienne est orale, pas écrite."}
+   ],expl:"Donnacona conteste le geste de Cartier : planter la croix, c'était prendre possession sans consentement."},
+  {mode:"rep",d:"d4",q:"Qu'est-il arrivé à vos fils en 1534?",
+   options:[
+    {t:"Cartier a emmené Domagaya et Taignoagny en France; revenus l'année suivante, ils parlaient sa langue.",ok:true},
+    {t:"Ils sont partis étudier à l'université de Québec.",why:"⚠ Anachronisme : ni ville de Québec ni université au 16ᵉ siècle."},
+    {t:"Ils ont guidé Champlain jusqu'aux Grands Lacs.",why:"⚠ Anachronisme : Champlain arrivera deux générations plus tard."}
+   ],expl:"Cartier ramène en France les deux fils du chef; ils reviennent en 1535 et servent d'interprètes."},
+  {mode:"quest",d:"d3",r:"Contrôler qui monte le fleuve, c'est contrôler les échanges. Nous voulions rester les intermédiaires.",
+   options:[
+    {t:"Pourquoi ne vouliez-vous pas que Cartier monte librement vers Hochelaga?",ok:true},
+    {t:"Pourquoi cultiviez-vous ensemble maïs, courges et haricots?",why:"La réponse parle de commerce et de routes d'eau, pas d'agriculture."},
+    {t:"Pourquoi vendiez-vous vos fourrures aux marchands anglais?",why:"⚠ Anachronisme et erreur d'acteur : pas de marchands anglais sur le Saint-Laurent en 1535."}
+   ],expl:"Les nations qui commercent directement avec les Européens sont avantagées : Stadaconé veut demeurer l'intermédiaire."},
+  {mode:"rep",d:"d4",q:"Que s'est-il passé au printemps 1536?",
+   options:[
+    {t:"Cartier m'a enlevé, avec d'autres des miens, pour que je parle au roi des richesses du pays.",ok:true},
+    {t:"Je suis parti de mon plein gré ouvrir un comptoir de fourrures à Paris.",why:"Contresens : les sources parlent d'un enlèvement, pas d'un voyage d'affaires librement choisi."},
+    {t:"J'ai signé un traité de paix écrit avec la France.",why:"⚠ Anachronisme : les nations iroquoiennes ne pratiquent pas l'écriture — les ententes passent par la parole et le wampum."}
+   ],expl:"Au départ de 1536, Cartier enlève Donnacona afin qu'il vante au roi les richesses du territoire."},
+  {mode:"rep",d:"d4",q:"Qu'avez-vous dit au roi de France?",
+   options:[
+    {t:"J'ai parlé des richesses du territoire — assez pour qu'il finance d'autres voyages.",ok:true},
+    {t:"Je lui ai demandé d'envoyer des chevaux à Stadaconé.",why:"⚠ Anachronisme : il n'y a aucun cheval en Amérique du Nord-Est avant leur introduction par les Européens."},
+    {t:"Je lui ai offert la recette de la tourtière du Lac-Saint-Jean.",why:"⚠ Anachronisme (et clin d'œil) : ce plat appartient à une tout autre époque."}
+   ],expl:"Les récits de Donnacona sur les richesses — dont le fameux « royaume du Saguenay » — encouragent le roi à poursuivre."},
+  {mode:"quest",d:"d2",r:"Mon peuple raconte, il n'écrit pas : notre mémoire vit dans la parole des aînés.",
+   options:[
+    {t:"Pourquoi n'existe-t-il aucun document écrit de votre main?",ok:true},
+    {t:"Quel wampum portiez-vous à Gaspé?",why:"La réponse parle de transmission de la mémoire, pas d'un objet précis."},
+    {t:"Pourquoi avez-vous appris le français à l'école?",why:"⚠ Anachronisme : aucune école française n'existe — et c'est Cartier qui dépend des interprètes."}
+   ],expl:"Vers 1500, les cultures autochtones transmettent savoirs et récits par la tradition orale; les aînés y jouent un rôle central."}
+ ]
+};
+
+function portraitDial(perso){
+  const T=' stroke="#201e1d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"';
+  let s='<svg viewBox="0 0 120 120" width="86" height="86" role="img" aria-label="'+DIAL_PERSOS[perso].nom+'">';
+  s+='<circle cx="60" cy="60" r="56" fill="'+(perso==="cartier"?"#dfe9ee":"#e8e3d6")+'"'+T+'/>';
+  if(perso==="cartier"){
+    s+='<path d="M34,116 Q36,86 60,84 Q84,86 86,116 Z" fill="#4a3a52"'+T+'/>';
+    s+='<path d="M52,80 L52,88 Q60,92 68,88 L68,80 Z" fill="#eec39a"'+T+'/>';
+    s+='<path d="M40,50 Q40,30 60,30 Q80,30 80,50 L80,60 Q80,80 60,82 Q40,80 40,60 Z" fill="#eec39a"'+T+'/>';
+    s+='<path d="M40,62 Q42,84 60,88 Q78,84 80,62 Q80,96 60,98 Q40,96 40,62 Z" fill="#6b4a2e"'+T+'/>';
+    s+='<path d="M50,68 Q55,64 59,67 Q60,67.6 61,67 Q65,64 70,68 Q66,71 61,70 Q60,69.7 59,70 Q54,71 50,68 Z" fill="#6b4a2e"'+T.replace("2.4","2")+'/>';
+    s+='<path d="M34,44 Q32,24 52,20 Q76,14 86,30 Q90,38 82,42 Q84,34 74,32 Q60,30 48,36 Q38,40 38,48 Z" fill="#3a2a1a"'+T+'/>';
+    s+='<circle cx="52" cy="55" r="2.3" fill="#201e1d"/><circle cx="68" cy="55" r="2.3" fill="#201e1d"/>';
+    s+='<path d="M47,49 Q52,46 56,49 M64,49 Q68,46 73,49" fill="none" stroke="#201e1d" stroke-width="2"/>';
+  }else{
+    s+='<path d="M32,116 Q34,88 60,86 Q86,88 88,116 Z" fill="#8f5a34"'+T+'/>';
+    s+='<path d="M30,112 Q46,96 60,96 Q74,96 90,112" fill="none" stroke="#c9762a" stroke-width="3"/>';
+    s+='<path d="M52,80 L52,90 Q60,94 68,90 L68,80 Z" fill="#a1663d"'+T+'/>';
+    s+='<path d="M40,50 Q40,28 60,28 Q80,28 80,50 L80,62 Q80,82 60,84 Q40,82 40,62 Z" fill="#a1663d"'+T+'/>';
+    s+='<path d="M38,54 Q34,22 60,20 Q86,22 82,54 L84,86 Q78,92 74,86 L74,50 Q68,36 52,38 Q46,40 46,50 L46,86 Q42,92 36,86 Z" fill="#241d18"'+T+'/>';
+    s+='<circle cx="52" cy="55" r="2.3" fill="#201e1d"/><circle cx="68" cy="55" r="2.3" fill="#201e1d"/>';
+    s+='<path d="M47,49 Q52,46.5 56,49 M64,49 Q68,46.5 73,49" fill="none" stroke="#201e1d" stroke-width="2"/>';
+    s+='<path d="M48,64 Q48,70 52,72 M72,64 Q72,70 68,72" fill="none" stroke="#201e1d" stroke-width="1.6" opacity=".6"/>';
+    s+='<path d="M54,74 Q60,77 66,74" fill="none" stroke="#201e1d" stroke-width="2.2"/>';
+  }
+  s+='</svg>';
+  return s;
+}
+let dialPerso=null,dialIdx=0,dialPropre=true,dialPremier=0;
+function dialChoisit(p){
+  dialPerso=p;dialIdx=0;dialPremier=0;
+  $("dial-selection").hidden=true;
+  $("dial-zone").hidden=false;
+  $("dial-fin").hidden=true;
+  $("dial-portrait").innerHTML=portraitDial(p);
+  $("dial-nom").textContent=DIAL_PERSOS[p].nom;
+  $("dial-dates").textContent=DIAL_PERSOS[p].dates;
+  $("dial-fil").innerHTML='<div class="bulle-dial perso">'+DIAL_PERSOS[p].amorce+'</div>';
+  if(etat.dialogues.faits[p]){toast("Dialogue déjà complété — on replonge pour le plaisir (aucun point).");}
+  dialCharge();
+}
+function dialCharge(){
+  dialPropre=true;
+  const e=DIALOGUES[dialPerso][dialIdx];
+  $("dial-prog").textContent="Échange "+(dialIdx+1)+" / "+DIALOGUES[dialPerso].length;
+  const fil=$("dial-fil");
+  const r=$("dial-retro");r.className="retro";r.innerHTML="";
+  $("dial-suivant").hidden=true;
+  const amorce=document.createElement("div");
+  if(e.mode==="rep"){
+    amorce.className="bulle-dial toi";
+    amorce.textContent=e.q;
+    $("dial-consigne-echange").textContent="Qu'aurait répondu "+DIAL_PERSOS[dialPerso].nom+" ?";
+  }else{
+    amorce.className="bulle-dial perso";
+    amorce.textContent=e.r;
+    $("dial-consigne-echange").textContent="Quelle question a suscité cette réponse ?";
+  }
+  fil.appendChild(amorce);
+  fil.scrollTop=fil.scrollHeight;
+  const z=$("dial-choix");z.innerHTML="";
+  melange(e.options).forEach(o=>{
+    const b=document.createElement("button");b.textContent=o.t;
+    b.addEventListener("click",()=>{
+      if(b.disabled)return;
+      if(o.ok){
+        b.classList.add("bonne");
+        document.querySelectorAll("#dial-choix button").forEach(x=>{x.disabled=true;if(x!==b)x.classList.add("estompe");});
+        const rep=document.createElement("div");
+        rep.className="bulle-dial "+(e.mode==="rep"?"perso":"toi");
+        rep.textContent=o.t;
+        fil.appendChild(rep);fil.scrollTop=fil.scrollHeight;
+        if(dialPropre){
+          dialPremier++;
+          if(!etat.dialogues.faits[dialPerso])majPoints(5);
+        }
+        r.className="retro ok visible";
+        r.innerHTML="<strong>"+(dialPropre?"+5 points&nbsp;!":"Voilà.")+"</strong> "+e.expl+chipsGeo((e.q||e.r)+" "+e.expl);
+        $("dial-suivant").hidden=false;
+        $("dial-suivant").textContent=(dialIdx<DIALOGUES[dialPerso].length-1)?"Échange suivant →":"Conclure l'entretien →";
+      }else{
+        dialPropre=false;
+        etat.erreurs[e.d]=(etat.erreurs[e.d]||0)+1;
+        b.classList.add("mauvaise");b.disabled=true;
+        r.className="retro oups visible";
+        r.innerHTML="<strong>Pas cette réplique.</strong> "+(o.why||"Relis bien l'amorce.");
+      }
+    });
+    z.appendChild(b);
+  });
+}
+$("dial-suivant").addEventListener("click",()=>{
+  if(dialIdx<DIALOGUES[dialPerso].length-1){dialIdx++;dialCharge();}
+  else{
+    const premier=!etat.dialogues.faits[dialPerso];
+    etat.dialogues.faits[dialPerso]=true;
+    if(premier){etat.dialogues.premier+=dialPremier;}
+    $("dial-zone").hidden=true;
+    $("dial-fin").hidden=false;
+    $("dial-bilan").innerHTML=dialPremier+" échange"+(dialPremier>1?"s":"")+" sur "+DIALOGUES[dialPerso].length+" du premier coup avec <strong>"+DIAL_PERSOS[dialPerso].nom+"</strong>.";
+    confettis(14);
+    majDecouvertes();
+    majEtatsCarte();
+  }
+});
+$("dial-retour-persos").addEventListener("click",()=>{
+  $("dial-fin").hidden=true;
+  $("dial-selection").hidden=false;
+});
+document.querySelectorAll(".dial-carte").forEach(b=>{
+  b.addEventListener("click",()=>dialChoisit(b.dataset.perso));
+});
+function dialPortraitsInit(){
+  document.querySelectorAll(".dial-carte").forEach(b=>{
+    b.querySelector(".dial-vignette").innerHTML=portraitDial(b.dataset.perso);
+  });
+}
+dialPortraitsInit();
+
 /* =================== L'album de découvertes =================== */
 const DECOUVERTES=[
 {nom:"La Béringie",indice:"Réussis le niveau 1 de la Grande Randonnée.",
@@ -2942,8 +3235,8 @@ const DECOUVERTES=[
  cond:()=>etat.familles.fait,
  texte:"Léger, rapide à réparer, fait d'écorce de bouleau : le canot des Algonquiens file sur les cours d'eau l'été. Les rivières sont les routes du territoire.",
  svg:'<svg viewBox="0 0 80 60"><path d="M6,28 Q9,17 16,15 Q12,23 17,29 L63,29 Q68,23 64,15 Q71,17 74,28 Q64,41 40,41 Q16,41 6,28 Z" fill="#d9b98c" stroke="#201e1d" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M10,28 Q40,36 70,28" fill="none" stroke="#8a6a3f" stroke-width="1.8"/><line x1="28" y1="30.5" x2="28" y2="37.5" stroke="#201e1d" stroke-width="2"/><line x1="52" y1="30.5" x2="52" y2="37.5" stroke="#201e1d" stroke-width="2"/><path d="M22,32 L21,39 M40,33 L40,40.5 M58,32 L59,39" stroke="#8a6a3f" stroke-width="1.4"/><path d="M12,20 L17,22 M11,24 L16,26 M68,20 L63,22 M69,24 L64,26" stroke="#8a6a3f" stroke-width="1.4"/><path d="M4,48 Q16,44 28,48 M40,50 Q52,46 64,50" fill="none" stroke="#0088b0" stroke-width="2.4" stroke-linecap="round"/></svg>'},
-{nom:"La maison longue",indice:"Fais un sans-faute au jeu des familles.",
- cond:()=>etat.familles.fait&&etat.familles.premier>=etat.familles.total,
+{nom:"La maison longue",indice:"Termine le jeu des familles avec au plus 2 erreurs.",
+ cond:()=>etat.familles.fait&&etat.familles.premier>=etat.familles.total-2,
  texte:"Jusqu'à 25 mètres de long pour 25 à 60 personnes d'une même lignée maternelle. Derrière la palissade, la maison longue abrite le monde iroquoien.",
  svg:'<svg viewBox="0 0 80 60"><path d="M8,50 L8,26 Q40,6 72,26 L72,50 Z" fill="#b98d5e" stroke="#201e1d" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M20,50 L20,17.5 M32,50 L32,13 M48,50 L48,13 M60,50 L60,17.5" stroke="#6b4a2e" stroke-width="1.5"/><path d="M8,34 L72,34 M11,24 Q40,9 69,24" fill="none" stroke="#6b4a2e" stroke-width="1.5"/><rect x="36" y="38" width="8" height="12" fill="#3a2a1a" stroke="#201e1d" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M26,10 Q23,6 26,1 M54,10 Q57,6 54,1" fill="none" stroke="#7d7979" stroke-width="2.2" stroke-linecap="round"/></svg>'},
 {nom:"Le wampum",indice:"Réussis le niveau 5 de la Grande Randonnée.",
@@ -2978,10 +3271,54 @@ const DECOUVERTES=[
  cond:()=>etat.points>=250,
  texte:"Feutre aux bords relevés en trois cornes, galon doré : le chapeau des explorateurs et des officiers traverse l'Atlantique avec eux.",
  svg:'<svg viewBox="0 0 80 60"><path d="M33,30 Q33,12 40,11 Q47,12 47,30 Z" fill="#2b2320" stroke="#201e1d" stroke-width="2"/><path d="M8,42 Q16,24 30,16 Q38,15 41,26 L39,26 Q42,15 50,16 Q64,24 72,42 Q56,49 40,48 Q24,49 8,42 Z" fill="#2b2320" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M10,41 Q17,26 30,17 Q37,16 40,25 Q43,16 50,17 Q63,26 70,41" fill="none" stroke="#c9a227" stroke-width="2"/></svg>'},
-{nom:"Le drapeau du royaume de France",indice:"Atteins le sommet : 500 points.",
+{nom:"Le drapeau du royaume de France",indice:"Atteins le sommet : 750 points.",
  cond:()=>etat.points>=OBJECTIF_PTS,
- texte:"Blanc semé de fleurs de lys d'or : c'est sous ce drapeau que la France plante ses croix et ses postes en Amérique. Cinq cents points — tu as parcouru tout le sentier des origines à 1608 !",
- svg:'<svg viewBox="0 0 80 60"><line x1="15" y1="7" x2="15" y2="54" stroke="#201e1d" stroke-width="2.6" stroke-linecap="round"/><path d="M12,7 L15,1.5 L18,7 L15,8.5 Z" fill="#c9a227" stroke="#201e1d" stroke-width="1.4" stroke-linejoin="round"/><path d="M15,10 Q41,5 66,11 L64,37 Q39,31 15,35 Z" fill="#fbfaf9" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><g transform="translate(21,12) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><g transform="translate(35,10.5) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><g transform="translate(49,12.5) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><g transform="translate(27,21.5) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><g transform="translate(41,20) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><g transform="translate(55,22) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><path d="M4,54 Q15,48 26,54 L26,58 L4,58 Z" fill="#9db898" stroke="#201e1d" stroke-width="2"/></svg>'}
+ texte:"Blanc semé de fleurs de lys d'or : c'est sous ce drapeau que la France plante ses croix et ses postes en Amérique. Sept cent cinquante points — tu as parcouru tout le sentier des origines à 1608 !",
+ svg:'<svg viewBox="0 0 80 60"><line x1="15" y1="7" x2="15" y2="54" stroke="#201e1d" stroke-width="2.6" stroke-linecap="round"/><path d="M12,7 L15,1.5 L18,7 L15,8.5 Z" fill="#c9a227" stroke="#201e1d" stroke-width="1.4" stroke-linejoin="round"/><path d="M15,10 Q41,5 66,11 L64,37 Q39,31 15,35 Z" fill="#fbfaf9" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><g transform="translate(21,12) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><g transform="translate(35,10.5) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><g transform="translate(49,12.5) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><g transform="translate(27,21.5) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><g transform="translate(41,20) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><g transform="translate(55,22) scale(.92)"><path d="M5,0.5 Q6.6,3.5 5,6.8 Q3.4,3.5 5,0.5 Z M3.9,4.6 Q1,3.8 1.2,1.6 Q3.2,2.6 4.2,3.9 Z M6.1,4.6 Q9,3.8 8.8,1.6 Q6.8,2.6 5.8,3.9 Z M3.4,6.6 L6.6,6.6 L6.6,7.7 L3.4,7.7 Z M4.2,7.9 L5.8,7.9 L5.4,9.6 L4.6,9.6 Z" fill="#e0aa14"/></g><path d="M4,54 Q15,48 26,54 L26,58 L4,58 Z" fill="#9db898" stroke="#201e1d" stroke-width="2"/></svg>'},
+{nom:"L'annedda",indice:"Complète les deux entretiens de Paroles d'histoire.",
+ cond:()=>!!(etat.dialogues.faits.cartier&&etat.dialogues.faits.donnacona),
+ texte:"L'hiver 1535-1536, le scorbut décime l'équipage de Cartier. Domagaya montre aux Français une infusion d'écorce et d'aiguilles de conifère — l'annedda — qui sauve les survivants. Un savoir autochtone au secours des nouveaux venus.",
+ svg:'<svg viewBox="0 0 80 60"><path d="M40,6 L40,44" stroke="#6b4a2e" stroke-width="2.6" stroke-linecap="round"/><path d="M40,12 L26,6 M40,12 L54,6 M40,20 L22,13 M40,20 L58,13 M40,28 L20,22 M40,28 L60,22 M40,36 L24,31 M40,36 L56,31" stroke="#3e6b4f" stroke-width="2.6" stroke-linecap="round"/><path d="M26,50 Q26,44 32,44 L48,44 Q54,44 54,50 Q54,56 46,56 L34,56 Q26,56 26,50 Z" fill="#b98d5e" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M54,47 Q60,47 60,51 Q60,55 54,54" fill="none" stroke="#201e1d" stroke-width="2"/><path d="M34,42 Q32,38 35,34 M44,42 Q46,38 43,34" fill="none" stroke="#7d7979" stroke-width="2" stroke-linecap="round"/></svg>'},
+{nom:"Les coquillages du Sud",indice:"Termine le paquet de cartes mémoire.",
+ cond:()=>etat.cartes.fait,
+ texte:"Certains coquillages trouvés au bord du Saint-Laurent viennent du golfe du Mexique : passés de nation en nation, ils deviennent perles et parures. Pas de monnaie dans ce commerce — le troc et la réciprocité.",
+ svg:'<svg viewBox="0 0 80 60"><path d="M30,44 Q16,40 16,28 Q16,14 32,12 Q52,10 58,26 Q62,38 50,44 Q40,48 30,44 Z" fill="#e8d3ac" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M32,12 Q30,26 34,42 M42,12 Q42,26 44,43 M52,16 Q52,28 50,42" fill="none" stroke="#c9a880" stroke-width="1.8"/><path d="M50,44 Q58,48 64,46" fill="none" stroke="#201e1d" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="52" r="2.6" fill="#fbfaf9" stroke="#201e1d" stroke-width="1.5"/><circle cx="26" cy="54" r="2.6" fill="#5d3a6e" stroke="#201e1d" stroke-width="1.5"/><circle cx="34" cy="54.5" r="2.6" fill="#fbfaf9" stroke="#201e1d" stroke-width="1.5"/><circle cx="42" cy="53.5" r="2.6" fill="#5d3a6e" stroke="#201e1d" stroke-width="1.5"/></svg>'},
+{nom:"La pierre à tailler",indice:"Démasque les huit intrus.",
+ cond:()=>etat.intrus.fait,
+ texte:"Quartzite du Labrador, jaspe de Pennsylvanie : les meilleures pierres voyagent sur des centaines de kilomètres avant de devenir pointes, grattoirs et couteaux. Les archéologues retracent les routes du troc grâce à elles.",
+ svg:'<svg viewBox="0 0 80 60"><path d="M40,4 Q52,16 50,32 Q48,48 40,56 Q32,48 30,32 Q28,16 40,4 Z" fill="#8f9aa4" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M40,8 L36,20 L41,32 L37,44 L40,52 M40,8 L44,18 L39,30 L44,42" fill="none" stroke="#5d6a75" stroke-width="1.6" stroke-linejoin="round"/><path d="M60,38 Q66,32 64,24 Q58,28 57,34 Z" fill="#8f9aa4" stroke="#201e1d" stroke-width="1.8" stroke-linejoin="round"/></svg>'},
+{nom:"La fourrure de castor",indice:"Réussis le niveau 6 de la Grande Randonnée.",
+ cond:()=>etat.rando.etoiles[5]!==undefined,
+ texte:"Peaux et fourrures : la part des Algonquiens dans le grand troc. À l'arrivée des Européens, le castor devient la marchandise la plus recherchée — au point de transformer les échanges.",
+ svg:'<svg viewBox="0 0 80 60"><ellipse cx="36" cy="34" rx="22" ry="15" fill="#6b4a2e" stroke="#201e1d" stroke-width="2"/><circle cx="58" cy="26" r="9" fill="#6b4a2e" stroke="#201e1d" stroke-width="2"/><circle cx="61" cy="24" r="1.6" fill="#201e1d"/><path d="M64,30 L64,34 L66.5,34 L66.5,30" fill="#fbfaf9" stroke="#201e1d" stroke-width="1.4"/><circle cx="54" cy="18.5" r="2.6" fill="#6b4a2e" stroke="#201e1d" stroke-width="1.6"/><path d="M14,40 Q2,46 8,54 Q16,58 22,50 Q24,46 18,42 Z" fill="#8a5a34" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M8,48 L18,44 M10,52 L20,48" stroke="#201e1d" stroke-width="1.2" opacity=".6"/><path d="M30,49 L30,54 M44,48 L44,53" stroke="#201e1d" stroke-width="2.2" stroke-linecap="round"/></svg>'},
+{nom:"Le rocher Percé",indice:"Atteins 100 points — chaque tranche de 100 révèle une merveille du Québec.",
+ cond:()=>etat.points>=100,
+ texte:"Un mur de calcaire de 400 mètres posé dans le golfe, percé de son arche marine. Les pêcheurs européens du 16ᵉ siècle le voyaient déjà se dresser à l'entrée de la baie de Gaspé.",
+ svg:'<svg viewBox="0 0 80 60"><rect x="2" y="2" width="76" height="56" rx="4" fill="#cfe8ef"/><path d="M2,46 Q40,42 78,46 L78,58 L2,58 Z" fill="#0088b0" opacity=".35"/><path d="M28,46 L34,14 Q40,8 52,9 Q70,11 74,24 L76,46 Z" fill="#e0c9a0" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M56,46 Q54,32 60,31 Q66,32 66,46 Z" fill="#cfe8ef" stroke="#201e1d" stroke-width="1.8"/><path d="M40,14 L42,44 M50,12 L52,44" stroke="#b89a6a" stroke-width="1.4"/><path d="M10,14 Q14,10 18,14 M14,20 Q18,16 22,20" fill="none" stroke="#201e1d" stroke-width="1.6" stroke-linecap="round"/></svg>'},
+{nom:"Les chutes Montmorency",indice:"Atteins 200 points.",
+ cond:()=>etat.points>=200,
+ texte:"Un rideau d'eau de 83 mètres — une fois et demie Niagara — qui gronde à la rencontre du Saint-Laurent. L'hiver, ses embruns gelés forment le fameux pain de sucre.",
+ svg:'<svg viewBox="0 0 80 60"><path d="M2,2 L30,2 L30,8 Q28,30 24,46 L2,46 Z" fill="#3e6b4f" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M78,2 L50,2 L50,8 Q52,30 56,46 L78,46 Z" fill="#3e6b4f" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M30,4 L50,4" stroke="#201e1d" stroke-width="2.4"/><path d="M30,6 Q32,28 28,46 L52,46 Q48,28 50,6 Z" fill="#fbfaf9" stroke="#201e1d" stroke-width="2"/><path d="M36,10 Q37,28 34,44 M44,10 Q43,28 46,44" stroke="#cfe8ef" stroke-width="1.8" fill="none"/><path d="M2,46 L78,46 L78,58 L2,58 Z" fill="#9fd3e2" stroke="#201e1d" stroke-width="2"/><path d="M22,50 Q28,46 34,50 M46,51 Q52,47 58,51" fill="none" stroke="#0088b0" stroke-width="2" stroke-linecap="round"/></svg>'},
+{nom:"Le fjord du Saguenay",indice:"Atteins 300 points.",
+ cond:()=>etat.points>=300,
+ texte:"Une vallée glaciaire aux parois de 300 mètres, envahie par la mer. À son embouchure, Tadoussac — et dans ses eaux froides, les bélugas, déjà là bien avant les navires.",
+ svg:'<svg viewBox="0 0 80 60"><path d="M2,2 L34,2 Q28,20 30,44 L2,50 Z" fill="#4a5d52" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M78,2 L46,2 Q52,20 50,44 L78,50 Z" fill="#4a5d52" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M30,44 Q40,40 50,44 L78,50 L78,58 L2,58 L2,50 Z" fill="#0e6e8e" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M34,50 Q40,45 46,50 Q43,52 40,51.6 Q37,52 34,50 Z" fill="#fbfaf9" stroke="#201e1d" stroke-width="1.6" stroke-linejoin="round"/><path d="M12,8 Q16,4 20,8 M58,10 Q62,6 66,10" fill="none" stroke="#8fa08f" stroke-width="1.6" stroke-linecap="round"/></svg>'},
+{nom:"Les îles de Mingan",indice:"Atteins 400 points.",
+ cond:()=>etat.points>=400,
+ texte:"Des monolithes de calcaire sculptés par la mer depuis des millénaires — les « pots de fleurs » de la Côte-Nord. Chacun est une bibliothèque de fossiles vieux de 450 millions d'années.",
+ svg:'<svg viewBox="0 0 80 60"><rect x="2" y="2" width="76" height="56" rx="4" fill="#cfe8ef"/><path d="M2,48 L78,48 L78,58 L2,58 Z" fill="#9fd3e2" stroke="#201e1d" stroke-width="2"/><path d="M18,48 L20,26 Q14,24 15,18 Q16,12 24,12 Q32,12 33,18 Q34,24 28,26 L30,48 Z" fill="#d8cfc0" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M48,48 L50,30 Q44,28 45,22 Q46,17 53,17 Q60,17 61,22 Q62,28 56,30 L58,48 Z" fill="#d8cfc0" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M18,20 L30,20 M46,25 L60,25" stroke="#b0a58f" stroke-width="1.4"/></svg>'},
+{nom:"L'île d'Anticosti",indice:"Atteins 500 points.",
+ cond:()=>etat.points>=500,
+ texte:"Plus grande que la Corse, presque déserte, inscrite au patrimoine mondial de l'UNESCO pour ses fossiles : Anticosti raconte une extinction vieille de 445 millions d'années, page par page de roche.",
+ svg:'<svg viewBox="0 0 80 60"><rect x="2" y="2" width="76" height="56" rx="4" fill="#cfe8ef"/><path d="M8,26 Q24,16 44,20 Q66,24 72,30 Q60,36 40,34 Q18,33 8,26 Z" fill="#9db898" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M40,56 Q28,56 28,46 Q28,38 38,38 Q46,38 46,45 Q46,51 39,51 Q34,51 34,46 Q34,42 38,42" fill="none" stroke="#8a6a3f" stroke-width="2.6" stroke-linecap="round"/><path d="M52,50 Q56,44 62,46" fill="none" stroke="#8a6a3f" stroke-width="2" stroke-linecap="round"/></svg>'},
+{nom:"Les monts Torngat",indice:"Atteins 600 points.",
+ cond:()=>etat.points>=600,
+ texte:"À la pointe nord du Québec et du Labrador, des sommets déchiquetés sans un seul arbre — parmi les plus vieilles roches de la planète. C'est là que s'extrait le quartzite de Ramah, voyageur des routes du troc.",
+ svg:'<svg viewBox="0 0 80 60"><rect x="2" y="2" width="76" height="56" rx="4" fill="#dfe9ee"/><path d="M2,52 L16,18 L26,34 L36,10 L48,32 L58,14 L70,36 L78,26 L78,52 Z" fill="#7d8a94" stroke="#201e1d" stroke-width="2" stroke-linejoin="round"/><path d="M36,10 L32,20 L40,20 Z M58,14 L54,23 L62,23 Z" fill="#fbfaf9" stroke="#201e1d" stroke-width="1.6" stroke-linejoin="round"/><path d="M2,52 L78,52 L78,58 L2,58 Z" fill="#cdd8c3" stroke="#201e1d" stroke-width="2"/></svg>'},
+{nom:"Le cratère des Pingualuit",indice:"Atteins 700 points.",
+ cond:()=>etat.points>=700,
+ texte:"Au cœur du Nunavik, un anneau parfait creusé par une météorite il y a 1,4 million d'années. Les Inuit l'appellent l'« œil de cristal » : son eau est parmi les plus pures du monde.",
+ svg:'<svg viewBox="0 0 80 60"><rect x="2" y="2" width="76" height="56" rx="4" fill="#cdd8c3"/><ellipse cx="40" cy="31" rx="30" ry="22" fill="#a8b2a4" stroke="#201e1d" stroke-width="2"/><ellipse cx="40" cy="31" rx="19" ry="13.5" fill="#0e6e8e" stroke="#201e1d" stroke-width="2"/><ellipse cx="40" cy="31" rx="19" ry="13.5" fill="none" stroke="#9fd3e2" stroke-width="2" opacity=".5"/><path d="M14,10 L18,12 M64,50 L68,52 M10,46 L13,44" stroke="#7d8a94" stroke-width="2" stroke-linecap="round"/></svg>'}
 ];
 function compteDecouvertes(){return DECOUVERTES.reduce((s,d)=>s+(d.cond()?1:0),0);}
 let decouvert={};
@@ -2998,13 +3335,20 @@ function rendAlbum(){
   z.innerHTML="";
   DECOUVERTES.forEach(d=>{
     const ok=d.cond();
-    const c=document.createElement(ok?"button":"div");
+    const c=document.createElement("div");
     c.className="trouvaille"+(ok?"":" verrou");
     if(ok){
-      c.type="button";
+      c.tabIndex=0;
+      c.setAttribute("role","button");
       c.setAttribute("aria-label",d.nom+" — clique pour lire");
-      c.innerHTML='<span class="tr-img">'+d.svg+'</span><span class="tr-nom">'+d.nom+'</span><span class="tr-verso"><strong>'+d.nom+'</strong><br>'+d.texte+'</span>';
-      c.addEventListener("click",()=>c.classList.toggle("tourne"));
+      c.innerHTML='<span class="tr-img">'+d.svg+'</span><span class="tr-nom">'+d.nom+'</span><span class="tr-verso"><strong>'+d.nom+'</strong><br>'+d.texte+chipsGeo(d.nom+" "+d.texte)+'</span>';
+      c.addEventListener("click",ev=>{
+        if(ev.target.closest&&ev.target.closest("a"))return;
+        c.classList.toggle("tourne");
+      });
+      c.addEventListener("keydown",ev=>{
+        if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();c.classList.toggle("tourne");}
+      });
     }else{
       c.innerHTML='<span class="tr-img tr-mystere">?</span><span class="tr-nom">???</span><span class="tr-indice">'+d.indice+'</span>';
     }
@@ -3030,8 +3374,9 @@ function etatVersCode(){
     [etat.intrus.premier,etat.intrus.fait?1:0],
     [peiMask,etat.pei.premier],
     etat.visites.slice(-12),
-    [etat.eclair.faites],
-    [etat.erreurs.d1||0,etat.erreurs.d2||0,etat.erreurs.d3||0,etat.erreurs.d4||0]];
+    [etat.eclair.faites,etat.eclair.jourPts||0],
+    [etat.erreurs.d1||0,etat.erreurs.d2||0,etat.erreurs.d3||0,etat.erreurs.d4||0],
+    [etat.dialogues.faits.cartier?1:0,etat.dialogues.faits.donnacona?1:0,etat.dialogues.premier||0]];
   const b=btoa(unescape(encodeURIComponent(JSON.stringify(arr))));
   return "SH1."+b+"."+codeValidation(b);
 }
@@ -3064,8 +3409,11 @@ function codeVersEtat(code){
     const i2=a[13]||[0,0];etat.intrus={premier:i2[0]||0,total:INTRUS.length,fait:!!i2[1]};
     const pz=a[14]||[0,0];etat.pei={faits:{},premier:pz[1]||0};for(let i=0;i<PEI_CONCEPTS.length;i++){if((pz[0]>>i)&1)etat.pei.faits[i]=true;}
     const vs=a[15];etat.visites=Array.isArray(vs)?vs.slice(-12):[];
-    const ec2=a[16]||[0];etat.eclair={faites:ec2[0]||0};
+    const ec2=a[16]||[0];etat.eclair={faites:ec2[0]||0,jourPts:ec2[1]||0};
     const er2=a[17]||[0,0,0,0];etat.erreurs={d1:er2[0]||0,d2:er2[1]||0,d3:er2[2]||0,d4:er2[3]||0};
+    const dg=a[18]||[0,0,0];etat.dialogues={faits:{},premier:dg[2]||0};
+    if(dg[0])etat.dialogues.faits.cartier=true;
+    if(dg[1])etat.dialogues.faits.donnacona=true;
     $("prenom").value=etat.prenom;
     $("ci-nom").textContent=etat.prenom||"à inscrire…";
     $("nom-affiche-1").textContent=etat.prenom||"Randonneur·euse";
@@ -3202,8 +3550,8 @@ $("prof-lien").addEventListener("click",()=>{
   toast("Lien du tableau copié — projette-le ou partage-le à ton groupe !");
   rendPanorama(codes);
 });
-const CLE_PROF_HASH="2ee0060f4b99a517051e0f6f892da4cd9fe876d3921787f7fb54b2b12e65985e";
-  async function sha256hex(s){
+const CLE_PROF_HASH="1dfa26ff297cd720005fa1c3bc745e63d3ab4d54143228dacfef1a212af64057";
+async function sha256hex(s){
   const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));
   return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("");
 }
