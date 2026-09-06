@@ -551,6 +551,18 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 .article.porte{background:var(--color-accent);color:#fff;border-color:var(--color-text)}
 .article.verrou{opacity:.55;background:var(--color-bg)}
 @media(max-width:520px){.carnet-tete{gap:.6rem}.carnet-boite{padding:1rem}}
+
+/* ============ V7.0 : révélation des trouvailles ============ */
+.voile-revel{z-index:650}
+.reveil-boite{max-width:430px;width:100%;text-align:center}
+.reveil-boite.descend{animation:descendCarte .6s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes descendCarte{from{transform:translateY(-115vh)}to{transform:translateY(0)}}
+.reveil-brav{font-size:1.35rem;font-weight:700;color:#fff;text-shadow:0 2px 0 rgba(32,30,29,.5);margin:0 0 .7rem}
+.reveil-carte{background:#fff;border:3px solid var(--color-text);border-radius:12px;box-shadow:var(--ombre);padding:1.1rem 1.2rem 1.2rem}
+.reveil-img{display:block;background:#eef3ea;border:2px solid var(--color-text);border-radius:8px;padding:.6rem;margin:0 auto}
+.reveil-img svg{width:min(240px,60vw);height:auto;display:block;margin:0 auto}
+.reveil-carte .geo-chip{margin-top:.55rem}
+@media(max-width:480px){.reveil-carte{padding:.9rem}}
 </style>
 </head>
 <body>
@@ -1850,8 +1862,12 @@ document.addEventListener("click",ev=>{
 });
 document.addEventListener("keydown",ev=>{
   if(ev.key==="Escape"&&!$("carnet").hidden)fermeCarnet();
+  if(ev.key==="Escape"&&!$("revelation").hidden)revelSuivante();
 });
 document.addEventListener("click",ev=>{
+  if(ev.target.id==="revel-continuer"){revelSuivante();}
+  if(ev.target.id==="revel-album"){revelFile=[];$("revelation").hidden=true;montre("ecran-album");}
+  if(ev.target.id==="revelation"){revelSuivante();}
   if(ev.target.id==="carnet-fermer"){fermeCarnet();}
   if(ev.target.id==="carnet-atelier"){fermeCarnet();montre("ecran-accueil");}
   if(ev.target.id==="carnet-voir-album"){fermeCarnet();montre("ecran-album");}
@@ -3538,11 +3554,31 @@ const DECOUVERTES=[
 ];
 function compteDecouvertes(){return DECOUVERTES.reduce((s,d)=>s+(d.cond()?1:0),0);}
 let decouvert={};
+let revelFile=[];
+function reveleTrouvaille(d){
+  revelFile.push(d);
+  if($("revelation").hidden)revelSuivante();
+}
+function revelSuivante(){
+  const v=$("revelation");
+  if(!revelFile.length){v.hidden=true;return;}
+  const d=revelFile.shift();
+  $("revel-img").innerHTML=d.svg;
+  $("revel-nom").textContent=d.nom;
+  $("revel-texte").innerHTML=d.texte+chipsGeo(d.nom+" "+d.texte);
+  const f=["Félicitations — quelle trouvaille !","Bravo, elle est à toi !","Chapeau, randonneur·euse !","Bel exploit — ton album s'enrichit !"];
+  $("revel-brav").textContent="🎉 "+f[Math.floor(Math.random()*f.length)];
+  v.hidden=false;
+  const b=v.querySelector(".reveil-boite");
+  if(b){b.classList.remove("descend");void b.offsetWidth;b.classList.add("descend");}
+  confettis(18);
+  $("revel-continuer").focus();
+}
 function majDecouvertes(silencieux){
   DECOUVERTES.forEach((d,i)=>{
     if(d.cond()&&!decouvert[i]){
       decouvert[i]=true;
-      if(!silencieux){toast("Nouvelle découverte : "+d.nom+" — vois ton album !");}
+      if(!silencieux){reveleTrouvaille(d);}
     }
   });
 }
@@ -3871,6 +3907,20 @@ function verifierFiche(){
 }
 $("verif-btn").addEventListener("click",verifierFiche);
 </script>
+<div class="voile-carnet voile-revel" id="revelation" hidden role="dialog" aria-modal="true" aria-label="Nouvelle trouvaille">
+  <div class="reveil-boite descend">
+    <p class="reveil-brav" id="revel-brav"></p>
+    <div class="reveil-carte">
+      <span class="reveil-img" id="revel-img"></span>
+      <h2 id="revel-nom" style="margin:.5rem 0 .3rem"></h2>
+      <p id="revel-texte" style="margin:0;line-height:1.55"></p>
+    </div>
+    <p style="margin-top:1rem;display:flex;gap:.55rem;justify-content:center;flex-wrap:wrap">
+      <button class="btn" id="revel-continuer">Continuer →</button>
+      <button class="btn contour" id="revel-album">Voir l'album</button>
+    </p>
+  </div>
+</div>
 <div class="voile-carnet" id="carnet" hidden role="dialog" aria-modal="true" aria-label="Mon carnet de randonnée">
   <div class="carnet-boite">
     <button class="carnet-fermer" id="carnet-fermer" aria-label="Fermer le carnet">✕</button>
