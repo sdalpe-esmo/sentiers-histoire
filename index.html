@@ -536,6 +536,21 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 /* ============ V6.6 : cartes-div accessibles ============ */
 .trouvaille:focus-visible{outline:3px solid var(--color-accent);outline-offset:2px}
 .trouvaille .tr-verso .geo-chip{margin-top:.5rem}
+
+/* ============ V6.8 : carnet du randonneur ============ */
+.mini-avatar,#avatar-apercu,.prog-perso{cursor:pointer}
+.voile-carnet{position:fixed;inset:0;background:rgba(32,30,29,.55);z-index:600;display:flex;align-items:center;justify-content:center;padding:1rem}
+.carnet-boite{background:var(--color-bg);border:2.5px solid var(--color-text);border-radius:10px;box-shadow:var(--ombre);max-width:560px;width:100%;max-height:88vh;overflow-y:auto;padding:1.2rem 1.3rem;position:relative;animation:apparait .3s both}
+.carnet-fermer{position:absolute;top:.6rem;right:.6rem;background:#fff;border:2px solid var(--color-text);border-radius:50%;width:34px;height:34px;font-size:1rem;cursor:pointer;font-family:inherit}
+.carnet-fermer:hover{background:var(--m100)}
+.carnet-tete{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;border-bottom:2px solid var(--color-divider);padding-bottom:.8rem;margin-bottom:.8rem}
+.carnet-stats{display:flex;gap:.9rem;flex-wrap:wrap;font-size:.95rem}
+.boutique{display:flex;gap:.45rem;flex-wrap:wrap}
+.article{font-family:inherit;font-size:.9rem;padding:.4rem .7rem;border-radius:999px;border:2px solid var(--color-text);background:#fff;cursor:pointer}
+.article:hover{transform:translateY(-2px)}
+.article.porte{background:var(--color-accent);color:#fff;border-color:var(--color-text)}
+.article.verrou{opacity:.55;background:var(--color-bg)}
+@media(max-width:520px){.carnet-tete{gap:.6rem}.carnet-boite{padding:1rem}}
 </style>
 </head>
 <body>
@@ -1595,6 +1610,7 @@ function montre(id){
   if(id==="ecran-carte") majEtatsCarte();
   if(id==="ecran-sommet") majSommet();
   if(id==="ecran-album") rendAlbum();
+  if(id==="ecran-pei"){$("pei-zone").hidden=true;$("pei-liste").style.display="";peiListe();}
   if(id==="ecran-accueil"){construitOptions();majAvatars();}
 }
 document.addEventListener("click",e=>{
@@ -1609,6 +1625,7 @@ function majEtatsCarte(){
     if(k==="cartes"&&etat.cartes.fait){el.textContent=etat.cartes.sues+"/"+etat.cartes.total+" ✓";el.classList.add("ok");}
     if(k==="familles"&&etat.familles.fait){el.textContent=etat.familles.premier+"/"+etat.familles.total+" ✓";el.classList.add("ok");}
     if(k==="feu"&&etat.feu.fait){el.textContent="relevé ✓";el.classList.add("ok");}
+    if(k==="pei"){const n=Object.keys(etat.pei.faits).length;if(n){el.textContent=n+"/"+PEI_CONCEPTS.length+(n>=PEI_CONCEPTS.length?" ✓":"");el.classList.add("ok");}}
     if(k==="oi"){const n=Object.keys(etat.oi.faits).length;if(n){el.textContent=n+"/7 exercices";el.classList.add("ok");}}
     if(k==="quisuis"&&etat.quisuis.fait){el.textContent=etat.quisuis.pts+" pts ✓";el.classList.add("ok");}
     if(k==="intrus"&&etat.intrus.fait){el.textContent=etat.intrus.premier+"/"+etat.intrus.total+" ✓";el.classList.add("ok");}
@@ -1667,8 +1684,8 @@ const AV_PEAUX = [{id:"p1",c:"#f6d7bd"},{id:"p2",c:"#eec39a"},{id:"p3",c:"#cf9a6
 const AV_STYLES = [{id:"court",nom:"Court"},{id:"long",nom:"Long"},{id:"boucle",nom:"Bouclé"},{id:"rase",nom:"Rasé"}];
 const AV_CHEVEUX = [{id:"noir",c:"#241d18"},{id:"brun",c:"#4a3421"},{id:"chatain",c:"#7a5230"},{id:"blond",c:"#c8a05a"},{id:"roux",c:"#a34c22"}];
 const AV_CHANDAILS = [{id:"cyan",c:"#0088b0"},{id:"magenta",c:"#d6006c"},{id:"jaune",c:"#e0aa14"},{id:"sapin",c:"#3e6b4f"},{id:"prune",c:"#5d3a6e"}];
-const AV_CHAPEAUX = [{id:"aucun",nom:"Aucun"},{id:"tuque",nom:"Tuque du patriote"},{id:"tricorne",nom:"Tricorne"},{id:"castor",nom:"Chapeau de feutre"}];
-const AV_ACCS = [{id:"aucun",nom:"Aucun"},{id:"lunettes",nom:"Lunettes rondes"},{id:"moustache",nom:"Moustache"},{id:"pipe",nom:"Pipe"},{id:"raquettes",nom:"Raquettes"},{id:"pagaie",nom:"Pagaie"},{id:"fleche",nom:"Ceinture fléchée"}];
+const AV_CHAPEAUX = [{id:"aucun",nom:"Aucun"},{id:"tuque",nom:"Tuque du patriote"},{id:"paille",nom:"Chapeau de paille"},{id:"beret",nom:"Béret"},{id:"capuche",nom:"Capuche"},{id:"tricorne",nom:"Tricorne"},{id:"castor",nom:"Chapeau de feutre"}];
+const AV_ACCS = [{id:"aucun",nom:"Aucun"},{id:"lunettes",nom:"Lunettes rondes"},{id:"moustache",nom:"Moustache"},{id:"barbe",nom:"Barbe"},{id:"foulard",nom:"Foulard"},{id:"sacados",nom:"Sac à dos"},{id:"baton",nom:"Bâton de marche"},{id:"pipe",nom:"Pipe"},{id:"raquettes",nom:"Raquettes"},{id:"pagaie",nom:"Pagaie"},{id:"fleche",nom:"Ceinture fléchée"}];
 const avatar = {peau:"p2",style:"court",cheveux:"brun",chandail:"sapin",chapeau:"aucun",acc:"aucun"};
 
 function couleur(liste,id){const o=liste.find(x=>x.id===id);return o?o.c:liste[0].c;}
@@ -1687,6 +1704,16 @@ function dessineAvatar(cfg,taille){
     s+='<line x1="31" y1="78" x2="45" y2="119" stroke="#8a6a3f" stroke-width="2"/>';
     s+='<ellipse cx="83" cy="99" rx="9.5" ry="25" transform="rotate(22 83 99)" fill="#dcc39a"'+T+'/>';
     s+='<line x1="89" y1="78" x2="75" y2="119" stroke="#8a6a3f" stroke-width="2"/>';
+  }
+  if(cfg.acc==="sacados"){
+    s+='<path d="M36,104 Q31,78 46,75 L74,75 Q89,78 84,104 Z" fill="#8a6a3f"'+T+'/>';
+    s+='<path d="M46,75 L46,68 Q46,62 53,62 L67,62 Q74,62 74,68 L74,75" fill="#a1815a"'+T+'/>';
+  }
+  if(cfg.acc==="baton"){
+    s+='<line x1="93" y1="48" x2="86" y2="132" stroke="#201e1d" stroke-width="7" stroke-linecap="round"/>';
+    s+='<line x1="93" y1="48" x2="86" y2="132" stroke="#8a6a3f" stroke-width="4" stroke-linecap="round"/>';
+    s+='<circle cx="93.5" cy="45" r="5" fill="#6b4a2e"'+T.replace('2.6','2.2')+'/>';
+    s+='<path d="M89,62 Q95,64 92,69" fill="none" stroke="#b23a2f" stroke-width="2.4" stroke-linecap="round"/>';
   }
   s+='<path d="M32,138 Q33,102 50,96 L70,96 Q87,102 88,138 Z" fill="'+chand+'"'+T+'/>';
   if(cfg.acc==="fleche"){
@@ -1731,6 +1758,17 @@ function dessineAvatar(cfg,taille){
     s+='<path d="M28,40 Q60,30 92,40 L92,45 Q60,53 28,45 Z" fill="#3a2a1a"'+T+'/>';
     s+='<path d="M42,42 Q42,16 60,15 Q78,16 78,42 Q60,36 42,42 Z" fill="#3a2a1a"'+T+'/>';
     s+='<path d="M42,35 Q60,29 78,35 L78,41 Q60,35 42,41 Z" fill="#e0aa14"'+T+'/>';
+  }else if(cfg.chapeau==="paille"){
+    s+='<path d="M22,45 Q60,34 98,45 L98,50 Q60,60 22,50 Z" fill="#e8d3a0"'+T+'/>';
+    s+='<path d="M42,44 Q42,18 60,17 Q78,18 78,44 Q60,38 42,44 Z" fill="#e8d3a0"'+T+'/>';
+    s+='<path d="M42,38 Q60,32 78,38 L78,43 Q60,37 42,43 Z" fill="#8a6a3f"'+T.replace('2.6','2')+'/>';
+    s+='<path d="M50,24 Q60,21 70,24 M46,30 Q60,26 74,30" fill="none" stroke="#c9a880" stroke-width="1.6" stroke-linecap="round"/>';
+  }else if(cfg.chapeau==="beret"){
+    s+='<path d="M36,42 Q32,20 60,16 Q88,17 87,34 Q88,41 79,40 Q62,34 42,45 Q36,46 36,42 Z" fill="#3e6b4f"'+T+'/>';
+    s+='<line x1="61" y1="16" x2="61" y2="10" stroke="#201e1d" stroke-width="3" stroke-linecap="round"/>';
+  }else if(cfg.chapeau==="capuche"){
+    s+='<path d="M33,64 Q28,16 60,12 Q92,16 87,64 L79,64 Q84,24 60,21 Q36,24 41,64 Z" fill="'+chand+'"'+T+'/>';
+    s+='<path d="M41,64 Q42,90 50,96 M79,64 Q78,90 70,96" fill="none"'+T+'/>';
   }
   if(cfg.acc==="lunettes"){
     s+='<circle cx="50" cy="63" r="8.3" fill="none" stroke="#201e1d" stroke-width="2"/><circle cx="70" cy="63" r="8.3" fill="none" stroke="#201e1d" stroke-width="2"/><line x1="58.3" y1="63" x2="61.7" y2="63" stroke="#201e1d" stroke-width="2"/>';
@@ -1740,10 +1778,84 @@ function dessineAvatar(cfg,taille){
     s+='<path d="M64,75 Q72,78 75.5,82" fill="none"'+T+'/>';
     s+='<path d="M72.5,80 Q72.5,76.5 76,76.5 Q79.5,76.5 79.5,80 Q79.5,86 76,86 Q72.5,86 72.5,80 Z" fill="#6b4a2e"'+T+'/>';
     s+='<path d="M76,72.5 Q74,69.5 76,66.5 Q78,63.5 76.5,60.5" fill="none" stroke="#7d7979" stroke-width="2" stroke-linecap="round"/>';
+  }else if(cfg.acc==="barbe"){
+    s+='<path d="M43,66 Q44,90 60,92 Q76,90 77,66 Q74,80 60,81 Q46,80 43,66 Z" fill="'+chev+'"'+T+'/>';
+    s+='<path d="M48,71 Q54,67.5 58.5,70 Q60,70.7 61.5,70 Q66,67.5 72,71 Q68,74 62,72.7 Q60,72.3 58,72.7 Q52,74 48,71 Z" fill="'+chev+'"'+T.replace('2.6','2.2')+'/>';
+  }else if(cfg.acc==="foulard"){
+    s+='<path d="M44,91 Q60,84 76,91 L74,101 Q60,94 46,101 Z" fill="#e0aa14"'+T+'/>';
+    s+='<path d="M66,99 L72,117 L61,113 Z" fill="#e0aa14"'+T+'/>';
+    s+='<path d="M52,92 Q60,89 68,92 M50,96 Q60,92 70,96" fill="none" stroke="#c9a227" stroke-width="1.8" stroke-linecap="round"/>';
+  }else if(cfg.acc==="sacados"){
+    s+='<path d="M50,98 L47,130 M70,98 L73,130" fill="none" stroke="#6b4a2e" stroke-width="5" stroke-linecap="round"/>';
+    s+='<rect x="44.5" y="110" width="6" height="7" rx="1.5" fill="#c9a227"'+T.replace('2.6','1.8')+'/>';
+    s+='<rect x="69.5" y="110" width="6" height="7" rx="1.5" fill="#c9a227"'+T.replace('2.6','1.8')+'/>';
   }
   s+='</svg>';
   return s;
 }
+function moyennePremierCoup(){
+  let bons=0,total=0;
+  if(etat.cartes.fait){bons+=etat.cartes.sues;total+=etat.cartes.total;}
+  if(etat.familles.fait){bons+=etat.familles.premier;total+=etat.familles.total;}
+  if(etat.intrus.fait){bons+=etat.intrus.premier;total+=etat.intrus.total||8;}
+  const oiNb=Object.keys(etat.oi.faits).length;
+  if(oiNb){bons+=etat.oi.premier;total+=oiNb;}
+  const peiNb=Object.keys(etat.pei.faits).length;
+  if(peiNb){bons+=etat.pei.premier;total+=peiNb;}
+  const dgNb=Object.keys(etat.dialogues.faits).length;
+  if(dgNb){bons+=etat.dialogues.premier;total+=dgNb*6;}
+  if(!total)return null;
+  return Math.round(100*bons/total);
+}
+function rendBoutique(zone,cle,liste){
+  const z=$(zone);z.innerHTML="";
+  liste.forEach(o=>{
+    if(o.id==="aucun")return;
+    const libre=estDebloque(cle,o.id);
+    const b=document.createElement("button");
+    b.className="article"+(avatar[cle]===o.id?" porte":"")+(libre?"":" verrou");
+    b.textContent=(libre?(avatar[cle]===o.id?"✓ ":""):"🔒 ")+o.nom;
+    if(!libre)b.title="Se débloque avec "+DEBLOCAGES[cle][o.id].txt;
+    b.addEventListener("click",()=>{
+      if(!libre){toast("À mériter : "+DEBLOCAGES[cle][o.id].txt+" !");return;}
+      avatar[cle]=(avatar[cle]===o.id)?"aucun":o.id;
+      majAvatars();construitOptions();ouvreCarnet();
+    });
+    z.appendChild(b);
+  });
+}
+function ouvreCarnet(){
+  $("carnet-avatar").innerHTML=dessineAvatar(avatar,120);
+  $("carnet-nom").textContent=etat.prenom||"Randonneur·euse";
+  $("carnet-pts").textContent=etat.points;
+  $("carnet-album").textContent=compteDecouvertes()+"/"+DECOUVERTES.length;
+  const m=moyennePremierCoup();
+  $("carnet-moy").textContent=(m===null)?"—":(m+" %");
+  const proch=$("carnet-prochaine");
+  if(etat.points>=OBJECTIF_PTS){proch.textContent="Sommet atteint — le drapeau du royaume de France est à toi !";}
+  else{
+    const cap=Math.min(OBJECTIF_PTS,(Math.floor(etat.points/100)+1)*100);
+    proch.textContent="Prochaine récompense à "+cap+" points ("+(cap-etat.points)+" à gagner).";
+  }
+  rendBoutique("boutique-chapeaux","chapeau",AV_CHAPEAUX);
+  rendBoutique("boutique-accs","acc",AV_ACCS);
+  $("carnet").hidden=false;
+  $("carnet-fermer").focus();
+}
+function fermeCarnet(){$("carnet").hidden=true;}
+document.addEventListener("click",ev=>{
+  const cible=ev.target.closest&&ev.target.closest(".mini-avatar,#avatar-apercu,.prog-perso");
+  if(cible){ouvreCarnet();return;}
+  if(ev.target.id==="carnet")fermeCarnet();
+});
+document.addEventListener("keydown",ev=>{
+  if(ev.key==="Escape"&&!$("carnet").hidden)fermeCarnet();
+});
+document.addEventListener("click",ev=>{
+  if(ev.target.id==="carnet-fermer"){fermeCarnet();}
+  if(ev.target.id==="carnet-atelier"){fermeCarnet();montre("ecran-accueil");}
+  if(ev.target.id==="carnet-voir-album"){fermeCarnet();montre("ecran-album");}
+});
 function majAvatars(){
   $("avatar-apercu").innerHTML = dessineAvatar(avatar,238);
   const mini = dessineAvatar(avatar,30);
@@ -1758,8 +1870,10 @@ const DEBLOCAGES={
 function estDebloque(cle,id){
   const r=DEBLOCAGES[cle]&&DEBLOCAGES[cle][id];
   if(!r)return true;
-  if(r.pts!==undefined)return etat.points>=r.pts;
-  if(r.tr!==undefined)return DECOUVERTES[r.tr].cond();
+  try{
+    if(r.pts!==undefined)return etat.points>=r.pts;
+    if(r.tr!==undefined)return DECOUVERTES[r.tr].cond();
+  }catch(_){return false;}
   return true;
 }
 function construitOptions(){
@@ -2920,7 +3034,14 @@ const ENCOURAGEMENTS={
 
 /* =================== Piste de progression =================== */
 function majProgression(){
-  const z=$("prog-perso");if(!z)return;
+  let z=document.querySelector(".prog-perso");
+  if(!z){
+    const piste=document.querySelector(".prog-piste");
+    if(!piste)return;
+    z=document.createElement("span");
+    z.className="prog-perso";
+    piste.appendChild(z);
+  }
   const bo=$("bulle-obj");if(bo&&!bo.textContent)bo.textContent="Objectif : "+OBJECTIF_PTS+" points";
   const frac=Math.max(0,Math.min(1,etat.points/OBJECTIF_PTS));
   z.style.left=(5+90*frac)+"%";
@@ -3022,6 +3143,101 @@ function ecFin(){
 $("ec-rejouer").addEventListener("click",eclairInit);
 $("btn-eclair").addEventListener("click",()=>{montre("ecran-eclair");eclairInit();});
 
+
+/* =================== Défi PEI : les concepts clés =================== */
+const PEI_CONCEPTS=[
+ {cle:"Changement",
+  def:"Ce qui se transforme : passage d'un état à un autre, son rythme, ses causes.",
+  q:"Quel exemple du chapitre illustre le mieux le concept de changement ?",
+  options:[
+   {t:"L'arrivée des Européens transforme les réseaux d'échanges : la fourrure de castor devient la marchandise la plus recherchée.",ok:true},
+   {t:"Les Grands Bancs de Terre-Neuve regorgent de morue.",why:"C'est un état des lieux, une richesse stable — rien ne s'y transforme encore."},
+   {t:"La maison longue abrite plusieurs familles d'une même lignée.",why:"C'est une description de la vie quotidienne, pas une transformation."}
+  ],
+  expl:"Le concept de changement s'observe quand une réalité se transforme : ici, le contact européen réoriente des réseaux d'échanges millénaires."},
+ {cle:"Systèmes",
+  def:"Des éléments reliés qui fonctionnent ensemble — retire une pièce et tout l'ensemble bouge.",
+  q:"Quel exemple du chapitre illustre le mieux le concept de systèmes ?",
+  options:[
+   {t:"Le grand réseau d'échanges relie les nations entre elles : cuivre du lac Supérieur, coquillages du Sud, pierres à tailler circulent de main en main.",ok:true},
+   {t:"Cartier plante une croix à Gaspé en 1534.",why:"C'est un événement ponctuel — pas un ensemble d'éléments interreliés."},
+   {t:"Le scorbut frappe l'équipage pendant l'hiver 1535-1536.",why:"C'est un épisode précis, pas un réseau organisé."}
+  ],
+  expl:"Un système, c'est un réseau : les routes du troc relient des nations sur des milliers de kilomètres — toucher un maillon fait bouger le reste."},
+ {cle:"Interactions mondiales",
+  def:"Les liens entre des sociétés éloignées — et leurs effets, dans les deux directions.",
+  q:"Quel exemple du chapitre illustre le mieux les interactions mondiales ?",
+  options:[
+   {t:"Pêcheurs basques, explorateurs français et nations autochtones échangent produits, savoirs et mots sur les côtes de l'Atlantique.",ok:true},
+   {t:"Les Thuléens chassent les mammifères marins dans l'Arctique.",why:"C'est un mode de vie adapté au territoire, sans lien entre continents."},
+   {t:"Le maïs, la courge et le haricot poussent ensemble dans un même champ.",why:"Les trois sœurs illustrent une technique agricole, pas un contact entre sociétés éloignées."}
+  ],
+  expl:"Quand deux mondes se rencontrent — Europe et Amérique du Nord —, produits, techniques, langues et maladies voyagent dans les deux sens."},
+ {cle:"Temps, lieu et espace",
+  def:"Situer : quand et où les choses se passent, et comment le territoire influence les façons de vivre.",
+  q:"Quel exemple du chapitre illustre le mieux le concept de temps, lieu et espace ?",
+  options:[
+   {t:"Nomades sur le Bouclier canadien, sédentaires dans les basses-terres du Saint-Laurent : les ressources du territoire façonnent les modes de vie.",ok:true},
+   {t:"Donnacona proteste contre la croix plantée par Cartier.",why:"C'est un geste politique entre personnes — le territoire n'y joue pas le rôle central."},
+   {t:"Le wampum scelle les alliances entre nations.",why:"C'est un objet diplomatique : il relève des relations, pas de l'influence du territoire."}
+  ],
+  expl:"Le lieu explique le mode de vie : sols fertiles = agriculture et villages; forêts giboyeuses = chasse et déplacements saisonniers."}
+];
+let peiIdx=0,peiPropre=true;
+function peiListe(){
+  const zone=$("pei-liste");if(!zone)return;
+  zone.innerHTML="";
+  PEI_CONCEPTS.forEach((c,i)=>{
+    const b=document.createElement("button");
+    b.className="carte-niveau";
+    const fait=etat.pei.faits[i];
+    b.innerHTML='<span><span class="sous-niv" style="display:block;text-transform:uppercase;letter-spacing:.1em;font-size:.72rem">Concept clé</span><span class="nom-niv">'+(i+1)+'. '+c.cle+'</span></span>'
+      +'<span class="etat '+(fait?"ok":"")+'" style="font-size:.85rem;'+(fait?"color:var(--vert);font-weight:700":"color:var(--n700)")+'">'+(fait?"relié ✓":"à relier")+'</span>';
+    b.addEventListener("click",()=>lancePEI(i));
+    zone.appendChild(b);
+  });
+}
+function lancePEI(i){
+  peiIdx=i;peiPropre=true;
+  const c=PEI_CONCEPTS[i];
+  $("pei-liste").style.display="none";
+  $("pei-zone").hidden=false;
+  $("pei-badge").textContent=c.cle;
+  $("pei-def").textContent=c.def;
+  $("pei-question").textContent=c.q;
+  const r=$("pei-retro");r.className="retro";r.innerHTML="";
+  $("pei-suivant").hidden=true;
+  if(etat.pei.faits[i])toast("Concept déjà relié — on refait pour le plaisir (aucun point).");
+  const z=$("pei-choix");z.innerHTML="";
+  melange(c.options).forEach(o=>{
+    const b=document.createElement("button");b.textContent=o.t;
+    b.addEventListener("click",()=>{
+      if(b.disabled)return;
+      if(o.ok){
+        b.classList.add("bonne");
+        document.querySelectorAll("#pei-choix button").forEach(x=>{x.disabled=true;if(x!==b)x.classList.add("estompe");});
+        const deja=etat.pei.faits[peiIdx];
+        if(peiPropre&&!deja){etat.pei.premier++;majPoints(5);}
+        etat.pei.faits[peiIdx]=true;
+        r.className="retro ok visible";
+        r.innerHTML="<strong>"+(peiPropre&&!deja?"+5 points bonus&nbsp;!":"Bien relié.")+"</strong> "+c.expl;
+        $("pei-suivant").hidden=false;
+        majEtatsCarte();
+      }else{
+        peiPropre=false;
+        b.classList.add("mauvaise");b.disabled=true;
+        r.className="retro oups visible";
+        r.innerHTML="<strong>Pas le meilleur exemple.</strong> "+(o.why||"Relis la définition du concept.");
+      }
+    });
+    z.appendChild(b);
+  });
+}
+$("pei-suivant").addEventListener("click",()=>{
+  $("pei-zone").hidden=true;
+  $("pei-liste").style.display="";
+  peiListe();
+});
 
 /* =================== Jeu G : Paroles d'histoire (dialogues sans anachronismes) =================== */
 const DIAL_PERSOS={
@@ -3655,5 +3871,35 @@ function verifierFiche(){
 }
 $("verif-btn").addEventListener("click",verifierFiche);
 </script>
+<div class="voile-carnet" id="carnet" hidden role="dialog" aria-modal="true" aria-label="Mon carnet de randonnée">
+  <div class="carnet-boite">
+    <button class="carnet-fermer" id="carnet-fermer" aria-label="Fermer le carnet">✕</button>
+    <div class="carnet-tete">
+      <span id="carnet-avatar"></span>
+      <div>
+        <p class="sur-titre" style="margin:0">Carnet de randonnée</p>
+        <h2 id="carnet-nom" style="margin:.1rem 0 .3rem"></h2>
+        <div class="carnet-stats">
+          <span class="carnet-stat">✦ <strong id="carnet-pts">0</strong> points</span>
+          <span class="carnet-stat">Album : <strong id="carnet-album">0/23</strong></span>
+          <span class="carnet-stat">Premier coup : <strong id="carnet-moy">—</strong></span>
+        </div>
+        <p id="carnet-prochaine" style="font-size:.88rem;color:var(--n600);margin:.35rem 0 0"></p>
+      </div>
+    </div>
+    <div class="carnet-corps">
+      <h3 style="margin:.2rem 0 .4rem">La boutique du randonneur</h3>
+      <p style="font-size:.88rem;color:var(--n600);margin:0 0 .5rem">Clique un article libre pour le porter. Les articles 🔒 indiquent comment les mériter.</p>
+      <p style="font-weight:700;margin:.4rem 0 .25rem">Chapeaux</p>
+      <div class="boutique" id="boutique-chapeaux"></div>
+      <p style="font-weight:700;margin:.7rem 0 .25rem">Accessoires</p>
+      <div class="boutique" id="boutique-accs"></div>
+      <p style="margin-top:.9rem;display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn contour" id="carnet-atelier">Tout modifier à l'atelier</button>
+        <button class="btn contour" id="carnet-voir-album">Voir mon album →</button>
+      </p>
+    </div>
+  </div>
+</div>
 </body>
 </html>
