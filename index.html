@@ -564,6 +564,9 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 .reveil-img svg{width:min(240px,60vw);height:auto;display:block;margin:0 auto}
 .reveil-carte .geo-chip{margin-top:.55rem}
 @media(max-width:480px){.reveil-carte{padding:.9rem}}
+
+/* ============ V7.2 : sentier escarpé ============ */
+.chip-defi{display:inline-block;background:var(--color-text);color:#e0aa14;border-radius:999px;padding:.14rem .6rem;font-size:.72rem;font-weight:700;letter-spacing:.09em;margin-left:.4rem;vertical-align:2px}
 </style>
 </head>
 <body>
@@ -588,11 +591,11 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
           <span class="cours-info"><strong>Les sentiers de l'histoire</strong><em>Histoire du Québec et du Canada · Des origines à 1840</em></span>
           <span class="cours-fleche">Entrer →</span>
         </button>
-        <button class="cours a-venir cours-venir" type="button">
+        <a class="cours ouvert" href="/routes/" style="text-decoration:none;color:inherit">
           <span class="cours-sec">4ᵉ<br>sec.</span>
           <span class="cours-info"><strong>Les routes de l'histoire</strong><em>Histoire du Québec et du Canada · De 1840 à nos jours</em></span>
-          <span class="cours-badge">À venir</span>
-        </button>
+          <span class="cours-fleche">Entrer →</span>
+        </a>
       </div>
       <p class="pied" style="text-align:center">École secondaire Montessori Orford · Programme d'éducation intermédiaire de l'IB<br>Conçu par Samuel Dalpé — © 2026, tous droits réservés.</p>
     </div>
@@ -1233,11 +1236,11 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
     <div class="jeu-tete">
       <p class="sur-titre">Répétition espacée</p>
       <h1>Randonnée éclair</h1>
-      <p class="consigne">Cinq questions pigées dans tout le chapitre — trois minutes, montre en main. Et surtout&nbsp;: <strong>reviens un autre jour</strong>. C'est en revenant que la mémoire se construit (chaque nouveau jour de visite vaut <strong>+10 points de fidélité</strong>).</p>
+      <p class="consigne">Cinq questions pigées dans tout le chapitre — trois minutes, montre en main. Et surtout&nbsp;: <strong>reviens un autre jour</strong>. C'est en revenant que la mémoire se construit (chaque nouveau jour de visite vaut <strong>+10 points de fidélité</strong>). L'éclair s'adapte à toi&nbsp;: il vise tes dossiers fragiles… et sert des <strong>défis à +8 points</strong> aux randonneur·euse·s aguerri·e·s.</p>
     </div>
     <div class="tuiles" data-rangs="2" data-theme="rando" aria-hidden="true"></div>
     <div class="zone-jeu">
-      <div class="hud-niveau"><strong id="ec-prog"></strong></div>
+      <div class="hud-niveau"><strong id="ec-prog"></strong> <span class="chip-defi" id="ec-defi" hidden>DÉFI · sentier escarpé</span></div>
       <p class="q-texte" id="ec-q"></p>
       <div class="choix" id="ec-choix"></div>
       <div class="retro" id="ec-retro" role="status"></div>
@@ -1423,7 +1426,7 @@ const etat = {
   quisuis:{pts:0,total:0,fait:false},
   intrus:{premier:0,total:0,fait:false},
   pei:{faits:{}, premier:0},
-  eclair:{faites:0,jourPts:0},
+  eclair:{faites:0,jourPts:0,defis:0},
   dialogues:{faits:{},premier:0},
   visites:[],
   erreurs:{d1:0,d2:0,d3:0,d4:0},
@@ -3006,7 +3009,7 @@ function majSommet(){
     "Défi PEI (concepts clés) : "+peiNb+"/4 concept(s) relié(s), "+etat.pei.premier+" bonus du premier coup",
     "Album de découvertes : "+compteDecouvertes()+"/"+DECOUVERTES.length+" trouvailles",
     "Paroles d'histoire : "+Object.keys(etat.dialogues.faits).length+"/2 entretien(s), "+etat.dialogues.premier+" échange(s) du premier coup",
-    "Randonnée éclair : "+etat.eclair.faites+" série(s) de 5 questions, "+etat.visites.length+" jour(s) de visite",
+    "Randonnée éclair : "+etat.eclair.faites+" série(s), "+etat.visites.length+" jour(s) de visite, "+(etat.eclair.defis||0)+" défi(s) du sentier escarpé",
     "Boussole des erreurs : "+(totErr?(DOSSIERS_NOMS[topD]+" ("+er[topD]+" erreur"+(er[topD]>1?"s":"")+" sur "+totErr+")"):"aucun dossier en difficulté"),
     "",
     "Ressenti : "+(etat.meta.feel||"—")+" · À revoir : "+(etat.meta.revoir||"—")
@@ -3088,10 +3091,78 @@ NIVEAUX.forEach((n,i)=>{n.questions.forEach(q=>{
   if(q.t==="qcm"||q.t==="trous"){ECLAIR_POOL.push({q:q.q,options:q.options,bonne:q.bonne,expl:q.expl,niv:i});}
   else if(q.t==="vf"){ECLAIR_POOL.push({q:q.q,options:["Vrai","Faux"],bonne:q.bonne,expl:q.expl,niv:i});}
 });});
+const ECLAIR_DEFIS=[
+ {d:"d1",q:"Vers 1500, les Iroquoiens vivent dans des villages permanents, mais pas les Algonquiens. Quelle explication est la plus solide?",
+  options:["Les Algonquiens ne connaissent pas les techniques de construction.","L'agriculture des basses-terres nourrit toute l'année au même endroit; la chasse du Bouclier oblige à suivre les ressources.","Les Iroquoiens ont peur des déplacements en forêt.","Le climat du Bouclier canadien interdit toute habitation."],
+  bonne:1,expl:"Le mode de vie découle des ressources du territoire : sols fertiles = récoltes stockables = sédentarité; gibier dispersé = déplacements saisonniers."},
+ {d:"d1",q:"Les Premières Nations occupent le sud du Québec depuis environ 12 000 ans; les ancêtres directs des Inuit arrivent dans le Nord il y a environ 1 000 ans. Quelle conclusion est juste?",
+  options:["Les Inuit descendent des premières populations venues par la Béringie il y a 12 000 ans.","Ces deux peuplements sont deux migrations distinctes, très éloignées dans le temps.","Les Thuléens sont arrivés avant les Premières Nations.","Tous les peuples autochtones sont arrivés en même temps."],
+  bonne:1,expl:"Deux vagues distinctes : les ancêtres des Premières Nations (par la Béringie, ~12 000 ans), puis les Thuléens venus d'Alaska (~1 000 ans), ancêtres directs des Inuit."},
+ {d:"d3",q:"Des archéologues trouvent près de Montréal une pointe taillée dans du quartzite du Labrador, à plus de 1 000 km de sa carrière. Quelle est la meilleure interprétation?",
+  options:["Un chasseur a marché 1 000 km pour tailler sa pointe.","La pierre a voyagé de main en main sur les réseaux d'échanges, de nation en nation.","Le quartzite pousse naturellement partout au Québec.","Des Européens ont apporté cette pierre en 1534."],
+  bonne:1,expl:"Les objets voyagent plus loin que les personnes : le troc de proche en proche déplace les matériaux précieux sur des milliers de kilomètres — c'est ainsi que les archéologues retracent les réseaux."},
+ {d:"d2",q:"Chez les Iroquoiens, qui choisit le chef civil du village?",
+  options:["Le chef de guerre, après un combat.","Les mères de clan, qui peuvent aussi le destituer.","Le chef français le plus proche.","Le plus ancien chasseur du village."],
+  bonne:1,expl:"Dans cette société matrilinéaire, les mères de clan désignent le chef civil — et peuvent lui retirer sa charge s'il déçoit. Le pouvoir vient d'elles."},
+ {d:"d2",q:"Pourquoi une décision importante peut-elle prendre beaucoup de temps dans un conseil autochtone?",
+  options:["Personne ne veut parler en premier.","On cherche le consensus : discuter jusqu'à l'accord de tous, car le chef n'a pas le pouvoir d'imposer.","Il faut attendre l'autorisation du roi.","Les conseils ne se réunissent qu'une fois par année."],
+  bonne:1,expl:"Le chef influence par la parole et le prestige, il n'ordonne pas : la décision appartient au groupe, d'où l'importance du consensus."},
+ {d:"d2",q:"Les sociétés autochtones de 1500 n'utilisent pas l'écriture. Pour les connaître aujourd'hui, quelle combinaison de sources est la plus fiable?",
+  options:["Uniquement les écrits des explorateurs européens.","Archéologie, tradition orale autochtone ET écrits européens — en croisant leurs regards.","Uniquement les films historiques.","Aucune source ne permet de les connaître."],
+  bonne:1,expl:"Chaque source a ses limites — les écrits européens portent un regard extérieur. C'est en croisant artefacts, mémoire orale et documents qu'on approche la réalité."},
+ {d:"d3",q:"Des coquillages du golfe du Mexique se retrouvent au bord du Saint-Laurent vers 1500. Comment sont-ils le plus probablement arrivés?",
+  options:["Des marchands du Mexique sont venus les vendre directement.","De relais en relais : chaque nation les échange à ses voisines, sur des générations.","Les courants marins les ont portés jusqu'au fleuve.","Des navires européens les ont importés avant 1500."],
+  bonne:1,expl:"Personne ne fait le voyage complet : les réseaux fonctionnent par relais successifs. C'est la chaîne d'échanges qui parcourt la distance, pas les individus."},
+ {d:"d3",q:"Quel est le but principal d'une « guerre de capture » chez les Iroquoiens?",
+  options:["Conquérir le territoire de la nation voisine.","Capturer des prisonniers, notamment pour remplacer des membres décédés du clan.","Détruire les récoltes ennemies.","Prendre le contrôle des routes de commerce européennes."],
+  bonne:1,expl:"Ces guerres ne visent pas le territoire : elles visent des personnes — les captifs peuvent être adoptés pour combler la perte d'êtres chers du clan."},
+ {d:"d4",q:"Pourquoi les pêcheurs européens font-ils sécher et saler la morue sur les côtes avant de repartir?",
+  options:["Pour la rendre plus lourde à vendre.","Sans réfrigération, c'est le seul moyen de conserver le poisson pendant la longue traversée.","Parce que la morue fraîche est interdite en Europe.","Pour respecter une coutume autochtone."],
+  bonne:1,expl:"La traversée dure des semaines : séchage et salage empêchent le poisson de pourrir — toute l'économie de la morue repose sur cette conservation."},
+ {d:"d4",q:"En 1534, Donnacona proteste contre la croix plantée à Gaspé. Quelle interprétation de son geste est la plus juste?",
+  options:["Il n'aime pas la forme de la croix.","Il comprend que ce geste signifie une prise de possession du territoire, faite sans le consentement de son peuple.","Il veut une croix plus grande pour son village.","Il croit que la croix va attirer les tempêtes."],
+  bonne:1,expl:"Donnacona lit le geste pour ce qu'il est : un symbole d'appropriation. Sa protestation défend les droits de son peuple sur son territoire."},
+ {d:"d4",q:"Pourquoi Cartier enlève-t-il Donnacona en 1536?",
+  options:["Pour le punir de sa protestation de 1534.","Pour qu'il décrive au roi les richesses du territoire et convainque la France de financer d'autres voyages.","Pour apprendre la langue iroquoienne.","Pour l'échanger contre des fourrures."],
+  bonne:1,expl:"Cartier a besoin d'un témoin convaincant : les récits de Donnacona — dont le fameux royaume du Saguenay — doivent persuader François 1ᵉʳ d'investir encore."},
+ {d:"d4",q:"La colonie de Charlesbourg-Royal est abandonnée en 1543. Quelle explication combine le mieux les causes?",
+  options:["Un seul problème : le froid.","Hivers meurtriers, scorbut, relations devenues hostiles avec les Iroquoiens et « trésors » sans valeur : trop d'obstacles à la fois.","Le roi a simplement oublié la colonie.","Les colons sont tous repartis riches en Espagne."],
+  bonne:1,expl:"Les échecs historiques ont rarement une seule cause : c'est l'accumulation — climat, maladie, conflits, déception économique — qui condamne la tentative."},
+ {d:"d3",q:"Dans les réseaux d'échanges autochtones, qu'est-ce qui rend un objet particulièrement précieux?",
+  options:["Sa couleur brillante uniquement.","Sa rareté locale, la distance parcourue et le savoir-faire qu'il exige — comme le cuivre ou le wampum.","Son poids : plus c'est lourd, plus c'est précieux.","Son origine européenne, seule source de valeur."],
+  bonne:1,expl:"La valeur vient de ce qui est difficile à obtenir : matériaux absents du territoire, objets façonnés avec expertise, biens venus de loin."},
+ {d:"d4",q:"Les échanges entre Français et nations autochtones vont dans les deux sens. Qu'est-ce que les Français apprennent ou reçoivent des nations?",
+  options:["Rien : ils apportent tout d'Europe.","Le remède au scorbut, le canot, les raquettes, les routes du territoire et des réseaux d'alliances.","Seulement des fourrures, sans aucun savoir.","La technique de la voile et de la boussole."],
+  bonne:1,expl:"Sans les savoirs autochtones — annedda, moyens de transport, connaissance du territoire —, les nouveaux venus n'auraient pas survécu : l'échange est bidirectionnel."}
+];
+
+function profilEclair(){
+  const er=etat.erreurs||{};
+  let topD=null,maxE=0,totE=0;
+  ["d1","d2","d3","d4"].forEach(k=>{const n=er[k]||0;totE+=n;if(n>maxE){maxE=n;topD=k;}});
+  const reussis=Object.keys(etat.rando.etoiles).length;
+  if(reussis>=6&&maxE<=3)return {mode:"defi"};
+  if(totE>=5&&topD)return {mode:"cible",dossier:topD};
+  return {mode:"libre"};
+}
 let ecQs=[],ecIdx=0,ecPropre=true,ecPremier=0;
 let ecGratuit=false;
+const NOMS_DOSSIERS={d1:"le peuplement et les modes de vie",d2:"l'organisation sociale",d3:"les réseaux d'échanges",d4:"les explorations européennes"};
 function eclairInit(){
-  ecQs=melange(ECLAIR_POOL.slice()).slice(0,5);
+  const profil=profilEclair();
+  if(profil.mode==="cible"){
+    const cible=melange(ECLAIR_POOL.filter(p=>{const nf=NIVEAU_FICHE[p.niv];return nf&&nf.d===profil.dossier;})).slice(0,3);
+    const reste=melange(ECLAIR_POOL.filter(p=>cible.indexOf(p)<0)).slice(0,5-cible.length);
+    ecQs=melange(cible.concat(reste));
+    toast("Ta boussole t'a préparé un éclair sur mesure : cap sur "+NOMS_DOSSIERS[profil.dossier]+".");
+  }else if(profil.mode==="defi"){
+    const durs=melange(ECLAIR_DEFIS.slice()).slice(0,3).map(d=>Object.assign({defi:true},d));
+    const std=melange(ECLAIR_POOL.slice()).slice(0,2);
+    ecQs=melange(durs.concat(std));
+    toast("Sentier escarpé : ta maîtrise mérite mieux — des défis corsés t'attendent (+8 points chacun) !");
+  }else{
+    ecQs=melange(ECLAIR_POOL.slice()).slice(0,5);
+  }
   ecIdx=0;ecPremier=0;
   ecGratuit=(etat.eclair.jourPts===Math.floor(Date.now()/86400000));
   if(ecGratuit)toast("Série bonus du jour déjà jouée — celle-ci est pour le plaisir.");
@@ -3104,6 +3175,7 @@ function ecCharge(){
   ecPropre=true;
   const q=ecQs[ecIdx];
   $("ec-prog").textContent="Question "+(ecIdx+1)+" / 5";
+  $("ec-defi").hidden=!q.defi;
   $("ec-q").textContent=q.q;
   const r=$("ec-retro");r.className="retro";r.innerHTML="";
   $("ec-suivant").hidden=true;
@@ -3115,19 +3187,20 @@ function ecCharge(){
       if(ch.ok){
         b.classList.add("bonne");
         document.querySelectorAll("#ec-choix button").forEach(x=>{x.disabled=true;if(x!==b)x.classList.add("estompe");});
-        if(ecPropre){ecPremier++;if(!ecGratuit)majPoints(5);}
+        const bar=q.defi?8:5;
+        if(ecPropre){ecPremier++;if(!ecGratuit){majPoints(bar);if(q.defi)etat.eclair.defis=(etat.eclair.defis||0)+1;}}
         r.className="retro ok visible";
-        r.innerHTML="<strong>"+(ecPropre?"+5 points&nbsp;!":"Bien.")+"</strong> "+q.expl+chipsGeo(q.q+" "+q.expl);
+        r.innerHTML="<strong>"+(ecPropre?("+"+bar+" points"+(q.defi?" de défi":"")+"&nbsp;!"):"Bien.")+"</strong> "+q.expl+chipsGeo(q.q+" "+q.expl);
         $("ec-suivant").hidden=false;
         $("ec-suivant").textContent=(ecIdx<4)?"Question suivante →":"Voir mon éclair →";
         $("ec-suivant").onclick=()=>{if(ecIdx<4){ecIdx++;ecCharge();}else{ecFin();}};
       }else{
         ecPropre=false;
-        const nf=NIVEAU_FICHE[q.niv];
-        if(nf){etat.erreurs[nf.d]=(etat.erreurs[nf.d]||0)+1;}
+        const dd=q.d||(NIVEAU_FICHE[q.niv]&&NIVEAU_FICHE[q.niv].d);
+        if(dd){etat.erreurs[dd]=(etat.erreurs[dd]||0)+1;}
         b.classList.add("mauvaise");b.disabled=true;
         r.className="retro oups visible";
-        r.innerHTML="<strong>Pas celle-là.</strong> Essaie encore.";
+        r.innerHTML="<strong>Pas celle-là.</strong> "+(q.defi?"Un défi se mérite — élimine les explications trop simples.":"Essaie encore.");
       }
     });
     z.appendChild(b);
@@ -3627,7 +3700,7 @@ function etatVersCode(){
     [etat.intrus.premier,etat.intrus.fait?1:0],
     [peiMask,etat.pei.premier],
     etat.visites.slice(-12),
-    [etat.eclair.faites,etat.eclair.jourPts||0],
+    [etat.eclair.faites,etat.eclair.jourPts||0,etat.eclair.defis||0],
     [etat.erreurs.d1||0,etat.erreurs.d2||0,etat.erreurs.d3||0,etat.erreurs.d4||0],
     [etat.dialogues.faits.cartier?1:0,etat.dialogues.faits.donnacona?1:0,etat.dialogues.premier||0]];
   const b=btoa(unescape(encodeURIComponent(JSON.stringify(arr))));
@@ -3662,7 +3735,7 @@ function codeVersEtat(code){
     const i2=a[13]||[0,0];etat.intrus={premier:i2[0]||0,total:INTRUS.length,fait:!!i2[1]};
     const pz=a[14]||[0,0];etat.pei={faits:{},premier:pz[1]||0};for(let i=0;i<PEI_CONCEPTS.length;i++){if((pz[0]>>i)&1)etat.pei.faits[i]=true;}
     const vs=a[15];etat.visites=Array.isArray(vs)?vs.slice(-12):[];
-    const ec2=a[16]||[0];etat.eclair={faites:ec2[0]||0,jourPts:ec2[1]||0};
+    const ec2=a[16]||[0];etat.eclair={faites:ec2[0]||0,jourPts:ec2[1]||0,defis:ec2[2]||0};
     const er2=a[17]||[0,0,0,0];etat.erreurs={d1:er2[0]||0,d2:er2[1]||0,d3:er2[2]||0,d4:er2[3]||0};
     const dg=a[18]||[0,0,0];etat.dialogues={faits:{},premier:dg[2]||0};
     if(dg[0])etat.dialogues.faits.cartier=true;
