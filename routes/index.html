@@ -1,0 +1,2753 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les routes de l'histoire · ESMO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+<style>
+:root{--papier:#eee2c4;--papier2:#e4d4ae;--encre:#1f1a15;--marine:#1d2856;--bordeaux:#8f2b22;--vert:#2f4f3a;--sepia:#5b4a33;--or:#c9a23c;--filet:#bfa878;
+ --t-serif:"EB Garamond","Latin Modern Roman",Georgia,serif;--t-titre:"IM Fell English SC","EB Garamond",Georgia,serif}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:var(--t-serif);font-size:18px;line-height:1.5;color:var(--encre);background:#e8dab6}
+.fond{position:fixed;inset:0;z-index:-1;pointer-events:none}
+a{color:var(--marine)}
+button{font-family:inherit}
+.ecran{display:none;min-height:100vh}
+.ecran.actif{display:block;animation:fondu .35s both}
+@keyframes fondu{from{opacity:0}to{opacity:1}}
+.page{max-width:960px;margin:0 auto;padding:0 20px 60px}
+/* bandeau institutionnel */
+.bandeau{background:#fbf7ec;border-bottom:1px solid var(--filet)}
+.bandeau .int{max-width:960px;margin:0 auto;padding:8px 20px;display:flex;justify-content:space-between;align-items:center}
+.bandeau img{height:40px}
+/* barre de voyage */
+.barre{position:sticky;top:0;z-index:50;background:rgba(238,226,196,.94);backdrop-filter:blur(3px);border-bottom:1px solid var(--filet)}
+.barre .int{max-width:960px;margin:0 auto;padding:6px 20px;display:flex;align-items:center;gap:12px}
+.retour{background:none;border:none;color:var(--marine);font-size:16px;cursor:pointer;padding:6px 0}
+.retour:hover{text-decoration:underline}
+.qui{margin-left:auto;display:flex;align-items:center;gap:10px}
+.mini-sceau{width:44px;height:44px;cursor:pointer;display:block}
+.mini-sceau svg{width:44px;height:44px}
+.chip{border:1px solid var(--sepia);border-radius:999px;padding:2px 12px;font-size:15px;background:#f6efdc}
+/* titres */
+.sur-titre{font-family:var(--t-titre);letter-spacing:.14em;color:var(--bordeaux);font-size:15px;margin:26px 0 0;text-transform:uppercase}
+h1{font-family:var(--t-titre);font-weight:400;font-size:clamp(34px,6vw,54px);line-height:1.05;margin:4px 0 8px;color:var(--marine)}
+h2{font-family:var(--t-titre);font-weight:400;font-size:26px;color:var(--marine);margin:30px 0 8px;border-bottom:1px solid var(--marine);padding-bottom:3px}
+h3{font-family:var(--t-titre);font-weight:400;font-size:21px;color:var(--bordeaux);margin:20px 0 6px}
+.chapeau{font-style:italic;color:var(--sepia);max-width:720px}
+/* boutons */
+.btn{display:inline-block;border:1.5px solid var(--marine);background:var(--marine);color:#f6efdc;padding:9px 20px;border-radius:3px;font-size:17px;cursor:pointer;text-decoration:none;letter-spacing:.02em}
+.btn:hover{background:#27335a}
+.btn.contour{background:transparent;color:var(--marine)}
+.btn.contour:hover{background:#f6efdc}
+.btn:disabled{opacity:.45;cursor:default}
+/* cartes du hub */
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.carte{background:#f6efdc;border:1px solid var(--filet);border-radius:3px;padding:12px 14px;cursor:pointer;text-align:left;font-size:16px;line-height:1.3;color:var(--encre);position:relative;box-shadow:0 2px 0 rgba(91,74,51,.15);transition:transform .15s,box-shadow .15s}
+.carte:hover{transform:translateY(-2px);box-shadow:0 5px 12px rgba(91,74,51,.25)}
+.carte .n{font-family:var(--t-titre);color:var(--bordeaux);font-size:14px;letter-spacing:.1em;display:block}
+.carte .t{font-size:18px;display:block;margin:2px 0}
+.carte .d{font-size:14px;color:var(--sepia);font-style:italic}
+.carte .etat{position:absolute;top:10px;right:12px;font-size:14px;color:var(--vert)}
+.carte.verrou{opacity:.55}
+/* voie ferrée */
+.voie{margin:14px 0 4px}
+.voie svg{width:100%;height:auto;display:block}
+.voie-legende{display:flex;justify-content:space-between;font-size:14px;color:var(--sepia);font-style:italic}
+/* quiz */
+.zone{background:#f6efdc;border:1px solid var(--filet);padding:18px 20px;border-radius:3px;margin-top:14px}
+.hud{display:flex;justify-content:space-between;font-size:15px;color:var(--sepia);margin-bottom:8px}
+.vies span{font-size:18px;margin-left:2px}
+.q-texte{font-size:21px;margin:6px 0 14px}
+.choix{display:grid;gap:8px}
+.choix button{text-align:left;background:#fbf7ec;border:1px solid var(--filet);padding:10px 14px;font-size:17px;border-radius:3px;cursor:pointer;color:var(--encre)}
+.choix button:hover:not(:disabled){border-color:var(--marine);background:#fff}
+.choix button.bonne{background:#dfe9d8;border-color:var(--vert)}
+.choix button.mauvaise{background:#f1d9d3;border-color:var(--bordeaux);text-decoration:line-through}
+.choix button.estompe{opacity:.5}
+.choix button.choisi{outline:2px solid var(--marine)}
+.retro{display:none;margin-top:12px;padding:10px 14px;border-left:3px solid var(--sepia);background:#f1e7cd;font-size:16px}
+.retro.visible{display:block}
+.retro.ok{border-color:var(--vert)}
+.retro.oups{border-color:var(--bordeaux)}
+.nav{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.assoc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.assoc .col{display:grid;gap:8px;align-content:start}
+.ordre-choisis{min-height:44px;border:1px dashed var(--sepia);padding:8px;margin-bottom:10px;border-radius:3px;font-size:16px}
+.ordre-choisis .pas{display:block}
+/* fiches */
+.fiche-bloc{background:#f6efdc;border:1px solid var(--filet);padding:6px 20px 12px;margin:12px 0;border-radius:3px}
+.fiche-bloc ul{margin:6px 0 0;padding-left:20px}
+.fiche-bloc li{margin:4px 0}
+.banniere{background:#f1d9d3;border:1px solid var(--bordeaux);padding:10px 14px;margin:14px 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-radius:3px}
+/* frise */
+.onglets{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.onglets button{border:1px solid var(--marine);background:transparent;color:var(--marine);padding:6px 14px;cursor:pointer;border-radius:999px;font-size:15px}
+.onglets button.actif{background:var(--marine);color:#f6efdc}
+.cartes-frise{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.cf{border:1px solid var(--filet);border-left:6px solid var(--sepia);background:#fbf7ec;padding:6px 10px;font-size:15px;cursor:pointer;border-radius:2px;max-width:280px;text-align:left}
+.cf.sel{outline:2px solid var(--marine);background:#fff}
+.cf.pol{border-left-color:#c2552e}.cf.eco{border-left-color:#5f8f3a}.cf.soc{border-left-color:#2f7a95}.cf.ter{border-left-color:#c9a23c}
+.bacs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bac{border:1.5px dashed var(--sepia);min-height:120px;padding:8px;border-radius:3px;cursor:pointer;background:rgba(251,247,236,.5)}
+.bac h4{margin:0 0 6px;font-family:var(--t-titre);font-weight:400;color:var(--marine);font-size:18px}
+.bac .cf{cursor:default;max-width:none;margin-bottom:4px}
+.rail{overflow-x:auto;padding-bottom:6px}
+.rail svg{display:block}
+.legende{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--sepia);margin-top:6px}
+.legende i{display:inline-block;width:12px;height:12px;margin-right:5px;vertical-align:-1px}
+/* schémas */
+.etiquettes{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.etiq{border:1px solid var(--bordeaux);background:#fbf7ec;color:var(--bordeaux);padding:5px 12px;border-radius:999px;cursor:pointer;font-size:15px;font-style:italic}
+.etiq.sel{background:var(--bordeaux);color:#fbf7ec}
+.etiq.utilise{display:none}
+.schema-svg{width:100%;height:auto;background:rgba(251,247,236,.4);border:1px solid var(--filet)}
+.schema-svg .trou{cursor:pointer}
+@keyframes secoue{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.secoue{animation:secoue .3s}
+/* débat */
+.tribune{background:#fbf7ec;border:1px solid var(--filet);padding:18px 22px;border-radius:3px;margin-top:12px}
+.citation{font-size:23px;font-style:italic;line-height:1.4;margin:6px 0 16px}
+.citation::before{content:"« "}.citation::after{content:" »"}
+.camps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.camps button{border:1px solid var(--filet);background:#f6efdc;padding:10px;font-size:15px;cursor:pointer;border-radius:3px;line-height:1.3}
+.camps button:hover:not(:disabled){border-color:var(--marine)}
+.camps button.bonne{background:#dfe9d8;border-color:var(--vert)}
+.camps button.mauvaise{background:#f1d9d3;border-color:var(--bordeaux)}
+/* passeport (fenêtre) */
+.voile{position:fixed;inset:0;background:rgba(30,22,15,.72);z-index:200;display:flex;align-items:center;justify-content:center;padding:14px}
+.voile[hidden]{display:none}
+.livret{position:relative;width:min(900px,100%);max-height:94vh;overflow:auto;background:#141b40;border-radius:10px;padding:10px;box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.pages{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#eee2c4;border-radius:4px;position:relative;min-height:540px}
+.pg{position:relative;padding:22px 24px;overflow:hidden}
+.pg-g{background:linear-gradient(90deg,rgba(0,0,0,0) 80%,rgba(60,40,18,.28))}
+.pg-d{background:linear-gradient(270deg,rgba(0,0,0,0) 80%,rgba(60,40,18,.3))}
+.pg h4{font-family:var(--t-titre);font-weight:400;text-align:center;color:var(--marine);letter-spacing:.2em;margin:0 0 10px;border-bottom:1px solid var(--marine);padding-bottom:6px;font-size:16px}
+.champ{margin:10px 0}.champ .e{font-size:11px;letter-spacing:.18em;color:var(--sepia);display:block}.champ .v{font-size:20px}
+.mrz{white-space:pre;overflow:hidden;font-family:"DejaVu Sans Mono",Consolas,monospace;font-size:11.5px;background:rgba(214,196,150,.6);padding:8px 10px;margin-top:14px;letter-spacing:.06em;word-break:break-all}
+.fermer{position:absolute;top:14px;right:16px;z-index:3;background:#f6efdc;border:1px solid var(--sepia);border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:16px}
+.estampes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.est{aspect-ratio:1;position:relative;display:flex;align-items:center;justify-content:center}
+.est svg{width:100%;height:100%}
+.est .vide{width:86%;height:86%;border:1px dashed #a89572;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;color:#9a8762;font-style:italic;padding:4px;line-height:1.15}
+.est.visa .vide{border-radius:4px}
+@keyframes tamponne{0%{transform:scale(2.4) rotate(-20deg);opacity:0}60%{transform:scale(.92) rotate(var(--rot));opacity:1}100%{transform:scale(1) rotate(var(--rot));opacity:1}}
+.est .encre{transform:rotate(var(--rot))}
+.est.nouveau .encre{animation:tamponne .7s cubic-bezier(.3,1.5,.5,1) both}
+/* couverture */
+.couv-scene{display:flex;justify-content:center;padding:30px 0}
+.couv{width:min(360px,86vw);aspect-ratio:430/600;border-radius:12px 20px 20px 12px;overflow:hidden;box-shadow:0 30px 45px rgba(0,0,0,.45),6px 6px 0 #d8cba7;cursor:pointer;transition:transform .3s}
+.couv:hover{transform:translateY(-4px) rotate(-1deg)}
+.couv svg{width:100%;height:100%;display:block}
+/* formulaire */
+.form-id{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}
+.form-id label{display:block;font-size:13px;letter-spacing:.14em;color:var(--sepia);margin-top:10px}
+.form-id input[type=text],textarea{width:100%;font-family:inherit;font-size:19px;padding:7px 10px;border:1px solid var(--filet);background:#fbf7ec;border-radius:2px}
+.opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.opts button{border:1px solid var(--filet);background:#fbf7ec;padding:4px 10px;border-radius:999px;cursor:pointer;font-size:14px}
+.opts button.choisi{border-color:var(--marine);background:var(--marine);color:#f6efdc}
+.opts button.verrou{opacity:.5}
+.sceau-apercu svg{width:210px;height:210px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--marine);color:#f6efdc;padding:10px 18px;border-radius:3px;z-index:300;font-size:16px;box-shadow:0 6px 18px rgba(0,0,0,.35);animation:fondu .3s both;max-width:90vw}
+.pied{margin-top:40px;font-size:13px;color:var(--sepia);text-align:center;font-style:italic}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.stat{background:#f6efdc;border:1px solid var(--filet);padding:10px 12px;border-radius:3px}
+.stat b{display:block;font-size:24px;color:var(--marine);font-weight:500}
+.stat span{font-size:14px;color:var(--sepia)}
+textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-height:90px}
+@media(max-width:700px){.pages{grid-template-columns:1fr}.form-id{grid-template-columns:1fr}.bacs,.camps,.assoc{grid-template-columns:1fr}.estampes{grid-template-columns:repeat(3,1fr)}}
+</style></head><body>
+<svg class="fond" width="100%" height="100%" preserveAspectRatio="none" aria-hidden="true"><defs>
+<filter id="fpapier" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" seed="5" result="t"/><feColorMatrix in="t" type="matrix" values="0 0 0 0 .55  0 0 0 0 .43  0 0 0 0 .24  0 0 0 .2 0" result="tache"/><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9" result="f"/><feColorMatrix in="f" type="matrix" values="0 0 0 0 .3  0 0 0 0 .25  0 0 0 0 .15  0 0 0 .08 0" result="fibre"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="tache"/><feMergeNode in="fibre"/></feMerge></filter>
+<radialGradient id="fbords" cx=".5" cy=".45" r=".75"><stop offset=".6" stop-color="#6b4a20" stop-opacity="0"/><stop offset="1" stop-color="#6b4a20" stop-opacity=".28"/></radialGradient>
+</defs><rect width="100%" height="100%" fill="#eadcb8" filter="url(#fpapier)"/><rect width="100%" height="100%" fill="url(#fbords)"/></svg>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="vieux" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="2" seed="7" result="d"/><feDisplacementMap in="SourceGraphic" in2="d" scale="1.3" xChannelSelector="R" yChannelSelector="G" result="dep"/><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="3" seed="19" result="u"/><feComponentTransfer in="u" result="m1"><feFuncA type="table" tableValues=".5 .88 1 1"/></feComponentTransfer><feComposite in="dep" in2="m1" operator="in" result="a"/><feGaussianBlur in="a" stdDeviation=".35"/></filter>
+<filter id="encre" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="21" result="d"/><feDisplacementMap in="SourceGraphic" in2="d" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="dep"/><feTurbulence type="fractalNoise" baseFrequency=".06" numOctaves="3" seed="13" result="u"/><feComponentTransfer in="u" result="m1"><feFuncA type="table" tableValues=".2 .75 1 1 1"/></feComponentTransfer><feComposite in="dep" in2="m1" operator="in"/></filter>
+<filter id="cuir" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="3" result="n"/><feDiffuseLighting in="n" surfaceScale="1.25" diffuseConstant="1.05" lighting-color="#fff" result="l"><feDistantLight azimuth="230" elevation="52"/></feDiffuseLighting><feComposite in="SourceGraphic" in2="l" operator="arithmetic" k1="1.15" result="t"/></filter>
+<linearGradient id="or" x1="0" y1="0" x2=".7" y2="1"><stop offset="0" stop-color="#8e6e2a"/><stop offset=".25" stop-color="#d8b965"/><stop offset=".42" stop-color="#f2dfa2"/><stop offset=".55" stop-color="#b8923f"/><stop offset=".75" stop-color="#e5c97c"/><stop offset="1" stop-color="#8a6a27"/></linearGradient>
+<filter id="dorure" x="-8%" y="-8%" width="116%" height="116%"><feGaussianBlur in="SourceAlpha" stdDeviation="1.3" result="b"/><feSpecularLighting in="b" surfaceScale="2" specularConstant="1.1" specularExponent="30" lighting-color="#fff4d6" result="s"><feDistantLight azimuth="230" elevation="38"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="br"/><feOffset in="SourceAlpha" dx="-.8" dy="-1" result="o1"/><feComposite in="SourceAlpha" in2="o1" operator="out" result="bh"/><feFlood flood-color="#05081a" flood-opacity=".5"/><feComposite in2="bh" operator="in" result="creux"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="br"/><feMergeNode in="creux"/></feMerge></filter>
+</defs></svg>
+
+<!-- ============ EMBARQUEMENT ============ -->
+<section class="ecran actif" id="ecran-couverture">
+ <div class="bandeau"><div class="int"><img alt="ESMO — École secondaire Montessori Orford" src="data:image/png;base64,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"><img alt="Programme d'éducation intermédiaire de l'IB" src="data:image/png;base64,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"></div></div>
+ <div class="page">
+  <p style="margin:10px 0 0"><a class="retour" href="/">← Tous les cours</a></p>
+  <p class="sur-titre" style="text-align:center">Histoire du Québec et du Canada · 4ᵉ secondaire</p>
+  <h1 style="text-align:center">Les routes de l'histoire</h1>
+  <p class="chapeau" style="text-align:center;margin:0 auto">Chapitre 1, partie 1 · De l'Acte d'Union à l'AANB (1840-1867)</p>
+  <div class="couv-scene"><div class="couv" id="couv" role="button" tabindex="0" aria-label="Ouvrir le passeport"></div></div>
+  <p style="text-align:center"><button class="btn" id="btn-ouvrir">Ouvrir mon passeport</button></p>
+  <p class="pied">Conçu par Samuel Dalpé — © 2026, tous droits réservés. Aucune donnée n'est conservée sur un serveur : ton voyage se garde grâce à ton code de voyage.</p>
+ </div>
+</section>
+
+<section class="ecran" id="ecran-identite">
+ <div class="page">
+  <p style="margin:10px 0 0"><button class="retour" data-ecran="ecran-couverture">← Couverture</button></p>
+  <p class="sur-titre">Page d'identité</p>
+  <h1>Ton passeport de voyageur</h1>
+  <p class="chapeau">Inscris ton nom : tes initiales deviennent ton sceau. Choisis ensuite son lettrage, son encre et l'emblème en filigrane.</p>
+  <div class="zone form-id">
+   <div class="sceau-apercu" id="sceau-apercu"></div>
+   <div>
+    <label for="f-prenom">PRÉNOM</label><input type="text" id="f-prenom" autocomplete="off" maxlength="30">
+    <label for="f-nom">NOM</label><input type="text" id="f-nom" autocomplete="off" maxlength="30">
+    <label>LETTRAGE</label><div class="opts" id="o-lettrage"></div>
+    <label>ENCRE</label><div class="opts" id="o-encre"></div>
+    <label>EMBLÈME EN FILIGRANE</label><div class="opts" id="o-embleme"></div>
+    <p class="nav"><button class="btn" id="btn-embarquer">Embarquer</button></p>
+   </div>
+  </div>
+  <h3>Tu reviens de voyage ?</h3>
+  <p style="font-size:16px">Colle ton code de voyage pour retrouver ton passeport, tes estampes et tes points.</p>
+  <textarea id="code-restaure" placeholder="RH1.…"></textarea>
+  <p class="nav"><button class="btn contour" id="btn-restaurer">Reprendre mon voyage</button></p>
+ </div>
+</section>
+
+<!-- ============ GARE CENTRALE ============ -->
+<section class="ecran" id="ecran-gare">
+ <div class="barre"><div class="int"><a class="retour" href="/">← Tous les cours</a><div class="qui"><span class="chip">✦ <b class="pts">0</b> / 1000</span><span class="mini-sceau" title="Ouvrir mon passeport"></span></div></div></div>
+ <div class="page">
+  <p class="sur-titre">Chapitre 1 · Partie 1 · 1840-1867</p>
+  <h1>La gare centrale</h1>
+  <p class="chapeau">De Montréal au 1ᵉʳ juillet 1867, chaque tranche de 100 points te vaut une nouvelle estampe dans ton passeport. Révise, voyage, puis prouve ce que tu sais.</p>
+  <div class="voie" id="voie"></div>
+  <div class="voie-legende"><span>Départ · 1840</span><span id="voie-msg"></span><span>Terminus · 1867</span></div>
+  <h2>Réviser · les fiches</h2><div class="grille" id="liste-fiches"></div>
+  <h2>Voyager · les étapes</h2><p style="margin:0 0 10px;font-size:16px;color:var(--sepia)">Trois erreurs permises par étape. Les points ne comptent qu'à la première bonne réponse.</p><div class="grille" id="liste-niveaux"></div>
+  <h2>Les ateliers</h2><div class="grille">
+   <button class="carte" data-ecran="ecran-frise"><span class="n">Situer dans le temps</span><span class="t">La ligne du temps</span><span class="d">25 événements à placer</span><span class="etat" data-etat="frise"></span></button>
+   <button class="carte" data-ecran="ecran-schemas"><span class="n">Faire des liens</span><span class="t">Les schémas à compléter</span><span class="d">6 schémas récapitulatifs</span><span class="etat" data-etat="schemas"></span></button>
+   <button class="carte" data-ecran="ecran-debat"><span class="n">Prendre position</span><span class="t">Le grand débat de 1865</span><span class="d">Cartier contre Dorion</span><span class="etat" data-etat="debat"></span></button>
+  </div>
+  <h2>Terminus</h2><div class="grille"><button class="carte" data-ecran="ecran-bilan"><span class="n">1ᵉʳ juillet 1867</span><span class="t">Mon bilan de voyage</span><span class="d">Résultats, boussole des erreurs, code de voyage</span></button></div>
+  <p class="pied">Ressources : notes de cours de M. Dalpé et <a href="https://www.alloprof.qc.ca/fr/eleves/bv/histoire/repertoire-de-revision-histoire-du-quebec-et-du-canada-secondaire-4-h1184" target="_blank" rel="noopener">Alloprof</a>. Conçu par Samuel Dalpé — © 2026, tous droits réservés.</p>
+ </div>
+</section>
+
+<!-- ============ FICHE ============ -->
+<section class="ecran" id="ecran-fiche">
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="page"><div id="fiche-contenu"></div></div>
+</section>
+
+<!-- ============ ÉTAPE (QUIZ) ============ -->
+<section class="ecran" id="ecran-quiz">
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="page">
+  <p class="sur-titre" id="qz-sous"></p><h1 id="qz-titre"></h1><p class="chapeau" id="qz-consigne"></p>
+  <div class="zone"><div class="hud"><span id="qz-prog"></span><span class="vies" id="qz-vies"></span></div><div id="qz-corps"></div><div class="retro" id="qz-retro" role="status"></div><div class="nav" id="qz-nav"></div></div>
+ </div>
+</section>
+
+<!-- ============ LIGNE DU TEMPS ============ -->
+<section class="ecran" id="ecran-frise">
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="page">
+  <p class="sur-titre">Atelier · situer dans le temps</p><h1>La ligne du temps</h1>
+  <p class="chapeau">Choisis une carte, puis clique à l'endroit où elle se place. Trois défis : la décennie, l'année exacte, puis l'ordre des événements d'une même année.</p>
+  <div class="onglets" id="fr-onglets"><button data-mode="1">1 · La décennie</button><button data-mode="2">2 · L'année</button><button data-mode="3">3 · La même année</button></div>
+  <div class="legende"><span><i style="background:#c2552e"></i>Aspect politique</span><span><i style="background:#5f8f3a"></i>Aspect économique</span><span><i style="background:#2f7a95"></i>Aspect social</span><span><i style="background:#c9a23c"></i>Aspect territorial</span></div>
+  <div class="zone" id="fr-zone"></div>
+ </div>
+</section>
+
+<!-- ============ SCHÉMAS ============ -->
+<section class="ecran" id="ecran-schemas">
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="page">
+  <p class="sur-titre">Atelier · faire des liens</p><h1>Les schémas à compléter</h1>
+  <p class="chapeau">Choisis une étiquette, puis la case pointillée où elle va. Attention aux leurres : certaines étiquettes ne vont nulle part.</p>
+  <div class="grille" id="sc-liste"></div>
+  <div id="sc-zone"></div>
+ </div>
+</section>
+
+<!-- ============ DÉBAT ============ -->
+<section class="ecran" id="ecran-debat">
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="page">
+  <p class="sur-titre">Atelier · prendre position</p><h1 id="db-titre"></h1>
+  <p class="chapeau" id="db-contexte"></p><p style="font-size:14px;color:var(--sepia)" id="db-note"></p>
+  <div class="tribune" id="db-zone"></div>
+ </div>
+</section>
+
+<!-- ============ BILAN ============ -->
+<section class="ecran" id="ecran-bilan">
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="page">
+  <p class="sur-titre">Terminus</p><h1>Mon bilan de voyage</h1>
+  <div class="stats" id="bi-stats"></div>
+  <h3>La boussole des erreurs</h3><div id="bi-boussole" class="zone"></div>
+  <h3>Ma fiche pour l'enseignant</h3><p style="font-size:16px">Copie ta fiche et remets-la à ton enseignant (courriel ou Classroom).</p>
+  <textarea id="bi-fiche" readonly style="min-height:200px"></textarea>
+  <p class="nav"><button class="btn" id="bi-copier">Copier ma fiche</button></p>
+  <h3>Mon code de voyage</h3><p style="font-size:16px">Garde ce code : il contient tout ton voyage. Colle-le à la page d'identité pour reprendre là où tu étais.</p>
+  <textarea id="bi-code" readonly></textarea>
+  <p class="nav"><button class="btn" id="bi-copier-code">Copier le code</button><button class="btn contour" id="bi-telecharger">Télécharger (.txt)</button></p>
+ </div>
+</section>
+
+<!-- ============ PASSEPORT OUVERT ============ -->
+<div class="voile" id="passeport" hidden role="dialog" aria-modal="true" aria-label="Mon passeport">
+ <div class="livret"><button class="fermer" id="pp-fermer" aria-label="Fermer">✕</button>
+  <div class="pages">
+   <div class="pg pg-g"><h4>PROVINCE DU CANADA</h4>
+    <div style="display:flex;gap:16px;align-items:flex-start"><div id="pp-sceau" style="flex:0 0 150px"></div>
+     <div><div class="champ"><span class="e">TITULAIRE</span><span class="v" id="pp-nom"></span></div><div class="champ"><span class="e">N° DE PASSEPORT</span><span class="v" id="pp-num" style="font-family:monospace;font-size:17px"></span></div><div class="champ"><span class="e">TRONÇON</span><span class="v">1840 – 1867 · Partie 1</span></div><div class="champ"><span class="e">POINTS DE VOYAGE</span><span class="v"><span class="pts">0</span> / 1000</span></div></div></div>
+    <p style="font-size:14px;margin-top:14px"><button class="btn contour" id="pp-modifier" style="font-size:14px;padding:5px 12px">Modifier mon sceau</button></p>
+    <div class="mrz" id="pp-mrz"></div>
+   </div>
+   <div class="pg pg-d"><h4>ESTAMPES ET VISAS</h4><div class="estampes" id="pp-estampes"></div></div>
+  </div>
+ </div>
+</div>
+
+<script>
+/* Banque de questions — Les routes de l'histoire · Chapitre 1, partie 1 (1840-1867)
+   Rédigée d'après les notes de cours de S. Dalpé et Alloprof (reformulé). À valider par l'enseignant. */
+window.CH1P1_DATA = {
+ "niveaux": [
+  {
+   "titre": "L'Acte d'Union",
+   "sousTitre": "Leçon 1 · 1839-1840",
+   "consigne": "Le rapport Durham, l'union des deux Canadas et ses conséquences. Trois erreurs permises : lis chaque énoncé jusqu'au bout.",
+   "questions": [
+    {
+     "t": "qcm",
+     "q": "Qui la reine Victoria charge-t-elle d'enquêter sur les causes des rébellions de 1837-1838 ?",
+     "options": [
+      "Louis-Hippolyte LaFontaine",
+      "Lord Durham",
+      "Robert Baldwin",
+      "John A. Macdonald"
+     ],
+     "bonne": 1,
+     "expl": "Nommé gouverneur en 1838, Lord Durham dépose son rapport en 1839. LaFontaine et Baldwin mèneront ensuite les réformistes; Macdonald sera le premier premier ministre du Canada en 1867.",
+     "var": [
+      "Qui est nommé gouverneur en 1838 pour enquêter sur les rébellions de 1837-1838 ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Selon le rapport Durham, quels sont les deux grands problèmes de la colonie ?",
+     "options": [
+      "La menace américaine et la dette du Bas-Canada",
+      "Le conflit entre Canadiens français et Britanniques, et un pouvoir concentré entre les mains du gouverneur et de ses conseillers",
+      "La crise agricole et l'exode rural",
+      "La guerre de Sécession et les raids des Féniens"
+     ],
+     "bonne": 1,
+     "expl": "Durham diagnostique un conflit ethnique et un déséquilibre politique : les députés élus ont peu de pouvoir face au gouverneur et aux conseils nommés.",
+     "var": [
+      "Quels deux problèmes le rapport de 1839 met-il en lumière dans la colonie ?"
+     ]
+    },
+    {
+     "t": "assoc",
+     "q": "Associe chaque problème relevé par Durham à la solution qu'il propose.",
+     "paires": [
+      [
+       "Le conflit ethnique",
+       "L'union des deux Canadas et une immigration britannique massive"
+      ],
+      [
+       "Le pouvoir du gouverneur et des conseils",
+       "La responsabilité ministérielle"
+      ],
+      [
+       "L'inégalité économique entre les colonies",
+       "La fusion des dettes"
+      ]
+     ],
+     "expl": "Chaque solution vise un problème précis : assimiler, rendre le gouvernement responsable devant les élus, planifier le développement en commun."
+    },
+    {
+     "t": "vf",
+     "q": "L'Acte d'Union de 1840 applique les deux grandes recommandations de Durham.",
+     "bonne": 1,
+     "expl": "Faux. Londres retient l'union pour assimiler les Canadiens français, mais refuse la responsabilité ministérielle afin de garder le contrôle de la colonie.",
+     "var": [
+      "Londres retient toutes les solutions proposées par Durham dans l'Acte d'Union."
+     ]
+    },
+    {
+     "t": "trous",
+     "q": "Le Haut-Canada et le Bas-Canada sont réunis en un seul territoire : la ____.",
+     "options": [
+      "Province du Canada",
+      "Confédération canadienne",
+      "Nouvelle-France",
+      "Dominion du Canada"
+     ],
+     "bonne": 0,
+     "expl": "On l'appelle aussi le Canada-Uni. Le Bas-Canada devient le Canada-Est et le Haut-Canada, le Canada-Ouest. Le Dominion ne viendra qu'en 1867.",
+     "var": [
+      "Avec l'Acte d'Union, les deux Canadas forment un territoire unique appelé la ____."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Pourquoi dit-on que la représentation prévue par l'Acte d'Union est « égale, mais injuste » ?",
+     "options": [
+      "Chaque section élit 42 députés, alors que le Bas-Canada est plus peuplé",
+      "Le Bas-Canada obtient plus de députés que le Haut-Canada",
+      "Seuls les anglophones ont le droit de vote",
+      "Les députés sont nommés par le gouverneur"
+     ],
+     "bonne": 0,
+     "expl": "Avec 42 sièges chacun, le Bas-Canada est sous-représenté. Comme des anglophones y sont aussi élus, les Canadiens français deviennent minoritaires à la Chambre.",
+     "var": [
+      "Pourquoi l'égalité des sièges à la Chambre désavantage-t-elle le Bas-Canada ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Sur le plan financier, pourquoi l'union avantage-t-elle surtout le Haut-Canada ?",
+     "options": [
+      "Les dettes sont fusionnées, alors que celle du Haut-Canada est beaucoup plus lourde",
+      "Le Haut-Canada garde seul les droits de douane",
+      "Le Bas-Canada doit payer une amende pour les rébellions",
+      "Londres efface la dette du Haut-Canada"
+     ],
+     "bonne": 0,
+     "expl": "Endetté par la construction des canaux, le Haut-Canada partage désormais sa dette avec le Bas-Canada, qui y voit une injustice.",
+     "var": [
+      "Pourquoi le Bas-Canada juge-t-il injuste la fusion des finances des deux colonies ?"
+     ]
+    },
+    {
+     "t": "vf",
+     "q": "Après 1840, le Bas-Canada conserve ses lois civiles françaises.",
+     "bonne": 0,
+     "expl": "Vrai. Chaque section garde ses lois civiles, mais le droit criminel anglais s'applique partout.",
+     "var": [
+      "Sous l'Acte d'Union, les lois civiles françaises restent en vigueur au Bas-Canada."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Selon l'Acte d'Union, en quelle langue les documents officiels du Parlement doivent-ils être rédigés ?",
+     "options": [
+      "En français seulement",
+      "En anglais seulement",
+      "En français et en anglais",
+      "En latin"
+     ],
+     "bonne": 1,
+     "expl": "Les lois et les documents officiels sont rédigés en anglais seulement : un autre outil d'assimilation. Le français sera de nouveau reconnu au Parlement en 1848.",
+     "var": [
+      "En 1840, quelle langue l'Acte d'Union impose-t-il pour les lois et les documents officiels ?"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "Le gouvernement responsable",
+   "sousTitre": "Leçon 2 · 1841-1849",
+   "consigne": "Réformistes contre conservateurs, la double majorité et la conquête du gouvernement responsable.",
+   "questions": [
+    {
+     "t": "qcm",
+     "q": "Quels deux groupes politiques s'affrontent aux élections de 1841 ?",
+     "options": [
+      "Les Bleus et les Rouges",
+      "Les conservateurs (tories) et les réformistes",
+      "Le Parti patriote et le Parti bureaucrate",
+      "Les Clear Grits et les libéraux-conservateurs"
+     ],
+     "bonne": 1,
+     "expl": "Le Parti patriote n'existe plus depuis les rébellions. Les Rouges n'apparaissent qu'à la fin des années 1840; les Bleus et les Clear Grits, dans les années 1850.",
+     "var": [
+      "Aux premières élections après l'Acte d'Union, quels camps politiques s'opposent ?"
+     ]
+    },
+    {
+     "t": "assoc",
+     "q": "Associe chaque personnage à son rôle.",
+     "paires": [
+      [
+       "Robert Baldwin",
+       "Chef réformiste du Haut-Canada"
+      ],
+      [
+       "Louis-Hippolyte LaFontaine",
+       "Chef réformiste du Bas-Canada"
+      ],
+      [
+       "Lord Elgin",
+       "Gouverneur qui accepte le gouvernement responsable"
+      ]
+     ],
+     "expl": "En 1848, Elgin laisse Baldwin et LaFontaine choisir eux-mêmes les ministres : le pouvoir passe aux élus."
+    },
+    {
+     "t": "qcm",
+     "q": "Comment le gouverneur tente-t-il d'empêcher la victoire des réformistes en 1841 ?",
+     "options": [
+      "En achetant des votes et en découpant la carte électorale à l'avantage des conservateurs",
+      "En abolissant la Chambre d'assemblée",
+      "En interdisant le vote aux Canadiens français",
+      "En reportant les élections de dix ans"
+     ],
+     "bonne": 0,
+     "expl": "Achat de votes, carte électorale truquée, fiers-à-bras aux bureaux de vote : l'effet est inverse, les réformistes se rapprochent et gagnent.",
+     "var": [
+      "Quelles manœuvres le gouverneur utilise-t-il contre les réformistes aux élections de 1841 ?"
+     ]
+    },
+    {
+     "t": "trous",
+     "q": "Pour qu'une loi soit adoptée, une majorité de députés de chaque section doit l'approuver : c'est le principe de la ____.",
+     "options": [
+      "double majorité",
+      "représentation proportionnelle",
+      "responsabilité ministérielle",
+      "union législative"
+     ],
+     "bonne": 0,
+     "expl": "La double majorité empêche qu'une section impose ses lois à l'autre.",
+     "var": [
+      "Une loi n'est adoptée que si elle obtient l'appui de la majorité des députés du Haut-Canada et du Bas-Canada : c'est la ____."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Avec le gouvernement responsable (1848), qu'est-ce qui change ?",
+     "options": [
+      "Les ministres sont choisis parmi les élus du parti majoritaire et doivent garder la confiance de la Chambre",
+      "La colonie dirige désormais ses relations extérieures",
+      "Le gouverneur est élu par la population",
+      "La colonie peut modifier sa constitution seule"
+     ],
+     "bonne": 0,
+     "expl": "Le pouvoir passe du gouverneur au premier ministre et aux ministres. Un gouvernement qui perd la confiance des députés doit démissionner.",
+     "var": [
+      "Qu'apporte de nouveau le gouvernement responsable accordé en 1848 ?"
+     ]
+    },
+    {
+     "t": "vf",
+     "q": "Après 1848, les relations extérieures et la constitution relèvent toujours de Londres.",
+     "bonne": 0,
+     "expl": "Vrai. La colonie obtient l'autonomie en politique intérieure seulement : c'est la part de continuité.",
+     "var": [
+      "Même avec le gouvernement responsable, Londres garde la main sur les relations extérieures et la constitution."
+     ]
+    },
+    {
+     "t": "vf",
+     "q": "La loi d'amnistie accorde le pardon aux personnes qui ont participé aux soulèvements patriotes.",
+     "bonne": 0,
+     "expl": "Vrai. Avec la reconnaissance du français au Parlement, c'est l'une des mesures qui déplaisent aux conservateurs.",
+     "var": [
+      "Les participants aux soulèvements de 1837-1838 obtiennent le pardon grâce à la loi d'amnistie."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Que prévoit la loi d'indemnisation de 1849, défendue par LaFontaine ?",
+     "options": [
+      "Indemniser les victimes des soulèvements au Bas-Canada",
+      "Abolir le régime seigneurial",
+      "Créer des réserves autochtones",
+      "Faire de l'anglais la seule langue officielle"
+     ],
+     "bonne": 0,
+     "expl": "Adoptée en mars 1849 par la majorité réformiste, la loi est sanctionnée par Elgin le 25 avril : il respecte la responsabilité ministérielle.",
+     "var": [
+      "Quel est l'objet de la loi d'indemnisation adoptée en 1849 ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Que change une loi adoptée en 1849 pour les femmes de la Province du Canada ?",
+     "options": [
+      "Elle leur retire le droit de vote",
+      "Elle leur accorde le droit de vote",
+      "Elle leur permet de devenir députées",
+      "Elle leur ouvre l'accès à l'université"
+     ],
+     "bonne": 0,
+     "expl": "Avant 1849, certaines femmes propriétaires pouvaient voter. La loi de 1849 leur retire ce droit; elles ne pouvaient pas non plus être candidates.",
+     "var": [
+      "Quel est l'effet d'une loi de 1849 sur les femmes de la Province du Canada ?"
+     ]
+    },
+    {
+     "t": "ordre",
+     "q": "Remets ces événements dans l'ordre chronologique.",
+     "hint": "Clique du plus ancien au plus récent.",
+     "items": [
+      "Victoire des réformistes aux élections (1841)",
+      "Lord Elgin accepte le gouvernement responsable (1848)",
+      "Adoption de la loi d'indemnisation (mars 1849)",
+      "Incendie du Parlement de Montréal (25 avril 1849)"
+     ],
+     "expl": "Le soir même où Elgin sanctionne la loi d'indemnisation, des impérialistes britanniques incendient le Parlement; le lendemain, ils saccagent la maison de LaFontaine."
+    }
+   ]
+  },
+  {
+   "titre": "L'influence de l'Église catholique",
+   "sousTitre": "Leçon 3 · 1840-1867",
+   "consigne": "Le retour en force du clergé, deux idéologies qui s'affrontent et le nationalisme de survivance.",
+   "questions": [
+    {
+     "t": "qcm",
+     "q": "Pourquoi le clergé catholique gagne-t-il la confiance des autorités britanniques après 1838 ?",
+     "options": [
+      "Il a condamné les rébellions",
+      "Il a financé l'armée britannique",
+      "Il a appuyé les Patriotes",
+      "Il s'est converti au protestantisme"
+     ],
+     "bonne": 0,
+     "expl": "En échange de sa loyauté, l'Église obtient des faveurs, et les autorités profitent de son influence sur la population.",
+     "var": [
+      "Quelle attitude du clergé pendant les rébellions lui vaut ensuite l'appui des autorités britanniques ?"
+     ]
+    },
+    {
+     "t": "trous",
+     "q": "La Loi sur l'instruction publique de 1841 pose les bases du premier système d'écoles ____ du Canada-Uni.",
+     "options": [
+      "publiques",
+      "privées",
+      "anglaises",
+      "militaires"
+     ],
+     "bonne": 0,
+     "expl": "Ce réseau scolaire se développe sur une base confessionnelle : écoles catholiques et protestantes, chacune encadrée par son clergé.",
+     "var": [
+      "En 1841, une loi jette les fondations du premier réseau d'écoles ____ de la Province du Canada."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Devenu évêque de Montréal en 1840, que fait Mgr Ignace Bourget pour renforcer l'Église ?",
+     "options": [
+      "Il recrute en Europe un grand nombre de religieux et de religieuses",
+      "Il fonde l'Institut canadien de Montréal",
+      "Il réclame la séparation de l'Église et de l'État",
+      "Il appuie les rébellions des Patriotes"
+     ],
+     "bonne": 0,
+     "expl": "Sous Mgr Bourget, le nombre de membres du clergé augmente fortement et l'emprise de l'Église s'accroît.",
+     "var": [
+      "Quelle action de Mgr Bourget, évêque de Montréal dès 1840, accroît l'emprise de l'Église ?"
+     ]
+    },
+    {
+     "t": "assoc",
+     "q": "Associe chaque idée à l'idéologie qu'elle représente.",
+     "paires": [
+      [
+       "Le pouvoir de l'Église est supérieur à celui de l'État",
+       "Ultramontanisme"
+      ],
+      [
+       "L'État doit être laïque, séparé de l'Église",
+       "Anticléricalisme"
+      ],
+      [
+       "La survie du peuple passe par la foi, la langue et la vie rurale",
+       "Nationalisme de survivance"
+      ]
+     ],
+     "expl": "Le clergé défend à la fois l'ultramontanisme et le nationalisme de survivance; les anticléricaux s'inspirent des idées libérales."
+    },
+    {
+     "t": "vf",
+     "q": "Les ultramontains veulent que l'Église se limite aux questions religieuses.",
+     "bonne": 1,
+     "expl": "Faux. C'est la position des anticléricaux. Les ultramontains veulent au contraire que l'Église intervienne dans toutes les sphères de la vie.",
+     "var": [
+      "Selon les ultramontains, l'Église ne doit pas intervenir en dehors de la religion."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Qu'est-ce que l'Institut canadien de Montréal, fondé en 1844 ?",
+     "options": [
+      "Une bibliothèque et un lieu de débats où l'on trouve même des livres mis à l'Index",
+      "Un séminaire qui forme les prêtres",
+      "Une école protestante",
+      "Une banque canadienne-française"
+     ],
+     "bonne": 0,
+     "expl": "Des instituts semblables naissent dans une soixantaine de villes : ce sont des foyers des idées libérales.",
+     "var": [
+      "Quelle est la vocation de l'Institut canadien, créé à Montréal en 1844 ?"
+     ]
+    },
+    {
+     "t": "vf",
+     "q": "L'Église catholique veille au respect de l'Index, une liste de livres interdits établie par Rome.",
+     "bonne": 0,
+     "expl": "Vrai. L'Index vient du Saint-Siège; le clergé d'ici le fait respecter, conformément à la soumission ultramontaine au pape.",
+     "var": [
+      "Le clergé d'ici fait respecter l'Index, la liste des livres défendus fixée par le Saint-Siège."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Quel journal diffuse les idées libérales et anticléricales de 1847 à 1852 ?",
+     "options": [
+      "La Minerve",
+      "L'Avenir",
+      "Le Devoir",
+      "La Gazette de Québec"
+     ],
+     "bonne": 1,
+     "expl": "L'Avenir porte la voix des jeunes libéraux. Le Devoir, fondé en 1910, serait un anachronisme.",
+     "var": [
+      "Quel journal de jeunes libéraux paraît à Montréal entre 1847 et 1852 ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "À quoi le nationalisme de survivance répond-il ?",
+     "options": [
+      "À la menace d'assimilation portée par le rapport Durham",
+      "À l'industrialisation des villes",
+      "À la menace des Féniens",
+      "À la fin du traité de réciprocité"
+     ],
+     "bonne": 0,
+     "expl": "Durham décrit les Canadiens français comme un peuple sans histoire ni littérature; en réaction, on mise sur la foi, la langue, les familles nombreuses et la vie rurale.",
+     "var": [
+      "Quelle menace pousse les Canadiens français vers le nationalisme de survivance ?"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "L'économie coloniale et les Premières Nations",
+   "sousTitre": "Leçon 4 · 1840-1866",
+   "consigne": "Agriculture, bois, libre-échange… et les effets du développement sur les Premières Nations.",
+   "questions": [
+    {
+     "t": "qcm",
+     "q": "Quel est le principal produit d'exportation du Bas-Canada au milieu du 19ᵉ siècle ?",
+     "options": [
+      "La fourrure",
+      "Le bois",
+      "Le blé",
+      "La morue"
+     ],
+     "bonne": 1,
+     "expl": "L'industrie forestière est le moteur de l'économie : coupe, flottage, scieries et chantiers navals.",
+     "var": [
+      "Quelle ressource le Bas-Canada exporte-t-il le plus vers le Royaume-Uni au milieu du 19ᵉ siècle ?"
+     ]
+    },
+    {
+     "t": "trous",
+     "q": "Au Bas-Canada, la forte natalité rend les terres agricoles rares et pousse de nombreux jeunes vers les villes : c'est l'____.",
+     "options": [
+      "exode rural",
+      "immigration",
+      "colonisation",
+      "industrialisation"
+     ],
+     "bonne": 0,
+     "expl": "La crise agricole commencée dans les années 1830 persiste; le blé cède la place à des cultures destinées au marché local.",
+     "var": [
+      "Faute de terres disponibles, beaucoup de jeunes du Bas-Canada quittent la campagne pour la ville : c'est l'____."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "En quelle année le régime seigneurial est-il aboli ?",
+     "options": [
+      "1840",
+      "1848",
+      "1854",
+      "1867"
+     ],
+     "bonne": 2,
+     "expl": "Jugé comme un frein au développement, il prend fin en 1854 : les censitaires peuvent racheter leur terre et les seigneurs sont indemnisés.",
+     "var": [
+      "Quand le lien entre seigneurs et censitaires prend-il officiellement fin ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Quelles régions se développent grâce à l'industrie forestière ?",
+     "options": [
+      "L'Outaouais, le Saguenay et la Mauricie",
+      "La Gaspésie, les Îles-de-la-Madeleine et la Côte-Nord",
+      "Les Prairies et la Terre de Rupert",
+      "Les Cantons-de-l'Est et la Beauce seulement"
+     ],
+     "bonne": 0,
+     "expl": "Traversées de grandes rivières pour le flottage du bois, ces régions voient naître villes et villages autour des scieries.",
+     "var": [
+      "Dans quelles régions des villages naissent-ils autour des scieries ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Que recommande la commission Bagot, dont le rapport est remis en 1844 ?",
+     "options": [
+      "Pousser les Autochtones à se sédentariser sur des territoires réservés et placer leurs enfants dans des pensionnats",
+      "Reconnaître les Premières Nations comme alliées militaires",
+      "Rendre aux Premières Nations les territoires forestiers",
+      "Accorder le droit de vote à tous les Autochtones"
+     ],
+     "bonne": 0,
+     "expl": "Ces recommandations visent l'assimilation : le statut d'« Indien » n'est accordé qu'à ceux qui acceptent de vivre dans les territoires réservés.",
+     "var": [
+      "Quelles mesures la commission Bagot propose-t-elle au sujet des Premières Nations ?"
+     ]
+    },
+    {
+     "t": "vf",
+     "q": "Les réserves créées en 1851 exigent que les Autochtones abandonnent le mode de vie nomade et pratiquent l'agriculture.",
+     "bonne": 0,
+     "expl": "Vrai. Supervisées par des communautés religieuses, les réserves doivent assimiler graduellement les Autochtones.",
+     "var": [
+      "Pour vivre dans les réserves de 1851, les Autochtones doivent devenir sédentaires et cultiver la terre."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Que décide le Royaume-Uni en 1846 ?",
+     "options": [
+      "Il abolit les Corn Laws et cesse de protéger le commerce des céréales de ses colonies",
+      "Il impose de nouveaux tarifs sur le bois américain",
+      "Il accorde le gouvernement responsable",
+      "Il signe le traité de réciprocité"
+     ],
+     "bonne": 0,
+     "expl": "Converti au libéralisme économique, Londres adopte le libre-échange : les produits coloniaux perdent leur marché privilégié.",
+     "var": [
+      "Quelle décision de Londres, en 1846, met fin à la protection du commerce colonial ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Que prévoit le traité de réciprocité de 1854 ?",
+     "options": [
+      "La colonie vend son blé et son bois aux États-Unis sans droits de douane; les Américains obtiennent un droit de pêche dans les Maritimes",
+      "Les États-Unis achètent la Terre de Rupert",
+      "Le Canada adopte la monnaie américaine",
+      "Les Américains financent le Grand Tronc"
+     ],
+     "bonne": 0,
+     "expl": "Signé par Londres au nom de ses colonies, il ouvre un vaste marché voisin pendant une décennie.",
+     "var": [
+      "Quel échange le traité de 1854 organise-t-il entre les colonies et les États-Unis ?"
+     ]
+    },
+    {
+     "t": "ordre",
+     "q": "Remets ces étapes de la politique commerciale dans l'ordre.",
+     "hint": "Clique du plus ancien au plus récent.",
+     "items": [
+      "Tarifs préférentiels britanniques (protectionnisme)",
+      "Abolition des Corn Laws (1846)",
+      "Traité de réciprocité avec les États-Unis (1854)",
+      "Fin du traité de réciprocité (1866)"
+     ],
+     "expl": "Chaque perte de marché force la colonie à chercher de nouveaux débouchés, jusqu'à envisager une union politique."
+    }
+   ]
+  },
+  {
+   "titre": "La première phase d'industrialisation",
+   "sousTitre": "Leçon 5 · vers 1850",
+   "consigne": "Immigration transatlantique, vapeur, usines, capitaux et transports.",
+   "questions": [
+    {
+     "t": "qcm",
+     "q": "Pourquoi de nombreux Irlandais émigrent-ils vers l'Amérique du Nord dans les années 1840 ?",
+     "options": [
+      "Une grande famine frappe l'Irlande",
+      "Ils fuient la guerre de Sécession",
+      "Ils sont attirés par l'or de la Terre de Rupert",
+      "Le Royaume-Uni les y oblige par la loi"
+     ],
+     "bonne": 0,
+     "expl": "S'ajoutant au chômage et à la pauvreté causés par la révolution industrielle, la famine pousse des milliers d'Irlandais à partir.",
+     "var": [
+      "Quelle catastrophe pousse les Irlandais à émigrer massivement dans les années 1840 ?"
+     ]
+    },
+    {
+     "t": "trous",
+     "q": "En 1847, une épidémie de ____ fait des milliers de victimes durant la traversée et au poste de quarantaine de Grosse-Île.",
+     "options": [
+      "typhus",
+      "choléra",
+      "variole",
+      "grippe"
+     ],
+     "bonne": 0,
+     "expl": "Affaiblis par la famine, les Irlandais sont particulièrement touchés; l'épidémie se propage jusque dans la colonie.",
+     "var": [
+      "Au poste de quarantaine de Grosse-Île, le ____ emporte des milliers d'immigrants en 1847."
+     ]
+    },
+    {
+     "t": "vf",
+     "q": "Dans les années 1840, la majorité des immigrants britanniques s'établissent au Haut-Canada.",
+     "bonne": 0,
+     "expl": "Vrai. Des terres y sont disponibles. Au Bas-Canada, ils choisissent des lieux déjà anglophones : Montréal, les Cantons-de-l'Est, l'Outaouais…",
+     "var": [
+      "La plupart des immigrants britanniques des années 1840 choisissent de s'installer au Haut-Canada."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Quelle invention permet de mécaniser largement la production ?",
+     "options": [
+      "La machine à vapeur",
+      "L'électricité",
+      "Le moteur à essence",
+      "Le télégraphe"
+     ],
+     "bonne": 0,
+     "expl": "Alimentée au charbon, la machine à vapeur fait tourner les usines. L'électricité appartient à la phase suivante.",
+     "var": [
+      "Quelle machine, alimentée au charbon, fait tourner les premières usines ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Pourquoi les usines s'installent-elles surtout à Montréal et à Toronto ?",
+     "options": [
+      "La main-d'œuvre y est abondante et les transports permettent de joindre les marchés",
+      "Les terres agricoles y sont moins chères",
+      "Le gouvernement y interdit les syndicats",
+      "Les matières premières y sont gratuites"
+     ],
+     "bonne": 0,
+     "expl": "Travailleurs disponibles et infrastructures de transport : les deux conditions de l'industrie urbaine.",
+     "var": [
+      "Qu'est-ce qui attire les usines dans les grandes villes comme Montréal et Toronto ?"
+     ]
+    },
+    {
+     "t": "vf",
+     "q": "Avec la division du travail, chaque ouvrier fabrique un produit du début à la fin.",
+     "bonne": 1,
+     "expl": "Faux. Chacun répète une tâche simple sur une machine; les ouvriers n'ont pas besoin d'être qualifiés et la productivité augmente.",
+     "var": [
+      "Dans une usine qui applique la division du travail, un seul ouvrier réalise toutes les étapes d'un produit."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "D'où provient surtout le capital qui finance l'industrialisation ?",
+     "options": [
+      "De la bourgeoisie d'affaires du Royaume-Uni",
+      "Du clergé catholique",
+      "Des agriculteurs du Bas-Canada",
+      "Du gouvernement de la colonie"
+     ],
+     "bonne": 0,
+     "expl": "Les investisseurs britanniques, avec quelques Canadiens et Américains, contrôlent la production et réinvestissent leurs profits : c'est le capitalisme industriel.",
+     "var": [
+      "Qui investit le plus dans les usines et les moyens de production de la colonie ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Quel avantage le chemin de fer a-t-il sur les canaux ?",
+     "options": [
+      "Il fonctionne toute l'année",
+      "Il coûte moins cher à construire",
+      "Il transporte plus de passagers par voyage",
+      "Il ne nécessite aucun investissement"
+     ],
+     "bonne": 0,
+     "expl": "Les canaux gèlent l'hiver; le train, lui, roule en toute saison.",
+     "var": [
+      "Pourquoi préfère-t-on le train aux canaux pour transporter les marchandises ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Quelle compagnie est fondée en 1852 pour relier Montréal à Toronto, puis aux ports américains ?",
+     "options": [
+      "Le Grand Tronc",
+      "Le Canadien Pacifique",
+      "L'Intercolonial",
+      "La Compagnie de la Baie d'Hudson"
+     ],
+     "bonne": 0,
+     "expl": "Financé surtout par des Britanniques, le Grand Tronc vise Portland et Boston. Le Canadien Pacifique ne viendra que dans les années 1880.",
+     "var": [
+      "Quelle compagnie de chemin de fer voit le jour en 1852 ?"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "Vers la fédération canadienne",
+   "sousTitre": "Leçon 6 · 1851-1864",
+   "consigne": "Problèmes économiques, menaces militaires, paralysie politique : pourquoi faut-il revoir la constitution ?",
+   "questions": [
+    {
+     "t": "qcm",
+     "q": "Pourquoi la fin du traité de réciprocité, en 1866, inquiète-t-elle la bourgeoisie marchande ?",
+     "options": [
+      "La colonie perd l'accès privilégié au grand marché américain",
+      "Les Américains cessent de pêcher dans les Maritimes",
+      "Le Royaume-Uni rétablit ses tarifs",
+      "Le prix du bois augmente trop"
+     ],
+     "bonne": 0,
+     "expl": "Après la fin du protectionnisme britannique (1846), c'est un second marché qui se ferme : on envisage une union politique, plus durable qu'une entente commerciale.",
+     "var": [
+      "Quel problème économique la fin de la réciprocité pose-t-elle en 1866 ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Quelle compagnie menace de faire faillite au début des années 1860 ?",
+     "options": [
+      "Le Grand Tronc",
+      "L'Institut canadien",
+      "La Compagnie des Cent-Associés",
+      "Le Canadien Pacifique"
+     ],
+     "bonne": 0,
+     "expl": "Écrasé par sa dette, le Grand Tronc pousse ses promoteurs vers une union avec les colonies de l'Atlantique, pour mettre les ressources en commun.",
+     "var": [
+      "Quelle compagnie croule sous les dettes au début des années 1860 ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Pourquoi les États du Nord menacent-ils d'envahir les colonies britanniques pendant la guerre de Sécession ?",
+     "options": [
+      "Le Royaume-Uni sympathise avec les États du Sud",
+      "Les colonies refusent de vendre leur blé",
+      "Les colonies abritent les Féniens",
+      "Le Royaume-Uni réclame la Louisiane"
+     ],
+     "bonne": 0,
+     "expl": "S'ajoute la crainte de voir les Américains, en pleine expansion vers l'ouest, s'emparer de la Terre de Rupert.",
+     "var": [
+      "Pendant la guerre de Sécession, pourquoi le Nord se montre-t-il hostile aux colonies britanniques ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Qui sont les Féniens ?",
+     "options": [
+      "Des patriotes irlandais radicaux, installés aux États-Unis, qui attaquent les colonies britanniques",
+      "Des marchands anglais de Montréal",
+      "Des réformistes du Haut-Canada",
+      "Des soldats envoyés par Londres"
+     ],
+     "bonne": 0,
+     "expl": "Entre 1866 et 1871, leurs raids visent à faire pression sur le Royaume-Uni pour l'indépendance de l'Irlande.",
+     "var": [
+      "Qui mène des raids armés contre les colonies britanniques à partir de 1866 ?"
+     ]
+    },
+    {
+     "t": "assoc",
+     "q": "Associe chaque membre de la Grande Coalition à son parti.",
+     "paires": [
+      [
+       "John A. Macdonald",
+       "Parti libéral-conservateur (Haut-Canada)"
+      ],
+      [
+       "George Brown",
+       "Clear Grits (Haut-Canada)"
+      ],
+      [
+       "George-Étienne Cartier",
+       "Parti bleu (Bas-Canada)"
+      ]
+     ],
+     "expl": "Ces trois chefs, pourtant adversaires, s'allient en 1864 pour sortir de la paralysie politique. Le Parti rouge reste à l'écart."
+    },
+    {
+     "t": "trous",
+     "q": "Entre 1854 et 1864, une dizaine de gouvernements se succèdent : c'est l'____ ministérielle.",
+     "options": [
+      "instabilité",
+      "responsabilité",
+      "solidarité",
+      "majorité"
+     ],
+     "bonne": 0,
+     "expl": "Clear Grits et Bleus, souvent majoritaires chacun dans leur section, ont des idées incompatibles : la double majorité devient impossible.",
+     "var": [
+      "Les gouvernements tombent les uns après les autres entre 1854 et 1864 : c'est l'____ ministérielle."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Pourquoi George Brown réclame-t-il la représentation proportionnelle (Rep by Pop) ?",
+     "options": [
+      "Depuis 1851, la population du Haut-Canada dépasse celle du Bas-Canada",
+      "Il veut plus de députés canadiens-français",
+      "Il souhaite abolir la Chambre d'assemblée",
+      "Il veut que Londres nomme les députés"
+     ],
+     "bonne": 0,
+     "expl": "L'immigration britannique a fait croître le Haut-Canada; les députés du Bas-Canada y voient une menace d'assimilation.",
+     "var": [
+      "Quel changement démographique pousse George Brown à réclamer la Rep by Pop ?"
+     ]
+    },
+    {
+     "t": "vf",
+     "q": "Les quatre partis de la Chambre s'unissent dans la Grande Coalition de 1864.",
+     "bonne": 1,
+     "expl": "Faux. Trois partis s'allient (Macdonald, Brown, Cartier); le Parti rouge reste à l'écart.",
+     "var": [
+      "Tous les partis de la Chambre participent à la Grande Coalition de 1864."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "L'Acte de l'Amérique du Nord britannique",
+   "sousTitre": "Leçon 7 · 1864-1867",
+   "consigne": "Des conférences à la naissance du Dominion : étapes, adhésions et partage des pouvoirs.",
+   "questions": [
+    {
+     "t": "ordre",
+     "q": "Remets les étapes menant à la fédération dans l'ordre.",
+     "hint": "Clique du plus ancien au plus récent.",
+     "items": [
+      "Conférence de Charlottetown (septembre 1864)",
+      "Conférence de Québec (octobre 1864)",
+      "Conférence de Londres (1866-1867)",
+      "Entrée en vigueur de l'AANB (1ᵉʳ juillet 1867)"
+     ],
+     "expl": "Charlottetown pose le principe du fédéralisme, Québec en dessine les bases, Londres rédige et approuve la constitution."
+    },
+    {
+     "t": "qcm",
+     "q": "Combien de résolutions sont adoptées à la conférence de Québec ?",
+     "options": [
+      "42",
+      "72",
+      "84",
+      "92"
+     ],
+     "bonne": 1,
+     "expl": "Les 72 résolutions jettent les bases de la constitution : union fédérale centralisée et représentation proportionnelle à la population.",
+     "var": [
+      "Combien de résolutions forment la base de la future constitution, adoptées à Québec en 1864 ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Quelles colonies rejettent le projet et s'en retirent ?",
+     "options": [
+      "Terre-Neuve et l'Île-du-Prince-Édouard",
+      "Le Nouveau-Brunswick et la Nouvelle-Écosse",
+      "L'Ontario et le Québec",
+      "La Colombie-Britannique et le Manitoba"
+     ],
+     "bonne": 0,
+     "expl": "Non reliées au futur chemin de fer, elles n'y voient pas assez d'avantages.",
+     "var": [
+      "Quelles colonies de l'Atlantique refusent d'entrer dans la fédération en 1867 ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Pourquoi le Parti rouge s'oppose-t-il au projet de fédération ?",
+     "options": [
+      "Il placerait les Canadiens français en minorité",
+      "Il coûterait trop cher en chemins de fer",
+      "Il donnerait trop de pouvoir aux provinces",
+      "Il éloignerait le Canada des États-Unis"
+     ],
+     "bonne": 0,
+     "expl": "Les trois autres partis de la Province du Canada appuient le projet.",
+     "var": [
+      "Quelle crainte explique l'opposition du Parti rouge à la fédération ?"
+     ]
+    },
+    {
+     "t": "vf",
+     "q": "Les Autochtones participent aux négociations de la fédération.",
+     "bonne": 1,
+     "expl": "Faux. Ils en sont exclus, alors que la nouvelle constitution confiera les « affaires indiennes » au gouvernement fédéral.",
+     "var": [
+      "Des représentants des Premières Nations sont invités aux conférences qui préparent la fédération."
+     ]
+    },
+    {
+     "t": "assoc",
+     "q": "Associe chaque domaine au palier de gouvernement responsable en 1867.",
+     "paires": [
+      [
+       "Monnaie et banques",
+       "Fédéral"
+      ],
+      [
+       "Éducation",
+       "Provincial"
+      ],
+      [
+       "Immigration et agriculture",
+       "Partagé"
+      ]
+     ],
+     "expl": "Le fédéral gère aussi la défense, le droit criminel et la poste; les provinces, le droit civil, les municipalités et les forêts. Transports et pêcheries sont aussi partagés."
+    },
+    {
+     "t": "qcm",
+     "q": "Que sont les pouvoirs résiduaires ?",
+     "options": [
+      "Les compétences non prévues par la constitution, qui reviennent au fédéral",
+      "Les pouvoirs que Londres conserve",
+      "Les revenus laissés aux provinces",
+      "Le droit d'annuler une loi provinciale"
+     ],
+     "bonne": 0,
+     "expl": "Avec le droit de désaveu (annuler une loi provinciale), ils font de cette fédération une fédération centralisée.",
+     "var": [
+      "Comment définit-on les pouvoirs résiduaires prévus par l'AANB ?"
+     ]
+    },
+    {
+     "t": "trous",
+     "q": "La capitale fédérale du Dominion du Canada est ____.",
+     "options": [
+      "Ottawa",
+      "Québec",
+      "Montréal",
+      "Toronto"
+     ],
+     "bonne": 0,
+     "expl": "Chaque province a aussi sa capitale : Québec pour la province de Québec, Toronto pour l'Ontario.",
+     "var": [
+      "En 1867, le gouvernement fédéral siège à ____."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "En 1867, quel droit civil s'applique au Québec et dans les autres provinces ?",
+     "options": [
+      "Le Québec conserve le droit civil français; les autres provinces appliquent la common law britannique",
+      "Toutes les provinces adoptent le droit civil français",
+      "Toutes les provinces appliquent la common law",
+      "Chaque province rédige un nouveau code en 1867"
+     ],
+     "bonne": 0,
+     "expl": "Le Québec a son Code civil du Bas-Canada depuis 1866. La common law repose sur la jurisprudence plutôt que sur un code. Le droit criminel, lui, est commun et relève du fédéral.",
+     "var": [
+      "Comment le droit civil est-il organisé dans les provinces du Dominion en 1867 ?"
+     ]
+    },
+    {
+     "t": "vf",
+     "q": "Après 1867, le Canada peut modifier sa constitution sans l'accord du Parlement britannique.",
+     "bonne": 1,
+     "expl": "Faux. Toute modification exige l'accord de Londres, qui garde aussi les relations internationales.",
+     "var": [
+      "En 1867, le Parlement canadien peut changer seul la constitution du pays."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Pourquoi les provinces dépendent-elles des subventions fédérales ?",
+     "options": [
+      "Le fédéral perçoit les droits de douane, la principale source de revenus",
+      "Les provinces n'ont pas le droit de percevoir d'argent",
+      "Londres verse tout à Ottawa",
+      "Les provinces refusent de taxer"
+     ],
+     "bonne": 0,
+     "expl": "Les subventions sont accordées surtout selon la population : la répartition des revenus est inégale.",
+     "var": [
+      "Pourquoi le fédéral a-t-il plus de revenus que les provinces après 1867 ?"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "L'épreuve finale",
+   "sousTitre": "Synthèse · 1840-1867",
+   "consigne": "Toute la partie 1. Changements, continuités, causes et conséquences : fais les liens.",
+   "questions": [
+    {
+     "t": "ordre",
+     "q": "Remets ces jalons dans l'ordre.",
+     "hint": "Clique du plus ancien au plus récent.",
+     "items": [
+      "Rapport Durham (1839)",
+      "Acte d'Union (1840)",
+      "Gouvernement responsable (1848)",
+      "Grande Coalition (1864)",
+      "AANB (1867)"
+     ],
+     "expl": "Trois constitutions ou réformes majeures en moins de trente ans : la période est celle d'une autonomie politique qui grandit."
+    },
+    {
+     "t": "assoc",
+     "q": "Associe chaque constitution à la structure qu'elle crée.",
+     "paires": [
+      [
+       "Acte constitutionnel (1791)",
+       "Deux colonies : Haut et Bas-Canada"
+      ],
+      [
+       "Acte d'Union (1840)",
+       "Une union législative"
+      ],
+      [
+       "AANB (1867)",
+       "Une fédération centralisée"
+      ]
+     ],
+     "expl": "On passe de deux colonies séparées à une seule chambre commune, puis à deux paliers de gouvernement."
+    },
+    {
+     "t": "vf",
+     "q": "L'Acte d'Union crée une fédération.",
+     "bonne": 1,
+     "expl": "Faux. Il crée une union législative : une seule chambre pour les deux sections. La fédération vient en 1867.",
+     "var": [
+      "En 1840, la Province du Canada devient une fédération de deux provinces."
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Entre 1840 et 1867, qu'est-ce qui demeure ?",
+     "options": [
+      "Le droit civil français au Bas-Canada, devenu le Québec",
+      "L'union législative",
+      "L'anglais comme seule langue au Parlement",
+      "La double majorité"
+     ],
+     "bonne": 0,
+     "expl": "C'est une continuité : l'AANB maintient le droit civil français au Québec, alors que les autres éléments ont disparu ou changé.",
+     "var": [
+      "Quel élément se maintient de l'Acte d'Union jusqu'à l'AANB ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Quel lien peut-on établir entre l'immigration britannique des années 1840 et la demande de Rep by Pop ?",
+     "options": [
+      "L'immigration fait croître le Haut-Canada, qui finit par dépasser le Bas-Canada en population",
+      "L'immigration vide le Haut-Canada",
+      "Les immigrants réclament la double majorité",
+      "Il n'existe aucun lien entre les deux"
+     ],
+     "bonne": 0,
+     "expl": "Une cause démographique produit une revendication politique : c'est un lien de cause à conséquence.",
+     "var": [
+      "Comment l'immigration britannique contribue-t-elle à la revendication de la Rep by Pop ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Lequel de ces problèmes menant à la fédération est de nature économique ?",
+     "options": [
+      "La fin du traité de réciprocité",
+      "Les raids des Féniens",
+      "L'instabilité ministérielle",
+      "La menace d'invasion américaine"
+     ],
+     "bonne": 0,
+     "expl": "Les Féniens et la menace américaine sont des problèmes de défense; l'instabilité ministérielle est politique.",
+     "var": [
+      "Parmi ces causes de la fédération, laquelle relève de l'économie ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "Pourquoi le système politique de 1840 finit-il par être paralysé ?",
+     "options": [
+      "Les partis majoritaires de chaque section ont des idées incompatibles, et la double majorité devient impossible",
+      "Le gouverneur refuse de convoquer la Chambre",
+      "Les députés sont trop nombreux",
+      "Londres interdit les nouvelles lois"
+     ],
+     "bonne": 0,
+     "expl": "Paralysie, démissions et élections à répétition convainquent les politiciens de revoir la constitution de 1840.",
+     "var": [
+      "Qu'est-ce qui bloque l'adoption des lois dans la Province du Canada après 1854 ?"
+     ]
+    },
+    {
+     "t": "qcm",
+     "q": "En quoi l'abolition des tarifs préférentiels (1846) et la fin de la réciprocité (1866) se ressemblent-elles ?",
+     "options": [
+      "Dans les deux cas, la colonie perd un marché privilégié et doit trouver de nouveaux débouchés",
+      "Dans les deux cas, les exportations augmentent",
+      "Les deux sont décidées par la colonie",
+      "Les deux concernent seulement la pêche"
+     ],
+     "bonne": 0,
+     "expl": "Deux chocs de même nature, qui poussent vers un marché intérieur élargi… et vers la fédération.",
+     "var": [
+      "Quel point commun relie la décision britannique de 1846 et la fin du traité de 1866 ?"
+     ]
+    },
+    {
+     "t": "trous",
+     "q": "En 1867, le Canada est une monarchie ____ : le chef d'État est le souverain britannique, mais c'est le premier ministre qui dirige.",
+     "options": [
+      "constitutionnelle",
+      "absolue",
+      "élective",
+      "de droit divin"
+     ],
+     "bonne": 0,
+     "expl": "Le pouvoir du monarque est encadré par une constitution et par la responsabilité ministérielle.",
+     "var": [
+      "Le Canada de 1867 est une monarchie ____ : un souverain règne, mais le premier ministre gouverne."
+     ]
+    }
+   ]
+  }
+ ]
+};
+
+/* Jeux de la partie 1 (1840-1867) — ligne du temps, schémas à compléter, grand débat. À valider. */
+window.CH1P1_JEUX = {
+ "frise": [
+  {
+   "an": 1840,
+   "t": "Acte d'Union et création du Canada-Uni",
+   "a": "pol"
+  },
+  {
+   "an": 1841,
+   "t": "Alliance des réformistes Baldwin-LaFontaine",
+   "a": "pol"
+  },
+  {
+   "an": 1841,
+   "t": "Loi sur l'instruction publique",
+   "a": "soc"
+  },
+  {
+   "an": 1844,
+   "t": "Rapport de la commission Bagot",
+   "a": "soc"
+  },
+  {
+   "an": 1844,
+   "t": "Fondation de l'Institut canadien de Montréal",
+   "a": "soc"
+  },
+  {
+   "an": 1845,
+   "fin": 1847,
+   "t": "Immigration irlandaise massive",
+   "a": "soc"
+  },
+  {
+   "an": 1846,
+   "t": "Abolition des Corn Laws : le Royaume-Uni adopte le libre-échange",
+   "a": "eco"
+  },
+  {
+   "an": 1847,
+   "t": "Épidémie de typhus à Grosse-Île",
+   "a": "soc"
+  },
+  {
+   "an": 1848,
+   "t": "Obtention du gouvernement responsable",
+   "a": "pol"
+  },
+  {
+   "an": 1849,
+   "m": 3,
+   "t": "Adoption de la loi d'indemnisation",
+   "a": "pol"
+  },
+  {
+   "an": 1849,
+   "m": 4,
+   "t": "Incendie du Parlement de Montréal",
+   "a": "pol"
+  },
+  {
+   "an": 1849,
+   "t": "Retrait du droit de vote aux femmes",
+   "a": "pol"
+  },
+  {
+   "an": 1850,
+   "t": "Début de la première phase d'industrialisation",
+   "a": "eco"
+  },
+  {
+   "an": 1851,
+   "t": "Création de réserves autochtones au Bas-Canada",
+   "a": "ter"
+  },
+  {
+   "an": 1852,
+   "t": "Fondation de la compagnie du Grand Tronc",
+   "a": "eco"
+  },
+  {
+   "an": 1854,
+   "m": 6,
+   "t": "Signature du traité de réciprocité avec les États-Unis",
+   "a": "eco"
+  },
+  {
+   "an": 1854,
+   "m": 12,
+   "t": "Abolition du régime seigneurial",
+   "a": "eco"
+  },
+  {
+   "an": 1854,
+   "fin": 1864,
+   "t": "Période d'instabilité ministérielle",
+   "a": "pol"
+  },
+  {
+   "an": 1864,
+   "m": 6,
+   "t": "Formation de la Grande Coalition",
+   "a": "pol"
+  },
+  {
+   "an": 1864,
+   "m": 9,
+   "t": "Conférence de Charlottetown",
+   "a": "pol"
+  },
+  {
+   "an": 1864,
+   "m": 10,
+   "t": "Conférence de Québec",
+   "a": "pol"
+  },
+  {
+   "an": 1866,
+   "m": 3,
+   "t": "Fin du traité de réciprocité",
+   "a": "eco"
+  },
+  {
+   "an": 1866,
+   "m": 6,
+   "t": "Premiers raids des Féniens",
+   "a": "pol"
+  },
+  {
+   "an": 1866,
+   "m": 12,
+   "fin": 1867,
+   "t": "Conférence de Londres",
+   "a": "pol"
+  },
+  {
+   "an": 1867,
+   "m": 7,
+   "t": "Entrée en vigueur de l'AANB : naissance du Dominion du Canada",
+   "a": "ter"
+  }
+ ],
+ "aspects": {
+  "pol": "Aspect politique",
+  "eco": "Aspect économique",
+  "soc": "Aspect social",
+  "ter": "Aspect territorial"
+ },
+ "schemas": [
+  {
+   "id": "s1",
+   "titre": "Qui gouverne ? 1840 et 1848",
+   "consigne": "Complète les deux structures politiques. Compare-les : où se trouve le changement ?",
+   "w": 760,
+   "h": 430,
+   "noeuds": [
+    {
+     "id": "h1",
+     "x": 40,
+     "y": 6,
+     "w": 300,
+     "h": 26,
+     "titre": "Sous l'Acte d'Union (1840)"
+    },
+    {
+     "id": "h2",
+     "x": 420,
+     "y": 6,
+     "w": 300,
+     "h": 26,
+     "titre": "Avec le gouvernement responsable (1848)"
+    },
+    {
+     "id": "a1",
+     "x": 90,
+     "y": 40,
+     "w": 200,
+     "h": 40,
+     "t": "Reine et Parlement britannique"
+    },
+    {
+     "id": "a2",
+     "x": 470,
+     "y": 40,
+     "w": 200,
+     "h": 40,
+     "t": "Reine et Parlement britannique"
+    },
+    {
+     "id": "b1",
+     "x": 90,
+     "y": 105,
+     "w": 200,
+     "h": 40,
+     "t": "Gouverneur général"
+    },
+    {
+     "id": "b2",
+     "x": 470,
+     "y": 105,
+     "w": 200,
+     "h": 40,
+     "t": "Gouverneur général"
+    },
+    {
+     "id": "c1",
+     "x": 40,
+     "y": 175,
+     "w": 145,
+     "h": 62,
+     "t": "Conseil exécutif",
+     "st": "Nommé par le gouverneur"
+    },
+    {
+     "id": "d1",
+     "x": 195,
+     "y": 175,
+     "w": 145,
+     "h": 62,
+     "t": "Conseil législatif",
+     "s": "Nommé"
+    },
+    {
+     "id": "c2",
+     "x": 420,
+     "y": 175,
+     "w": 145,
+     "h": 62,
+     "t": "Conseil exécutif",
+     "st": "Issu de la majorité élue"
+    },
+    {
+     "id": "d2",
+     "x": 575,
+     "y": 175,
+     "w": 145,
+     "h": 62,
+     "t": "Conseil législatif",
+     "s": "Nommé"
+    },
+    {
+     "id": "e1",
+     "x": 65,
+     "y": 268,
+     "w": 250,
+     "h": 50,
+     "trou": "Chambre d'assemblée",
+     "s": "42 + 42 députés élus"
+    },
+    {
+     "id": "e2",
+     "x": 445,
+     "y": 268,
+     "w": 250,
+     "h": 50,
+     "t": "Chambre d'assemblée",
+     "s": "42 + 42 députés élus"
+    },
+    {
+     "id": "f1",
+     "x": 90,
+     "y": 360,
+     "w": 200,
+     "h": 40,
+     "t": "Population du Canada-Uni"
+    },
+    {
+     "id": "f2",
+     "x": 470,
+     "y": 360,
+     "w": 200,
+     "h": 40,
+     "t": "Population du Canada-Uni"
+    }
+   ],
+   "fleches": [
+    [
+     "a1",
+     "b1"
+    ],
+    [
+     "b1",
+     "c1",
+     "nomme"
+    ],
+    [
+     "b1",
+     "d1"
+    ],
+    [
+     "f1",
+     "e1",
+     "élit"
+    ],
+    [
+     "a2",
+     "b2"
+    ],
+    [
+     "b2",
+     "d2"
+    ],
+    [
+     "f2",
+     "e2",
+     "élit"
+    ],
+    [
+     "e2",
+     "c2",
+     "responsable devant"
+    ]
+   ],
+   "leurres": [
+    "Nommé par Londres",
+    "Chambre des communes"
+   ]
+  },
+  {
+   "id": "s2",
+   "titre": "Le chemin vers l'AANB",
+   "consigne": "Classe les problèmes de la colonie, puis complète les étapes qui mènent à la fédération.",
+   "w": 760,
+   "h": 430,
+   "noeuds": [
+    {
+     "id": "p1",
+     "x": 10,
+     "y": 8,
+     "w": 235,
+     "h": 64,
+     "t": "Problème économique",
+     "st": "Fin du traité de réciprocité"
+    },
+    {
+     "id": "p2",
+     "x": 262,
+     "y": 8,
+     "w": 235,
+     "h": 64,
+     "t": "Problème politique",
+     "st": "Instabilité ministérielle"
+    },
+    {
+     "id": "p3",
+     "x": 515,
+     "y": 8,
+     "w": 235,
+     "h": 64,
+     "t": "Problème de défense",
+     "st": "Menace des Féniens"
+    },
+    {
+     "id": "g",
+     "x": 180,
+     "y": 100,
+     "w": 400,
+     "h": 50,
+     "t": "Grande Coalition · juin 1864",
+     "s": "Macdonald, Brown et Cartier s'allient"
+    },
+    {
+     "id": "k1",
+     "x": 180,
+     "y": 166,
+     "w": 400,
+     "h": 50,
+     "trou": "Conférence de Charlottetown",
+     "s": "Septembre 1864 · accord sur le principe du fédéralisme"
+    },
+    {
+     "id": "k2",
+     "x": 180,
+     "y": 232,
+     "w": 400,
+     "h": 50,
+     "trou": "Conférence de Québec",
+     "s": "Octobre 1864 · adoption des 72 résolutions"
+    },
+    {
+     "id": "k3",
+     "x": 180,
+     "y": 298,
+     "w": 400,
+     "h": 50,
+     "trou": "Conférence de Londres",
+     "s": "1866-1867 · rédaction et approbation de la constitution"
+    },
+    {
+     "id": "z",
+     "x": 180,
+     "y": 364,
+     "w": 400,
+     "h": 50,
+     "t": "AANB · 1ᵉʳ juillet 1867",
+     "s": "Naissance du Dominion du Canada"
+    }
+   ],
+   "fleches": [
+    [
+     "p1",
+     "g"
+    ],
+    [
+     "p2",
+     "g"
+    ],
+    [
+     "p3",
+     "g"
+    ],
+    [
+     "g",
+     "k1"
+    ],
+    [
+     "k1",
+     "k2"
+    ],
+    [
+     "k2",
+     "k3"
+    ],
+    [
+     "k3",
+     "z"
+    ]
+   ],
+   "leurres": [
+    "Rapport Durham",
+    "Abolition du régime seigneurial"
+   ]
+  },
+  {
+   "id": "s3",
+   "titre": "La structure du Dominion en 1867",
+   "consigne": "Place les institutions fédérales créées par l'AANB.",
+   "w": 760,
+   "h": 430,
+   "noeuds": [
+    {
+     "id": "r",
+     "x": 280,
+     "y": 14,
+     "w": 200,
+     "h": 44,
+     "t": "Reine (Royaume-Uni)"
+    },
+    {
+     "id": "gg",
+     "x": 280,
+     "y": 92,
+     "w": 200,
+     "h": 44,
+     "t": "Gouverneur général"
+    },
+    {
+     "id": "cab",
+     "x": 30,
+     "y": 190,
+     "w": 210,
+     "h": 70,
+     "trou": "Cabinet",
+     "s": "Premier ministre et ministres"
+    },
+    {
+     "id": "cc",
+     "x": 280,
+     "y": 190,
+     "w": 210,
+     "h": 70,
+     "trou": "Chambre des communes",
+     "s": "Députés élus"
+    },
+    {
+     "id": "sen",
+     "x": 520,
+     "y": 190,
+     "w": 210,
+     "h": 70,
+     "trou": "Sénat",
+     "s": "Sénateurs nommés"
+    },
+    {
+     "id": "pop",
+     "x": 280,
+     "y": 340,
+     "w": 210,
+     "h": 44,
+     "t": "Population des provinces"
+    }
+   ],
+   "fleches": [
+    [
+     "r",
+     "gg"
+    ],
+    [
+     "gg",
+     "sen",
+     "nomme"
+    ],
+    [
+     "pop",
+     "cc",
+     "élit"
+    ],
+    [
+     "cc",
+     "cab",
+     "issu de"
+    ]
+   ],
+   "leurres": [
+    "Chambre d'assemblée",
+    "Conseil exécutif"
+   ]
+  },
+  {
+   "id": "s4",
+   "titre": "Le partage des compétences",
+   "consigne": "Range chaque domaine dans la bonne colonne, selon l'AANB de 1867.",
+   "w": 760,
+   "h": 400,
+   "noeuds": [
+    {
+     "id": "t1",
+     "x": 20,
+     "y": 10,
+     "w": 230,
+     "h": 34,
+     "titre": "Fédéral"
+    },
+    {
+     "id": "t2",
+     "x": 265,
+     "y": 10,
+     "w": 230,
+     "h": 34,
+     "titre": "Provincial"
+    },
+    {
+     "id": "t3",
+     "x": 510,
+     "y": 10,
+     "w": 230,
+     "h": 34,
+     "titre": "Partagé"
+    },
+    {
+     "id": "f1",
+     "x": 20,
+     "y": 60,
+     "w": 230,
+     "h": 58,
+     "t": "Défense"
+    },
+    {
+     "id": "f2",
+     "x": 20,
+     "y": 130,
+     "w": 230,
+     "h": 58,
+     "trou": "Droit criminel"
+    },
+    {
+     "id": "f3",
+     "x": 20,
+     "y": 200,
+     "w": 230,
+     "h": 58,
+     "trou": "Monnaie et banques"
+    },
+    {
+     "id": "f4",
+     "x": 20,
+     "y": 270,
+     "w": 230,
+     "h": 58,
+     "t": "Poste"
+    },
+    {
+     "id": "v1",
+     "x": 265,
+     "y": 60,
+     "w": 230,
+     "h": 58,
+     "trou": "Éducation"
+    },
+    {
+     "id": "v2",
+     "x": 265,
+     "y": 130,
+     "w": 230,
+     "h": 58,
+     "t": "Droit civil"
+    },
+    {
+     "id": "v3",
+     "x": 265,
+     "y": 200,
+     "w": 230,
+     "h": 58,
+     "t": "Municipalités"
+    },
+    {
+     "id": "v4",
+     "x": 265,
+     "y": 270,
+     "w": 230,
+     "h": 58,
+     "trou": "Forêts"
+    },
+    {
+     "id": "m1",
+     "x": 510,
+     "y": 60,
+     "w": 230,
+     "h": 58,
+     "t": "Immigration"
+    },
+    {
+     "id": "m2",
+     "x": 510,
+     "y": 130,
+     "w": 230,
+     "h": 58,
+     "trou": "Agriculture"
+    },
+    {
+     "id": "m3",
+     "x": 510,
+     "y": 200,
+     "w": 230,
+     "h": 58,
+     "t": "Transports"
+    },
+    {
+     "id": "m4",
+     "x": 510,
+     "y": 270,
+     "w": 230,
+     "h": 58,
+     "trou": "Pêcheries"
+    }
+   ],
+   "fleches": [],
+   "leurres": [
+    "Relations internationales"
+   ]
+  },
+  {
+   "id": "s5",
+   "titre": "L'économie coloniale : des marchés qui se ferment",
+   "consigne": "Complète la chaîne de causes et de conséquences.",
+   "w": 760,
+   "h": 400,
+   "noeuds": [
+    {
+     "id": "e1",
+     "x": 20,
+     "y": 40,
+     "w": 220,
+     "h": 90,
+     "t": "Protectionnisme",
+     "s": "Tarifs préférentiels britanniques"
+    },
+    {
+     "id": "e2",
+     "x": 270,
+     "y": 40,
+     "w": 220,
+     "h": 90,
+     "t": "1846",
+     "st": "Abolition des Corn Laws"
+    },
+    {
+     "id": "e3",
+     "x": 520,
+     "y": 40,
+     "w": 220,
+     "h": 90,
+     "t": "Conséquence",
+     "s": "Les exportations vers la métropole diminuent"
+    },
+    {
+     "id": "e4",
+     "x": 20,
+     "y": 230,
+     "w": 220,
+     "h": 90,
+     "t": "1854",
+     "st": "Traité de réciprocité"
+    },
+    {
+     "id": "e5",
+     "x": 270,
+     "y": 230,
+     "w": 220,
+     "h": 90,
+     "t": "1866",
+     "st": "Fin du traité de réciprocité"
+    },
+    {
+     "id": "e6",
+     "x": 520,
+     "y": 230,
+     "w": 220,
+     "h": 90,
+     "t": "Solution envisagée",
+     "st": "Union politique des colonies"
+    }
+   ],
+   "fleches": [
+    [
+     "e1",
+     "e2"
+    ],
+    [
+     "e2",
+     "e3"
+    ],
+    [
+     "e3",
+     "e4",
+     "nouveau partenaire"
+    ],
+    [
+     "e4",
+     "e5"
+    ],
+    [
+     "e5",
+     "e6"
+    ]
+   ],
+   "leurres": [
+    "Abolition du régime seigneurial"
+   ]
+  },
+  {
+   "id": "s6",
+   "titre": "Deux idéologies qui s'affrontent",
+   "consigne": "Complète le tableau comparatif.",
+   "w": 760,
+   "h": 400,
+   "noeuds": [
+    {
+     "id": "h1",
+     "x": 200,
+     "y": 10,
+     "w": 270,
+     "h": 36,
+     "titre": "Ultramontanisme"
+    },
+    {
+     "id": "h2",
+     "x": 480,
+     "y": 10,
+     "w": 270,
+     "h": 36,
+     "titre": "Anticléricalisme"
+    },
+    {
+     "id": "l1",
+     "x": 10,
+     "y": 58,
+     "w": 180,
+     "h": 70,
+     "t": "Église et État"
+    },
+    {
+     "id": "l2",
+     "x": 10,
+     "y": 138,
+     "w": 180,
+     "h": 70,
+     "t": "Rôle de l'Église"
+    },
+    {
+     "id": "l3",
+     "x": 10,
+     "y": 218,
+     "w": 180,
+     "h": 70,
+     "t": "Lieux et publications"
+    },
+    {
+     "id": "l4",
+     "x": 10,
+     "y": 298,
+     "w": 180,
+     "h": 70,
+     "t": "Défenseurs"
+    },
+    {
+     "id": "u1",
+     "x": 200,
+     "y": 58,
+     "w": 270,
+     "h": 70,
+     "trou": "L'Église au-dessus de l'État"
+    },
+    {
+     "id": "a1",
+     "x": 480,
+     "y": 58,
+     "w": 270,
+     "h": 70,
+     "trou": "Séparation de l'Église et de l'État"
+    },
+    {
+     "id": "u2",
+     "x": 200,
+     "y": 138,
+     "w": 270,
+     "h": 70,
+     "t": "Présente partout : éducation, santé, politique"
+    },
+    {
+     "id": "a2",
+     "x": 480,
+     "y": 138,
+     "w": 270,
+     "h": 70,
+     "t": "Limitée aux questions religieuses"
+    },
+    {
+     "id": "u3",
+     "x": 200,
+     "y": 218,
+     "w": 270,
+     "h": 70,
+     "trou": "L'Index des livres interdits"
+    },
+    {
+     "id": "a3",
+     "x": 480,
+     "y": 218,
+     "w": 270,
+     "h": 70,
+     "trou": "L'Institut canadien et L'Avenir"
+    },
+    {
+     "id": "u4",
+     "x": 200,
+     "y": 298,
+     "w": 270,
+     "h": 70,
+     "t": "Le clergé, dont Mgr Bourget"
+    },
+    {
+     "id": "a4",
+     "x": 480,
+     "y": 298,
+     "w": 270,
+     "h": 70,
+     "t": "Les libéraux, dont les Rouges"
+    }
+   ],
+   "fleches": [],
+   "leurres": [
+    "Le nationalisme de survivance"
+   ]
+  }
+ ],
+ "debat": {
+  "titre": "Le grand débat de 1865",
+  "contexte": "Québec, février-mars 1865. Au Parlement de la Province du Canada, les députés débattent du projet de fédération issu de la conférence de Québec. Deux chefs canadiens-français s'affrontent : George-Étienne Cartier, chef du Parti bleu et membre de la Grande Coalition, défend le projet; Antoine-Aimé Dorion, chef du Parti rouge, le combat.",
+  "note": "Les répliques sont des reconstitutions : elles résument fidèlement les positions défendues, sans reprendre les mots exacts des débats.",
+  "camps": {
+   "cartier": "George-Étienne Cartier · Parti bleu · pour la fédération",
+   "dorion": "Antoine-Aimé Dorion · Parti rouge · contre le projet",
+   "ana": "Personne en 1865 : anachronisme"
+  },
+  "repliques": [
+   {
+    "r": "Dans une fédération, le Bas-Canada aura son propre gouvernement pour protéger sa langue, sa religion et ses lois civiles.",
+    "c": "cartier",
+    "why": "Argument central de Cartier : l'éducation et le droit civil relèveront des provinces, donc d'un gouvernement majoritairement canadien-français au Québec."
+   },
+   {
+    "r": "Dans un Parlement fédéral élu selon la population, les Canadiens français seront toujours en minorité.",
+    "c": "dorion",
+    "why": "C'est la principale crainte du Parti rouge : la représentation proportionnelle place les Canadiens français en minorité au fédéral."
+   },
+   {
+    "r": "Unies, les colonies pourront financer ensemble le chemin de fer intercolonial et ouvrir un vaste marché intérieur.",
+    "c": "cartier",
+    "why": "Cartier, proche du milieu ferroviaire, présente la fédération comme une solution économique après la fin de la réciprocité."
+   },
+   {
+    "r": "Ce projet est trop centralisé : le gouvernement fédéral pourra même désavouer les lois de notre province.",
+    "c": "dorion",
+    "why": "Dorion dénonce le droit de désaveu et les pouvoirs résiduaires, qui donnent le dernier mot au fédéral."
+   },
+   {
+    "r": "Seules, nos colonies ne résisteront pas aux ambitions des États-Unis; ensemble, elles pourront se défendre.",
+    "c": "cartier",
+    "why": "La menace américaine et les raids des Féniens font de la défense commune un argument fort pour le projet."
+   },
+   {
+    "r": "Un changement aussi grave doit être soumis au peuple avant d'être adopté.",
+    "c": "dorion",
+    "why": "Les Rouges réclament que la population se prononce; le projet est adopté par les députés sans consultation populaire."
+   },
+   {
+    "r": "La représentation selon la population ne me fait pas peur : à Québec, nous aurons notre propre Assemblée où nous serons majoritaires.",
+    "c": "cartier",
+    "why": "Cartier accepte la Rep by Pop au fédéral parce que la province de Québec garantira une majorité canadienne-française."
+   },
+   {
+    "r": "On veut surtout sauver le Grand Tronc de la faillite avec l'argent des contribuables.",
+    "c": "dorion",
+    "why": "Les adversaires du projet accusent ses promoteurs de servir les intérêts de la compagnie endettée."
+   },
+   {
+    "r": "Grâce à la Charte canadienne des droits et libertés, nos droits seront protégés dans la nouvelle fédération.",
+    "c": "ana",
+    "why": "Anachronisme : la Charte canadienne des droits et libertés date de 1982."
+   },
+   {
+    "r": "Le Sénat, dont les membres sont nommés, n'a rien de démocratique.",
+    "c": "dorion",
+    "why": "Les Rouges, libéraux et démocrates, se méfient d'une chambre non élue."
+   },
+   {
+    "r": "Le Canadien Pacifique relie déjà l'Atlantique au Pacifique : profitons-en.",
+    "c": "ana",
+    "why": "Anachronisme : le chemin de fer transcontinental du Canadien Pacifique n'est achevé qu'en 1885."
+   },
+   {
+    "r": "Nous formerons une nation politique où chaque peuple gardera sa langue et sa foi.",
+    "c": "cartier",
+    "why": "Cartier défend l'idée d'une « nationalité politique » commune qui respecte les différences culturelles."
+   }
+  ]
+ }
+};
+
+window.CH1P1_FICHES = [{"titre": "L'Acte d'Union", "dates": "1839-1840", "blocs": [["Le rapport Durham (1839)", ["Après les rébellions de 1837-1838, Lord Durham est nommé gouverneur et enquête sur leurs causes.", "Il relève deux problèmes : le conflit entre Canadiens français et Britanniques, et un pouvoir concentré entre les mains du gouverneur et des conseils nommés.", "Il ajoute un argument économique : endetté par ses canaux, le Haut-Canada gagnerait à partager ses finances avec le Bas-Canada."]], ["Les solutions proposées", ["Unir les deux Canadas et favoriser une forte immigration britannique pour assimiler les Canadiens français.", "Accorder la responsabilité ministérielle, que Londres refuse pour garder le contrôle de la colonie."]], ["L'Acte d'Union (1840)", ["C'est la 4ᵉ constitution. Le Haut et le Bas-Canada forment la Province du Canada (Canada-Uni) : le Canada-Ouest et le Canada-Est.", "Union législative : une seule Chambre d'assemblée, un seul Conseil législatif, un seul Conseil exécutif.", "84 députés, 42 par section, alors que le Bas-Canada est plus peuplé : il est sous-représenté et les Canadiens français deviennent minoritaires.", "Les dettes sont fusionnées. Les lois civiles françaises restent au Bas-Canada, le droit criminel anglais s'applique partout, et les documents officiels sont rédigés en anglais seulement."]]]}, {"titre": "Le gouvernement responsable", "dates": "1841-1849", "blocs": [["Les élections de 1841", ["Deux camps s'affrontent : les conservateurs (tories), qui défendent le statu quo, et les réformistes, qui veulent un gouvernement responsable.", "Le gouverneur tente de truquer le vote (achat de votes, carte électorale, fiers-à-bras), mais les réformistes l'emportent."]], ["L'alliance Baldwin-LaFontaine", ["Robert Baldwin (Haut-Canada) et Louis-Hippolyte LaFontaine (Bas-Canada) s'allient.", "Ils appliquent la double majorité : une loi doit être appuyée par une majorité de députés de chaque section."]], ["Le gouvernement responsable (1848)", ["Lord Elgin laisse les réformistes choisir les ministres parmi les élus du parti majoritaire.", "Changement : le pouvoir passe au premier ministre et aux ministres, qui doivent garder la confiance de la Chambre.", "Continuité : les relations extérieures et la constitution relèvent toujours de Londres."]], ["Les lois de 1848-1849", ["Le français est de nouveau reconnu au Parlement, et une loi d'amnistie pardonne aux Patriotes.", "La loi d'indemnisation des victimes des soulèvements est sanctionnée le 25 avril 1849 : le soir même, des émeutiers incendient le Parlement de Montréal.", "En 1849, une loi retire le droit de vote aux femmes."]]]}, {"titre": "L'influence de l'Église catholique", "dates": "1840-1867", "blocs": [["Le retour en force de l'Église", ["Le clergé a condamné les rébellions : il gagne la confiance des autorités britanniques.", "La Loi sur l'instruction publique de 1841 pose les bases du premier système d'écoles publiques, organisé selon la religion.", "Mgr Ignace Bourget, évêque de Montréal dès 1840, recrute en Europe de nombreux religieux et religieuses."]], ["Deux idéologies qui s'opposent", ["L'ultramontanisme : l'Église est au-dessus de l'État, fidèle au pape, présente dans toutes les sphères de la vie; elle fait respecter l'Index, la liste des livres interdits établie par Rome.", "L'anticléricalisme : l'État doit être laïque et l'Église se limiter à la religion. Ses foyers : l'Institut canadien de Montréal (1844) et le journal L'Avenir (1847-1852)."]], ["Le nationalisme de survivance", ["En réaction à la menace d'assimilation du rapport Durham, la survie du peuple canadien-français repose sur la foi, la langue, les familles nombreuses et la vie rurale.", "Le clergé s'en fait le principal défenseur."]]]}, {"titre": "L'économie coloniale et les Premières Nations", "dates": "1840-1866", "blocs": [["L'agriculture", ["Le Haut-Canada exporte ses céréales vers le Royaume-Uni; au Bas-Canada, la crise agricole persiste.", "La forte natalité rend les terres rares : c'est l'exode rural.", "Le régime seigneurial est aboli en 1854."]], ["L'industrie forestière", ["Le bois est le principal produit d'exportation du Bas-Canada, et le port de Québec est l'un des plus grands d'Amérique du Nord.", "L'Outaouais, le Saguenay et la Mauricie se développent autour des scieries."]], ["Les effets sur les Premières Nations", ["Privées de leur rôle d'alliées dans le commerce des fourrures, elles voient leurs territoires reculer devant la coupe forestière et la colonisation.", "La commission Bagot (rapport en 1844) recommande la sédentarisation dans des territoires réservés et des pensionnats pour assimiler les enfants.", "En 1851, une loi crée des réserves au Bas-Canada, à condition d'abandonner le nomadisme et de pratiquer l'agriculture."]], ["Du protectionnisme à la réciprocité", ["En 1846, le Royaume-Uni abolit les Corn Laws et adopte le libre-échange : les produits coloniaux perdent leur marché privilégié.", "En 1854, le traité de réciprocité ouvre le marché américain au blé et au bois; il prend fin en 1866."]]]}, {"titre": "La première phase d'industrialisation", "dates": "vers 1850", "blocs": [["L'immigration transatlantique", ["Chômage, pauvreté et famine en Irlande poussent des milliers de Britanniques à émigrer.", "En 1847, le typhus fait des milliers de victimes, notamment au poste de quarantaine de Grosse-Île.", "La plupart s'établissent au Haut-Canada; au Bas-Canada, ils choisissent des lieux déjà anglophones."]], ["L'industrialisation", ["La machine à vapeur mécanise la production; les usines s'installent à Montréal et à Toronto, où se trouvent la main-d'œuvre et les transports.", "La division du travail confie à chaque ouvrier une tâche simple et répétitive : la productivité augmente.", "Secteurs : alimentation, tabac, cuir, textile, bois de sciage, fer et acier.", "Capitalisme industriel : les capitaux viennent surtout de la bourgeoisie d'affaires britannique."]], ["Les transports", ["On agrandit les canaux (Lachine, Welland) et on modernise les ports.", "Le chemin de fer fonctionne toute l'année. Le Grand Tronc, fondé en 1852, relie Montréal à Toronto puis aux ports américains."]]]}, {"titre": "Vers la fédération canadienne", "dates": "1851-1864", "blocs": [["Des problèmes économiques", ["La fin du traité de réciprocité (1866) ferme un grand marché : on envisage une union politique, plus durable qu'une entente commerciale.", "Le Grand Tronc, lourdement endetté, menace de faire faillite."]], ["Des problèmes de défense", ["Londres demande à ses colonies d'assurer elles-mêmes leur défense.", "Les États-Unis inquiètent : expansion vers l'ouest et hostilité du Nord pendant la guerre de Sécession.", "Les Féniens, patriotes irlandais installés aux États-Unis, attaquent les colonies de 1866 à 1871."]], ["Des problèmes politiques", ["Les partis se transforment : libéraux-conservateurs (Macdonald) et Clear Grits (Brown) au Haut-Canada, Bleus (Cartier) et Rouges au Bas-Canada.", "Clear Grits et Bleus sont incompatibles : la double majorité devient impossible et une dizaine de gouvernements se succèdent de 1854 à 1864.", "Depuis 1851, le Haut-Canada est plus peuplé : George Brown réclame la représentation proportionnelle (Rep by Pop)."]], ["La Grande Coalition (1864)", ["Macdonald, Brown et Cartier s'allient pour réformer la constitution de 1840; le Parti rouge reste à l'écart."]]]}, {"titre": "L'Acte de l'Amérique du Nord britannique", "dates": "1864-1867", "blocs": [["Les conférences", ["Charlottetown (septembre 1864) : les colonies s'entendent sur le principe du fédéralisme et d'un chemin de fer intercolonial.", "Québec (octobre 1864) : union fédérale centralisée, représentation selon la population, adoption des 72 résolutions.", "Le Parti rouge s'oppose au projet; la Nouvelle-Écosse et le Nouveau-Brunswick l'acceptent contre la promesse de l'Intercolonial; Terre-Neuve et l'Île-du-Prince-Édouard se retirent. Les Autochtones sont exclus des négociations.", "Londres (1866-1867) : la constitution est rédigée puis approuvée par le Parlement britannique."]], ["Le Dominion du Canada (1ᵉʳ juillet 1867)", ["Quatre provinces : Ontario, Québec, Nouveau-Brunswick et Nouvelle-Écosse. Capitale fédérale : Ottawa.", "Le Royaume-Uni garde les relations internationales et le pouvoir de modifier la constitution. Le monarque britannique reste chef d'État, mais le premier ministre dirige : c'est une monarchie constitutionnelle."]], ["Le fédéralisme canadien", ["Deux paliers de gouvernement, chacun dans ses champs de compétence : au fédéral la défense, le droit criminel, la monnaie, la poste; aux provinces l'éducation, le droit civil, les municipalités, les forêts; partagés : immigration, agriculture, transports, pêcheries.", "Le fédéral détient le droit de désaveu et les pouvoirs résiduaires.", "Le Québec conserve le droit civil français; les autres provinces appliquent la common law.", "Grâce aux droits de douane, le fédéral a plus de revenus; les provinces dépendent de ses subventions."]]]}];
+</script>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const melange=a=>{const c=[...a];for(let i=c.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[c[i],c[j]]=[c[j],c[i]];}return c;};
+const NIV=window.CH1P1_DATA.niveaux, JX=window.CH1P1_JEUX, FICHES=window.CH1P1_FICHES;
+const OBJECTIF=1000;
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3200);}
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+/* =================== État =================== */
+const etat={v:1,prenom:"",nom:"",num:"",sceau:{l:"italique",e:"marine",m:"fleur"},pts:0,
+ et:{},qok:{},frise:{m1:[],m2:[],m3:[]},sch:{},deb:{fait:false,ok:[]},err:[0,0,0,0,0,0,0,0],prem:{qz:0,qt:0},est:[],vis:[]};
+let modifie=false;
+function sauveDirty(){modifie=true;}
+window.addEventListener("beforeunload",e=>{if(modifie&&etat.pts>0){e.preventDefault();e.returnValue="";}});
+
+/* =================== Sceau =================== */
+const ENCRES={marine:"#27335a",bordeaux:"#6b2319",vert:"#2f4f3a",sepia:"#5c4430"};
+const FLEUR_D="M2309 1622v-129h-115c0-66 32-130 66-150 20-17 65-25 104-5 51 29 54 113 28 151 243-45 219-280 136-365-67-69-140-79-196-58-128 46-214 199-218 427h-67c0-207 36-273 130-534 48-123 19-275-65-415-31-50-69-95-112-144-43 49-81 94-112 144-84 140-113 292-65 415 94 261 130 327 130 534h-67c-4-228-90-381-218-427-56-21-129-11-196 58-83 85-107 320 136 365-26-38-23-122 28-151 39-20 84-12 104 5 34 20 66 84 66 150h-115v129h239c-3 67-39 119-106 148 8 28 49 85 105 81 11 60 21 94 71 149 50-55 60-89 71-149 56 4 97-53 105-81-67-29-103-81-106-148z", ERABLE_D="M4890 4430l-45-863a95 95 0 0 1 111-98l859 151-116-320a65 65 0 0 1 20-73l941-762-212-99a65 65 0 0 1-34-79l186-572-542 115a65 65 0 0 1-73-38l-105-247-423 454a65 65 0 0 1-111-57l204-1052-327 189a65 65 0 0 1-91-27l-332-652-332 652a65 65 0 0 1-91 27l-327-189 204 1052a65 65 0 0 1-111 57l-423-454-105 247a65 65 0 0 1-73 38l-542-115 186 572a65 65 0 0 1-34 79l-212 99 941 762a65 65 0 0 1 20 73l-116 320 859-151a95 95 0 0 1 111 98l-45 863z";
+const EMBLEMES={
+ fleur:{nom:"Fleur de lys",svg:c=>`<path d="${FLEUR_D}" transform="scale(.047) translate(-2000,-1200)" fill="${c}"/>`},
+ erable:{nom:"Feuille d'érable",svg:c=>`<path d="${ERABLE_D}" transform="scale(.0174) translate(-4800,-2415)" fill="${c}"/>`},
+ locomotive:{nom:"Locomotive",svg:c=>`<g fill="none" stroke="${c}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" transform="translate(2,2) scale(1.2)"><path d="M-16,-7 L14,-7 Q17,-7 17,-4 L17,3 L-16,3 Z"/><path d="M-6,-7 L-6,3 M4,-7 L4,3"/><path d="M9,-7 L9,-17 M14,-7 L14,-17 M7,-19 L16,-19 L14,-17 L9,-17 Z"/><path d="M-27,3 L-27,-15 L-15,-15 L-15,3 M-29,-15 L-13,-15 M-24,-11 L-18,-11 L-18,-5 L-24,-5 Z"/><path d="M17,3 L24,11 L17,11"/><path d="M-30,11 L24,11"/><circle cx="-10" cy="5.5" r="5.5"/><circle cx="3" cy="5.5" r="5.5"/><circle cx="13" cy="8" r="3"/><circle cx="-22" cy="8" r="3"/><path d="M12,-21 Q8,-26 12,-30 Q17,-33 14,-38" stroke-width="1.1"/></g>`},
+ vapeur:{nom:"Bateau à vapeur",svg:c=>`<g fill="none" stroke="${c}" stroke-width="1.35" stroke-linejoin="round" stroke-linecap="round" transform="translate(1,4) scale(1.12)"><path d="M-31,6 L29,6 Q27,13 20,14 L-26,14 Q-31,11 -31,6 Z" fill="${c}" fill-opacity=".35"/><path d="M-25,6 L-25,-2 L21,-2 L21,6"/><path d="M-17,-2 L-17,-8 L13,-8 L13,-2"/><path d="M-12,6 A10,10 0 0 1 8,6 Z" fill="${c}" fill-opacity=".25"/><path d="M-2,6 L-2,-4 M-2,6 L-8.6,-1 M-2,6 L4.6,-1"/><path d="M3,-8 L3,-30 M8,-8 L8,-30 M1.5,-30 L9.5,-30"/><path d="M-26,-2 L-26,-15 M-26,-15 L-18,-13 L-26,-11"/><path d="M6,-34 Q2,-39 7,-42 Q13,-45 10,-50"/><path d="M-35,18 Q-29,15 -23,18 T-11,18 T1,18 T13,18 T25,18 T37,18" stroke-width="1"/></g>`},
+ castor:{nom:"Castor de 1851",min:500,svg:c=>`<g transform="translate(0,-2) scale(1.12)" fill="${c}"><path d="M-18,4 C-20,-8 -6,-14 6,-12 C14,-11 18,-7 20,-3 C24,-5 28,-3 28,0 C28,3 24,5 20,5 C16,8 8,9 0,8 C-8,8 -16,8 -18,4 Z"/><path d="M-17,3 C-26,1 -33,5 -33,10 C-31,14 -24,12 -17,7 Z"/><circle cx="19" cy="-6" r="2"/><rect x="-34" y="11" width="66" height="4" rx="2"/></g>`},
+ aucun:{nom:"Sans emblème",svg:()=>""}
+};
+function rosace(R,a,m,n){let d="";for(let k=0;k<n;k++){const ph=2*Math.PI*k/n;let p=[];for(let t=0;t<=360;t+=4){const th=t*Math.PI/180,r=R+a*Math.sin(m*th+ph);p.push((r*Math.cos(th)).toFixed(1)+","+(r*Math.sin(th)).toFixed(1));}d+="M"+p.join(" L")+" Z ";}return d;}
+const ROSACES={};
+function initiales(){const i=s=>(s||"").trim().charAt(0).toUpperCase()||"?";return [i(etat.prenom),i(etat.nom)];}
+let uid=0;
+function sceauSVG(cfg,taille,vieux){
+ const c=ENCRES[cfg.e]||ENCRES.marine, [a,b]=initiales(), id="s"+(uid++);
+ const orn={italique:16,romain:12,gras:20}[cfg.l]||16; const k="r"+orn;
+ if(!ROSACES[k])ROSACES[k]=rosace(66,5,orn,22);
+ const halo=`stroke="#e8d9b3" stroke-width="4" stroke-linejoin="round" paint-order="stroke"`;
+ let lettres;
+ if(cfg.l==="romain") lettres=`<text y="12" text-anchor="middle" font-family="EB Garamond,serif" font-size="33" letter-spacing="3" fill="${c}" ${halo}>${a}·${b}</text>`;
+ else if(cfg.l==="gras") lettres=`<text y="15" text-anchor="middle" font-family="EB Garamond,serif" font-weight="700" font-size="40" fill="${c}" ${halo}>${a}${b}</text>`;
+ else lettres=`<text y="14" text-anchor="middle" font-family="EB Garamond,serif" font-style="italic" font-size="44" fill="${c}" ${halo}>${a}<tspan dx="-5" dy="-2" font-size="37">${b}</tspan></text>`;
+ const emb=(EMBLEMES[cfg.m]||EMBLEMES.aucun).svg(c);
+ return `<svg viewBox="-72 -72 144 144" width="${taille}" height="${taille}" role="img" aria-label="Sceau ${a}${b}"><defs><clipPath id="c${id}"><circle r="41"/></clipPath><path id="b${id}" d="M-51,0 A51,51 0 1 1 51,0 A51,51 0 1 1 -51,0"/></defs><g ${vieux?'filter="url(#vieux)"':''}>
+ <g stroke="${c}" fill="none" stroke-width=".42" opacity=".55"><path d="${ROSACES[k]}"/></g>
+ <circle r="57" fill="#e8d9b3"/><circle r="57" fill="none" stroke="${c}" stroke-width="1.3"/>
+ <text font-family="EB Garamond,serif" font-size="7.6" letter-spacing="1.6" fill="${c}"><textPath href="#b${id}">PROVINCE DU CANADA ❖ LES ROUTES DE L'HISTOIRE ❖ 1840 ❖</textPath></text>
+ <circle r="47" fill="#e8d9b3"/><g clip-path="url(#c${id})" opacity=".2">${emb}</g>
+ <circle r="47" fill="none" stroke="${c}" stroke-width="1.2"/><circle r="42" fill="none" stroke="${c}" stroke-width=".45"/>${lettres}</g></svg>`;
+}
+function majSceaux(){document.querySelectorAll(".mini-sceau").forEach(e=>{e.innerHTML=sceauSVG(etat.sceau,44,false);});}
+function majPoints(n){
+ if(n){etat.pts+=n;sauveDirty();}
+ document.querySelectorAll(".pts").forEach(e=>e.textContent=etat.pts);
+ majVoie();verifieEstampes();
+}
+
+/* =================== Couverture =================== */
+function couvertureSVG(){return `<svg viewBox="0 0 430 600"><rect width="430" height="600" fill="#161d45" filter="url(#cuir)"/>
+<rect width="430" height="600" fill="url(#usureC)"/><defs><radialGradient id="usureC" cx=".5" cy=".45" r=".78"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></radialGradient></defs>
+<g filter="url(#dorure)" fill="url(#or)"><rect x="32" y="32" width="366" height="536" rx="3" fill="none" stroke="url(#or)" stroke-width="1.7"/><rect x="39" y="39" width="352" height="522" rx="2" fill="none" stroke="url(#or)" stroke-width=".7"/>
+<text x="215" y="120" text-anchor="middle" font-size="46" letter-spacing="5" font-family="EB Garamond,serif">PASSEPORT</text><text x="215" y="166" text-anchor="middle" font-size="27" letter-spacing="6" font-family="EB Garamond,serif">DU VOYAGEUR</text>
+<g transform="translate(215,332) scale(.152) translate(-2000,-1200)"><path d="${FLEUR_D}"/></g>
+<text x="215" y="494" text-anchor="middle" font-size="17" font-weight="600" letter-spacing="3.6" font-family="EB Garamond,serif">LES ROUTES DE L'HISTOIRE</text><text x="215" y="524" text-anchor="middle" font-size="17" font-weight="600" letter-spacing="5" font-family="EB Garamond,serif">1840 — 1867</text></g></svg>`;}
+
+/* =================== Navigation =================== */
+let retenteNiv=null;
+function montre(id){
+ document.querySelectorAll(".ecran").forEach(e=>e.classList.toggle("actif",e.id===id));
+ window.scrollTo(0,0);
+ if(id==="ecran-gare")majGare();
+ if(id==="ecran-frise")frInit();
+ if(id==="ecran-schemas")scListe();
+ if(id==="ecran-debat")dbInit();
+ if(id==="ecran-bilan")majBilan();
+ if(id==="ecran-identite")idInit();
+ if(id!=="ecran-fiche"&&id!=="ecran-quiz")retenteNiv=null;
+}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-ecran]");if(b){e.preventDefault();montre(b.dataset.ecran);return;}
+ if(e.target.closest(".mini-sceau"))ouvrePasseport();
+});
+/* =================== Identité =================== */
+function idInit(){
+ $("f-prenom").value=etat.prenom;$("f-nom").value=etat.nom;
+ const opts=(zone,liste,cle)=>{const z=$(zone);z.innerHTML="";liste.forEach(([id,nom,min])=>{const b=document.createElement("button");const libre=!min||etat.pts>=min;
+   b.textContent=(libre?"":"🔒 ")+nom;b.className=(etat.sceau[cle]===id?"choisi":"")+(libre?"":" verrou");
+   if(!libre)b.title="Se débloque à "+min+" points";
+   b.onclick=()=>{if(!libre){toast("À mériter : "+min+" points de voyage.");return;}etat.sceau[cle]=id;sauveDirty();idInit();};z.appendChild(b);});};
+ opts("o-lettrage",[["italique","Italique"],["romain","Capitales"],["gras","Gras"]],"l");
+ opts("o-encre",[["marine","Marine"],["bordeaux","Bordeaux"],["vert","Vert bouteille"],["sepia","Sépia"]],"e");
+ opts("o-embleme",Object.entries(EMBLEMES).map(([k,v])=>[k,v.nom,v.min]),"m");
+ $("sceau-apercu").innerHTML=sceauSVG(etat.sceau,210,true);
+}
+["f-prenom","f-nom"].forEach(id=>$(id).addEventListener("input",()=>{etat.prenom=$("f-prenom").value.trim();etat.nom=$("f-nom").value.trim();$("sceau-apercu").innerHTML=sceauSVG(etat.sceau,210,true);}));
+$("btn-embarquer").onclick=()=>{
+ etat.prenom=$("f-prenom").value.trim();etat.nom=$("f-nom").value.trim();
+ if(!etat.prenom||!etat.nom){toast("Inscris ton prénom et ton nom pour embarquer.");return;}
+ if(!etat.num)etat.num="RH-18"+(40+Math.floor(Math.random()*28))+"-"+String(Math.floor(Math.random()*10000)).padStart(4,"0");
+ notevisite();sauveDirty();majSceaux();majPoints(0);montre("ecran-gare");
+};
+const ouvrir=()=>montre("ecran-identite");
+$("btn-ouvrir").onclick=ouvrir;$("couv").onclick=ouvrir;$("couv").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")ouvrir();};
+function notevisite(){const j=Math.floor(Date.now()/86400000);if(etat.vis.indexOf(j)<0){etat.vis.push(j);etat.vis=etat.vis.slice(-20);}}
+
+/* =================== Gare centrale =================== */
+const ESCALES=[["Kingston","Capitale · 1841"],["Montréal","Parlement · 1849"],["Grosse-Île","Quarantaine · 1847"],["Québec","Port du bois"],["Toronto","Usines · 1850"],["Ottawa","Capitale · 1857"],["Charlottetown","Conférence · 1864"],["Saint-Jean","Nouveau-Brunswick"],["Halifax","Intercolonial"],["Dominion du Canada","1ᵉʳ juillet 1867"]];
+function majVoie(){
+ const z=$("voie");if(!z)return;
+ const W=900,x0=30,x1=870,f=Math.min(1,etat.pts/OBJECTIF),xl=x0+(x1-x0)*f;
+ let s=`<svg viewBox="0 0 ${W} 90"><line x1="${x0}" y1="62" x2="${x1}" y2="62" stroke="#5b4a33" stroke-width="2"/><line x1="${x0}" y1="70" x2="${x1}" y2="70" stroke="#5b4a33" stroke-width="2"/>`;
+ for(let x=x0;x<=x1;x+=14)s+=`<line x1="${x}" y1="58" x2="${x}" y2="74" stroke="#8a7550" stroke-width="3"/>`;
+ s+=`<line x1="${x0}" y1="62" x2="${xl}" y2="62" stroke="#1d2856" stroke-width="3"/><line x1="${x0}" y1="70" x2="${xl}" y2="70" stroke="#1d2856" stroke-width="3"/>`;
+ ESCALES.forEach((e,i)=>{const x=x0+(x1-x0)*(i+1)/10,ok=etat.pts>=(i+1)*100;
+  s+=`<circle cx="${x}" cy="66" r="6" fill="${ok?'#1d2856':'#eee2c4'}" stroke="#1d2856" stroke-width="1.6"/><text x="${x}" y="88" text-anchor="middle" font-size="10.5" fill="#5b4a33" font-family="EB Garamond,serif">${e[0].replace("Dominion du Canada","1867")}</text>`;});
+ s+=`<g transform="translate(${Math.max(xl-18,48)},34)"><g fill="none" stroke="#1f1a15" stroke-width="1.6" stroke-linejoin="round"><path d="M-16,12 L-16,-2 L4,-2 L4,-10 L12,-10 L12,-2 L18,-2 L22,8 L22,12 Z" fill="#1d2856"/><path d="M-12,-2 L-12,-12 L-6,-12 L-6,-2" fill="#1d2856"/><path d="M8,-12 Q4,-18 9,-22 Q15,-25 12,-30" stroke="#8a7550"/></g><circle cx="-10" cy="16" r="5" fill="#eee2c4" stroke="#1f1a15" stroke-width="1.6"/><circle cx="4" cy="16" r="5" fill="#eee2c4" stroke="#1f1a15" stroke-width="1.6"/><circle cx="16" cy="17" r="3.5" fill="#eee2c4" stroke="#1f1a15" stroke-width="1.6"/></g></svg>`;
+ z.innerHTML=s;
+ const prochaine=ESCALES.find((e,i)=>etat.pts<(i+1)*100);
+ $("voie-msg").textContent=prochaine?("Prochaine escale : "+prochaine[0]+" · "+(Math.ceil((etat.pts+1)/100)*100-etat.pts)+" points"):"Terminus atteint : bravo !";
+}
+function etoiles(n){return n===undefined?"":"★".repeat(n)+"☆".repeat(3-n);}
+function majGare(){
+ majVoie();
+ const lf=$("liste-fiches");lf.innerHTML="";
+ FICHES.forEach((f,i)=>{const b=document.createElement("button");b.className="carte";b.innerHTML=`<span class="n">Leçon ${i+1}</span><span class="t">${f.titre}</span><span class="d">${f.dates}</span>`;b.onclick=()=>ouvreFiche(i);lf.appendChild(b);});
+ const ln=$("liste-niveaux");ln.innerHTML="";
+ NIV.forEach((n,i)=>{const b=document.createElement("button");b.className="carte";b.innerHTML=`<span class="n">Étape ${i+1}</span><span class="t">${n.titre}</span><span class="d">${n.sousTitre}</span><span class="etat">${etoiles(etat.et[i])}</span>`;b.onclick=()=>lanceNiveau(i);ln.appendChild(b);});
+ const fr=etat.frise, nbF=JX.frise.length;
+ document.querySelector('[data-etat="frise"]').textContent=(fr.m1.length+fr.m2.length)?(Math.round(100*(fr.m1.length+fr.m2.length+fr.m3.length*3)/(2*nbF+GROUPES_FRISE().length*3))+" %"):"";
+ const nbS=Object.values(etat.sch).filter(x=>x.fait).length;document.querySelector('[data-etat="schemas"]').textContent=nbS?nbS+"/6":"";
+ document.querySelector('[data-etat="debat"]').textContent=etat.deb.fait?"✓":"";
+}
+
+/* =================== Fiches =================== */
+function ouvreFiche(i){
+ const f=FICHES[i];let h="";
+ if(retenteNiv!==null)h+=`<div class="banniere"><span>Tu reviens de l'étape ${retenteNiv+1} : relis ce qu'il te faut, puis</span><button class="btn" id="btn-retente">Retenter l'étape ${retenteNiv+1} →</button></div>`;
+ h+=`<p class="sur-titre">Leçon ${i+1} · ${f.dates}</p><h1>${f.titre}</h1>`;
+ f.blocs.forEach(([t,l])=>{h+=`<div class="fiche-bloc"><h3>${t}</h3><ul>${l.map(x=>`<li>${x}</li>`).join("")}</ul></div>`;});
+ h+=`<p class="nav"><button class="btn" onclick="lanceNiveau(${i})">Tester mes connaissances · étape ${i+1} →</button></p>`;
+ $("fiche-contenu").innerHTML=h;montre("ecran-fiche");
+ const r=$("btn-retente");if(r)r.onclick=()=>{const n=retenteNiv;retenteNiv=null;lanceNiveau(n);};
+}
+
+/* =================== Étapes (quiz) =================== */
+const rn={niv:0,qs:[],i:0,vies:3,err:0,essais:{}};
+function lanceNiveau(i){
+ rn.essais[i]=(rn.essais[i]||0)+1;
+ rn.niv=i;rn.i=0;rn.vies=3;rn.err=0;
+ let base=NIV[i].questions.map((q,k)=>Object.assign({k},q));
+ if(rn.essais[i]>1)base=base.map(q=>(q.var&&Math.random()<.8)?Object.assign({},q,{q:q.var[0]}):q);
+ rn.qs=melange(base);
+ const n=NIV[i];$("qz-sous").textContent=n.sousTitre;$("qz-titre").textContent=n.titre;$("qz-consigne").textContent=n.consigne;
+ montre("ecran-quiz");afficheQ();
+}
+function vies(){$("qz-vies").innerHTML="Vies "+"<span>●</span>".repeat(rn.vies)+"<span style='opacity:.25'>●</span>".repeat(3-rn.vies);}
+function afficheQ(){
+ const q=rn.qs[rn.i];$("qz-prog").textContent="Question "+(rn.i+1)+" / "+rn.qs.length;vies();
+ const r=$("qz-retro");r.className="retro";r.innerHTML="";$("qz-nav").innerHTML="";
+ const c=$("qz-corps");let h=`<p class="q-texte">${q.q}</p>`;
+ if(q.t==="qcm"||q.t==="trous"){h+=`<div class="choix">`+melange(q.options.map((o,ix)=>({o,ok:ix===q.bonne}))).map(x=>`<button data-ok="${x.ok?1:0}">${x.o}</button>`).join("")+`</div>`;c.innerHTML=h;
+  c.querySelectorAll(".choix button").forEach(b=>b.onclick=()=>repond(b,b.dataset.ok==="1"));}
+ else if(q.t==="vf"){h+=`<div class="choix"><button data-ok="${q.bonne===0?1:0}">Vrai</button><button data-ok="${q.bonne===1?1:0}">Faux</button></div>`;c.innerHTML=h;
+  c.querySelectorAll(".choix button").forEach(b=>b.onclick=()=>repond(b,b.dataset.ok==="1"));}
+ else if(q.t==="assoc"){rn.assoc={sel:null,faits:0};
+  h+=`<div class="assoc"><div class="col choix" id="as-g">${melange(q.paires.map((p,ix)=>`<button data-i="${ix}">${p[0]}</button>`)).join("")}</div><div class="col choix" id="as-d">${melange(q.paires.map((p,ix)=>`<button data-i="${ix}">${p[1]}</button>`)).join("")}</div></div>`;c.innerHTML=h;
+  c.querySelectorAll("#as-g button").forEach(b=>b.onclick=()=>{if(b.disabled)return;c.querySelectorAll("#as-g button").forEach(x=>x.classList.remove("choisi"));b.classList.add("choisi");rn.assoc.sel=b;});
+  c.querySelectorAll("#as-d button").forEach(b=>b.onclick=()=>{if(b.disabled||!rn.assoc.sel)return;const g=rn.assoc.sel;
+   if(g.dataset.i===b.dataset.i){[g,b].forEach(x=>{x.disabled=true;x.classList.remove("choisi");x.classList.add("bonne");});rn.assoc.sel=null;rn.assoc.faits++;if(rn.assoc.faits===q.paires.length)bonne(q);}
+   else{b.classList.add("mauvaise");setTimeout(()=>b.classList.remove("mauvaise"),600);erreur(q,false);}});}
+ else if(q.t==="ordre"){rn.ordre=[];
+  h+=`<p style="font-size:15px;color:var(--sepia);margin-top:-6px">${q.hint||""}</p><div class="ordre-choisis" id="or-ch"></div><div class="choix" id="or-it">${melange(q.items.map((t,ix)=>`<button data-i="${ix}">${t}</button>`)).join("")}</div>`;c.innerHTML=h;
+  c.querySelectorAll("#or-it button").forEach(b=>b.onclick=()=>{if(b.disabled)return;const attendu=rn.ordre.length;
+   if(+b.dataset.i===attendu){b.disabled=true;b.classList.add("bonne");rn.ordre.push(b.textContent);$("or-ch").innerHTML=rn.ordre.map((t,k)=>`<span class="pas">${k+1}. ${t}</span>`).join("");if(rn.ordre.length===q.items.length)bonne(q);}
+   else{b.classList.add("mauvaise");setTimeout(()=>b.classList.remove("mauvaise"),600);erreur(q,false);}});}
+}
+function repond(b,ok){const q=rn.qs[rn.i];if(b.disabled)return;
+ if(ok){$("qz-corps").querySelectorAll(".choix button").forEach(x=>{x.disabled=true;if(x!==b)x.classList.add("estompe");});b.classList.add("bonne");bonne(q);}
+ else{b.classList.add("mauvaise");b.disabled=true;erreur(q,true);}}
+function bonne(q){
+ const paye=(etat.qok[rn.niv]||[]);let gain=0;
+ if(paye.indexOf(q.k)<0){paye.push(q.k);etat.qok[rn.niv]=paye;gain=10;etat.prem.qt++;if(!q._err)etat.prem.qz++;majPoints(10);}
+ const r=$("qz-retro");r.className="retro ok visible";r.innerHTML=`<strong>${gain?"+10 points !":"Bien vu !"}</strong> ${q.expl}`;
+ const n=$("qz-nav");const der=rn.i>=rn.qs.length-1;n.innerHTML=`<button class="btn">${der?"Terminer l'étape →":"Question suivante →"}</button>`;
+ n.firstChild.onclick=()=>{if(der)finNiveau();else{rn.i++;afficheQ();}};
+}
+function erreur(q,montreRetro){
+ q._err=true;rn.vies--;rn.err++;etat.err[rn.niv]++;sauveDirty();vies();
+ const r=$("qz-retro");
+ if(rn.vies<=0){
+  r.className="retro oups visible";r.innerHTML=`<strong>Plus de vies.</strong> ${q.expl} <br>Pas grave : relis d'abord, retente ensuite.`;
+  $("qz-corps").querySelectorAll("button").forEach(x=>x.disabled=true);
+  const n=$("qz-nav");n.innerHTML="";
+  if(rn.niv<7){const bf=document.createElement("button");bf.className="btn contour";bf.textContent="Lire la fiche de la leçon "+(rn.niv+1)+" →";bf.onclick=()=>{retenteNiv=rn.niv;ouvreFiche(rn.niv);};n.appendChild(bf);}
+  const br=document.createElement("button");br.className="btn";br.textContent="Retenter l'étape";br.onclick=()=>lanceNiveau(rn.niv);n.appendChild(br);
+ }else if(montreRetro){r.className="retro oups visible";r.innerHTML=`<strong>Pas celle-là.</strong> Essaie encore.`;}
+}
+function finNiveau(){
+ const s=rn.err===0?3:rn.err===1?2:1, avant=etat.et[rn.niv];
+ if(avant===undefined||s>avant)etat.et[rn.niv]=s;sauveDirty();
+ const r=$("qz-retro");r.className="retro ok visible";r.innerHTML=`<strong>Étape réussie ${etoiles(s)}</strong> — ${rn.err} erreur${rn.err>1?"s":""}. ${avant===undefined?"":"Tu peux rejouer pour le plaisir : les points ne se gagnent qu'une fois par question."}`;
+ $("qz-corps").innerHTML="";$("qz-prog").textContent="";
+ const n=$("qz-nav");n.innerHTML=`<button class="btn" data-ecran="ecran-gare">Retour à la gare</button>`+(rn.niv<7?` <button class="btn contour" onclick="lanceNiveau(${rn.niv+1})">Étape suivante →</button>`:"");
+ verifieEstampes();
+}
+/* =================== Ligne du temps =================== */
+let frMode=1,frSel=null;
+function GROUPES_FRISE(){const g={};JX.frise.forEach((e,i)=>{if(e.m){(g[e.an]=g[e.an]||[]).push(i);}});return Object.keys(g).filter(k=>g[k].length>1).map(k=>({an:+k,ids:g[k].sort((a,b)=>JX.frise[a].m-JX.frise[b].m)}));}
+function frComplete(){return etat.frise.m1.length===JX.frise.length&&etat.frise.m2.length===JX.frise.length&&etat.frise.m3.length===GROUPES_FRISE().length;}
+const per=e=>e.fin?e.an+"-"+e.fin:String(e.an);
+function carteF(i,sel){const e=JX.frise[i];return `<button class="cf ${e.a}${sel?' sel':''}" data-i="${i}">${e.t}</button>`;}
+function frInit(){document.querySelectorAll("#fr-onglets button").forEach(b=>{b.classList.toggle("actif",+b.dataset.mode===frMode);b.onclick=()=>{frMode=+b.dataset.mode;frSel=null;frInit();};});frRend();}
+function frRend(){
+ const z=$("fr-zone"),F=JX.frise;frSel=null;
+ if(frMode===1){
+  const reste=melange(F.map((e,i)=>i).filter(i=>etat.frise.m1.indexOf(i)<0));
+  const bacs=[["1840-1849",1840,1849],["1850-1859",1850,1859],["1860-1867",1860,1867]];
+  z.innerHTML=(reste.length?`<p>Choisis une carte, puis la décennie où elle commence.</p><div class="cartes-frise" id="fr-cartes">${reste.map(i=>carteF(i)).join("")}</div>`:`<p><strong>Toutes les cartes sont classées par décennie.</strong> Passe au défi 2.</p>`)+
+   `<div class="bacs">${bacs.map(([t,a,b])=>`<div class="bac" data-a="${a}" data-b="${b}"><h4>${t}</h4>${etat.frise.m1.filter(i=>F[i].an>=a&&F[i].an<=b).sort((x,y)=>F[x].an-F[y].an).map(i=>`<div class="cf ${F[i].a}">${F[i].t}</div>`).join("")}</div>`).join("")}</div>`;
+  z.querySelectorAll("#fr-cartes .cf").forEach(b=>b.onclick=()=>{z.querySelectorAll("#fr-cartes .cf").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");frSel=+b.dataset.i;});
+  z.querySelectorAll(".bac").forEach(bac=>bac.onclick=()=>{if(frSel===null)return;const e=F[frSel];
+   if(e.an>=+bac.dataset.a&&e.an<=+bac.dataset.b){etat.frise.m1.push(frSel);majPoints(2);frRend();verifieEstampes();}
+   else{const c=z.querySelector(`#fr-cartes .cf[data-i="${frSel}"]`);c.classList.add("secoue");setTimeout(()=>c.classList.remove("secoue"),350);toast("Pas cette décennie. Regarde la fiche si tu hésites.");}});
+ }else if(frMode===2){
+  const reste=melange(F.map((e,i)=>i).filter(i=>etat.frise.m2.indexOf(i)<0));
+  const W=1000,x0=26,pas=(W-2*x0)/27;
+  let rail=`<svg width="${W}" height="96" viewBox="0 0 ${W} 96"><line x1="${x0}" y1="40" x2="${W-x0}" y2="40" stroke="#1d2856" stroke-width="3"/>`;
+  for(let a=1840;a<=1867;a++){const x=x0+(a-1840)*pas,n=etat.frise.m2.filter(i=>F[i].an===a).length;
+   rail+=`<g class="tick" data-an="${a}" style="cursor:pointer"><rect x="${x-pas/2}" y="6" width="${pas}" height="84" fill="transparent"/><line x1="${x}" y1="${a%10===0?26:32}" x2="${x}" y2="48" stroke="#1d2856" stroke-width="${a%10===0?2.4:1.4}"/><text x="${x}" y="${a%2===0?66:80}" text-anchor="middle" font-size="12" fill="#5b4a33" font-family="EB Garamond,serif">${a}</text>${n?`<circle cx="${x}" cy="18" r="8" fill="#1d2856"/><text x="${x}" y="22" text-anchor="middle" font-size="11" fill="#eee2c4">${n}</text>`:""}</g>`;}
+  rail+=`</svg>`;
+  z.innerHTML=(reste.length?`<p>Choisis une carte, puis clique sur son année. Pour une période, vise l'année où elle commence.</p><div class="cartes-frise" id="fr-cartes">${reste.map(i=>carteF(i)).join("")}</div>`:`<p><strong>Toutes les cartes sont à leur année.</strong> Passe au défi 3.</p>`)+
+   `<div class="rail">${rail}</div><h3>Déjà placées</h3><div>${etat.frise.m2.slice().sort((a,b)=>F[a].an-F[b].an||(F[a].m||0)-(F[b].m||0)).map(i=>`<div style="font-size:15px"><b>${per(F[i])}</b> — ${F[i].t}</div>`).join("")||"<em style='color:var(--sepia)'>Aucune pour l'instant.</em>"}</div>`;
+  z.querySelectorAll("#fr-cartes .cf").forEach(b=>b.onclick=()=>{z.querySelectorAll("#fr-cartes .cf").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");frSel=+b.dataset.i;});
+  z.querySelectorAll(".tick").forEach(t=>t.onclick=()=>{if(frSel===null){toast("Choisis d'abord une carte.");return;}const e=F[frSel];
+   if(+t.dataset.an===e.an){etat.frise.m2.push(frSel);majPoints(2);frRend();verifieEstampes();}
+   else{const d=Math.abs(+t.dataset.an-e.an);toast(d<=2?"Tout près ! Encore un petit effort.":(+t.dataset.an<e.an?"Plus tard que ça.":"Plus tôt que ça."));}});
+ }else{
+  const G=GROUPES_FRISE();
+  z.innerHTML=`<p>Certaines années sont chargées. Remets leurs événements dans l'ordre, du premier au dernier.</p>`+G.map(g=>{const fait=etat.frise.m3.indexOf(g.an)>=0;
+   return `<div class="fiche-bloc" data-an="${g.an}"><h3>${g.an}</h3>${fait?g.ids.map((i,k)=>`<div>${k+1}. ${F[i].t}</div>`).join("")+`<p style="color:var(--vert);margin:6px 0 0">✓ Réussi</p>`:`<div class="ordre-choisis"></div><div class="choix">${melange(g.ids).map(i=>`<button data-i="${i}">${F[i].t}</button>`).join("")}</div>`}</div>`;}).join("");
+  z.querySelectorAll(".fiche-bloc").forEach(bl=>{const an=+bl.dataset.an,g=G.find(x=>x.an===an);let pos=0;
+   bl.querySelectorAll(".choix button").forEach(b=>b.onclick=()=>{if(b.disabled)return;
+    if(+b.dataset.i===g.ids[pos]){b.disabled=true;b.classList.add("bonne");pos++;bl.querySelector(".ordre-choisis").innerHTML+=`<span class="pas">${pos}. ${b.textContent}</span>`;
+     if(pos===g.ids.length){etat.frise.m3.push(an);majPoints(5);setTimeout(frRend,700);verifieEstampes();}}
+    else{b.classList.add("mauvaise");setTimeout(()=>b.classList.remove("mauvaise"),600);}});});
+ }
+}
+
+/* =================== Schémas =================== */
+function scListe(){$("sc-zone").innerHTML="";const l=$("sc-liste");l.innerHTML="";l.style.display="";
+ JX.schemas.forEach((sc,i)=>{const d=etat.sch[sc.id]&&etat.sch[sc.id].fait;const b=document.createElement("button");b.className="carte";b.innerHTML=`<span class="n">Schéma ${i+1}</span><span class="t">${sc.titre}</span><span class="etat">${d?"✓":""}</span>`;b.onclick=()=>scOuvre(i);l.appendChild(b);});}
+function coupe(txt,w,t){const max=Math.floor((w-12)/(t*0.5)),out=[];let cur="";txt.split(" ").forEach(m=>{if((cur+" "+m).trim().length>max&&cur){out.push(cur);cur=m;}else cur=(cur+" "+m).trim();});out.push(cur);return out;}
+let scCur=null,scRemp={},scEtiq=null;
+function scOuvre(i){scCur=JX.schemas[i];scRemp={};scEtiq=null;$("sc-liste").style.display="none";scRend();}
+function scRend(){
+ const sc=scCur,N={};sc.noeuds.forEach(n=>N[n.id]=n);
+ const bord=(a,b)=>{const ax=a.x+a.w/2,ay=a.y+a.h/2,bx=b.x+b.w/2,by=b.y+b.h/2,dx=bx-ax,dy=by-ay;const t=(n,dx,dy)=>Math.min(dx?(n.w/2)/Math.abs(dx):1e9,dy?(n.h/2)/Math.abs(dy):1e9);const ta=t(a,dx,dy),tb=t(b,-dx,-dy);return [ax+dx*ta,ay+dy*ta,bx-dx*tb,by-dy*tb];};
+ let s=`<svg class="schema-svg" viewBox="0 0 760 ${sc.h}"><defs><marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#5b4a33"/></marker></defs>`;
+ sc.fleches.forEach(f=>{const [x1,y1,x2,y2]=bord(N[f[0]],N[f[1]]);s+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#5b4a33" stroke-width="1.6" marker-end="url(#fl)"/>`;
+  if(f[2]){const mx=(x1+x2)/2,my=(y1+y2)/2;s+=`<rect x="${mx-f[2].length*3.2-5}" y="${my-9}" width="${f[2].length*6.4+10}" height="17" fill="#f1e7cd"/><text x="${mx}" y="${my+4}" text-anchor="middle" font-size="12.5" font-style="italic" fill="#5b4a33">${f[2]}</text>`;}});
+ sc.noeuds.forEach(n=>{
+  if(n.titre){s+=`<text x="${n.x+n.w/2}" y="${n.y+n.h-8}" text-anchor="middle" font-size="17" fill="#1d2856" font-family="IM Fell English SC,EB Garamond,serif">${n.titre}</text><line x1="${n.x+10}" y1="${n.y+n.h-2}" x2="${n.x+n.w-10}" y2="${n.y+n.h-2}" stroke="#1d2856"/>`;return;}
+  const rep=n.trou||n.st, vide=rep&&!scRemp[n.id];
+  s+=`<g ${rep?`class="trou" data-n="${n.id}"`:""}><rect x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="3" fill="${rep?(vide?'#fbf7ec':'#dfe9d8'):'#e4d4ae'}" stroke="${rep?(vide?'#8f2b22':'#2f4f3a'):'#6b5636'}" stroke-width="1.5" ${vide?'stroke-dasharray="5 4"':''}/>`;
+  const L=[];
+  if(n.trou)L.push([vide?"?":n.trou,true,15]);else if(n.t)L.push([n.t,false,15]);
+  if(n.st)L.push([vide?"?":n.st,true,13]);else if(n.s)L.push([n.s,false,12.5]);
+  const out=[];L.forEach(l=>coupe(l[0],n.w,l[2]).forEach(x=>out.push([x,l[1],l[2]])));
+  const y0=n.y+n.h/2-(out.length-1)*8+5;
+  out.forEach((l,k)=>{s+=`<text x="${n.x+n.w/2}" y="${y0+k*16}" text-anchor="middle" font-size="${l[2]}" ${l[1]?'font-style="italic" fill="'+(l[0]==="?"?"#8f2b22":"#2f4f3a")+'"':'fill="#1f1a15"'}>${esc(l[0])}</text>`;});
+  s+=`</g>`;});
+ s+=`</svg>`;
+ const rep=sc.noeuds.filter(n=>n.trou||n.st).map(n=>n.trou||n.st);
+ if(!scCur._etiq)scCur._etiq=melange(rep.concat(sc.leurres));
+ const restants=sc.noeuds.filter(n=>(n.trou||n.st)&&!scRemp[n.id]).length;
+ $("sc-zone").innerHTML=`<p class="nav"><button class="btn contour" id="sc-retour">← Tous les schémas</button></p><h2>${sc.titre}</h2><p class="chapeau">${sc.consigne}</p>`+
+  (restants?`<div class="etiquettes">${scCur._etiq.map((t,k)=>`<button class="etiq${Object.values(scRemp).indexOf(t)>=0?' utilise':''}" data-k="${k}">${esc(t)}</button>`).join("")}</div>`:`<div class="retro ok visible"><strong>Schéma complété !</strong> Les étiquettes restantes étaient des leurres : ${sc.leurres.join(", ")}.</div>`)+s;
+ $("sc-retour").onclick=()=>{scCur._etiq=null;scListe();};
+ document.querySelectorAll(".etiq").forEach(b=>b.onclick=()=>{document.querySelectorAll(".etiq").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");scEtiq=scCur._etiq[+b.dataset.k];});
+ document.querySelectorAll(".trou").forEach(g=>g.onclick=()=>{const n=N[g.dataset.n];if(scRemp[n.id])return;if(!scEtiq){toast("Choisis d'abord une étiquette.");return;}
+  if(scEtiq===(n.trou||n.st)){scRemp[n.id]=scEtiq;const st=etat.sch[sc.id]=etat.sch[sc.id]||{fait:false,ok:[]};
+   if(st.ok.indexOf(n.id)<0){st.ok.push(n.id);majPoints(5);}scEtiq=null;
+   if(sc.noeuds.filter(x=>(x.trou||x.st)&&!scRemp[x.id]).length===0){st.fait=true;sauveDirty();verifieEstampes();}
+   scRend();}
+  else{g.classList.add("secoue");setTimeout(()=>g.classList.remove("secoue"),350);toast(sc.leurres.indexOf(scEtiq)>=0?"Cette étiquette ne va pas ici… peut-être nulle part ?":"Pas à cet endroit.");}});
+}
+
+/* =================== Débat =================== */
+let dbOrdre=[],dbI=0,dbPropre=true;
+function dbInit(){const D=JX.debat;$("db-titre").textContent=D.titre;$("db-contexte").textContent=D.contexte;$("db-note").textContent=D.note;
+ dbOrdre=melange(D.repliques.map((r,i)=>i));dbI=0;dbCharge();}
+function dbCharge(){const D=JX.debat,z=$("db-zone");
+ if(dbI>=dbOrdre.length){etat.deb.fait=true;sauveDirty();verifieEstampes();z.innerHTML=`<p class="citation" style="font-style:normal">Débat terminé</p><p>Tu as démêlé les arguments des deux camps. En mars 1865, les députés adoptent le projet de fédération, sans consulter la population comme le réclamait Dorion.</p><p class="nav"><button class="btn" data-ecran="ecran-gare">Retour à la gare</button> <button class="btn contour" onclick="dbInit()">Rejouer</button></p>`;return;}
+ dbPropre=true;const k=dbOrdre[dbI],r=D.repliques[k];
+ z.innerHTML=`<p style="font-size:14px;color:var(--sepia)">Réplique ${dbI+1} / ${dbOrdre.length} · Qui parle ?</p><p class="citation">${r.r}</p><div class="camps">${["cartier","dorion","ana"].map(c=>`<button data-c="${c}">${D.camps[c]}</button>`).join("")}</div><div class="retro" id="db-retro"></div><div class="nav" id="db-nav"></div>`;
+ z.querySelectorAll(".camps button").forEach(b=>b.onclick=()=>{if(b.disabled)return;const rr=$("db-retro");
+  if(b.dataset.c===r.c){b.classList.add("bonne");z.querySelectorAll(".camps button").forEach(x=>x.disabled=true);let g="";
+   if(dbPropre&&etat.deb.ok.indexOf(k)<0){etat.deb.ok.push(k);majPoints(5);g="+5 points ! ";}
+   rr.className="retro ok visible";rr.innerHTML=`<strong>${g||"Exact. "}</strong>${r.why}`;
+   $("db-nav").innerHTML=`<button class="btn">Réplique suivante →</button>`;$("db-nav").firstChild.onclick=()=>{dbI++;dbCharge();};}
+  else{dbPropre=false;b.classList.add("mauvaise");b.disabled=true;rr.className="retro oups visible";rr.innerHTML="Pas ce camp. Relis l'argument : qui a intérêt à le défendre ?";}});
+}
+/* =================== Estampes et visas =================== */
+const VISAS=[
+ ["gr","Gouvernement responsable","1848 · étape 2",()=>etat.et[1]!==undefined],
+ ["gc","Grande Coalition","1864 · étape 6",()=>etat.et[5]!==undefined],
+ ["co","Constitution de 1867","Épreuve finale",()=>etat.et[7]!==undefined],
+ ["ch","Chronologiste","Ligne du temps",()=>frComplete()],
+ ["ar","Architecte de la fédération","Six schémas",()=>Object.values(etat.sch).filter(x=>x.fait).length>=JX.schemas.length],
+ ["tr","Tribune de 1865","Le grand débat",()=>etat.deb.fait]];
+const COUL_EST=["#1f3d8a","#8f2b22","#5a2a63","#2f4f3a"];
+function acquises(){const a=[];ESCALES.forEach((e,i)=>{if(etat.pts>=(i+1)*100)a.push("e"+i);});VISAS.forEach(v=>{if(v[3]())a.push("v"+v[0]);});return a;}
+let nouvelles=[];
+function verifieEstampes(silencieux){
+ const a=acquises(),n=a.filter(x=>etat.est.indexOf(x)<0);if(!n.length)return;
+ n.forEach(x=>etat.est.push(x));sauveDirty();
+ if(silencieux)return;
+ nouvelles=nouvelles.concat(n);setTimeout(()=>{ouvrePasseport();},450);
+}
+function rotDe(k){let h=0;for(const c of k)h=(h*31+c.charCodeAt(0))>>>0;return ((h%15)-7);}
+function estampeSVG(k){
+ const i=+k.slice(1);
+ if(k[0]==="e"){const e=ESCALES[i],c=COUL_EST[i%4],id="t"+k;
+  const centre=i===9?`<text y="6" text-anchor="middle" font-size="15" fill="${c}" font-family="EB Garamond,serif" font-weight="600">1867</text>`:`<g fill="none" stroke="${c}" stroke-width="1.6" stroke-linejoin="round"><path d="M-14,6 L-14,-4 L2,-4 L2,-10 L8,-10 L8,-4 L12,-4 L15,3 L15,6 Z"/><circle cx="-9" cy="9" r="3.4"/><circle cx="2" cy="9" r="3.4"/><circle cx="11" cy="9.5" r="2.5"/></g>`;
+  return `<svg viewBox="-60 -60 120 120"><defs><path id="h${id}" d="M-42,0 A42,42 0 0 1 42,0"/><path id="b${id}" d="M-46,0 A46,46 0 0 0 46,0"/></defs><g filter="url(#encre)" style="mix-blend-mode:multiply" opacity=".88"><circle r="54" fill="none" stroke="${c}" stroke-width="3"/><circle r="48" fill="none" stroke="${c}" stroke-width="1"/><circle r="27" fill="none" stroke="${c}" stroke-width="1"/>
+  <text font-size="${e[0].length>12?9:11}" font-weight="700" letter-spacing="1.5" fill="${c}" font-family="DejaVu Sans Condensed,Arial Narrow,sans-serif"><textPath href="#h${id}" startOffset="50%" text-anchor="middle">${e[0].toUpperCase()}</textPath></text>
+  <text font-size="8.5" letter-spacing="1.2" fill="${c}" font-family="DejaVu Sans Condensed,Arial Narrow,sans-serif" dy="8"><textPath href="#b${id}" startOffset="50%" text-anchor="middle">${e[1].toUpperCase()}</textPath></text>${centre}</g></svg>`;}
+ const v=VISAS.find(x=>"v"+x[0]===k);
+ return `<svg viewBox="-60 -60 120 120"><g filter="url(#encre)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-54" y="-40" width="108" height="80" fill="none" stroke="#1d2856" stroke-width="2.6"/><rect x="-49" y="-35" width="98" height="70" fill="none" stroke="#1d2856" stroke-width=".9"/>
+  <text y="-16" text-anchor="middle" font-size="13" letter-spacing="5" font-weight="700" fill="#1d2856" font-family="DejaVu Sans Condensed,sans-serif">VISA</text>
+  ${coupe(v[1].toUpperCase(),150,8).map((l,j)=>`<text y="${0+j*10}" text-anchor="middle" font-size="8" font-weight="700" fill="#1d2856" font-family="DejaVu Sans Condensed,sans-serif">${l}</text>`).join("")}
+  <text y="27" text-anchor="middle" font-size="8.5" font-style="italic" fill="#1d2856" font-family="EB Garamond,serif">${v[2]}</text></g>
+  <g transform="translate(40,34)"><circle r="13" fill="#8a1d15"/><circle r="9" fill="none" stroke="#5a0f0a" stroke-width="1.5"/><text y="3.5" text-anchor="middle" font-size="9" font-style="italic" fill="#5a0f0a" font-family="EB Garamond,serif">RH</text></g></svg>`;
+}
+function ouvrePasseport(){
+ $("pp-sceau").innerHTML=sceauSVG(etat.sceau,150,true);
+ $("pp-nom").textContent=(etat.prenom+" "+etat.nom).trim()||"—";$("pp-num").textContent=etat.num||"—";
+ const sans=s=>(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase().replace(/[^A-Z]/g,"<");
+ $("pp-mrz").textContent=("P<CAN<<"+sans(etat.nom)+"<<"+sans(etat.prenom)+"<".repeat(30)).slice(0,44)+"\n"+(etat.num||"").replace(/-/g,"")+"<ROUTES<DE<L<HISTOIRE<1867";
+ const g=$("pp-estampes");g.innerHTML="";
+ ESCALES.map((e,i)=>["e"+i,e[0]]).concat(VISAS.map(v=>["v"+v[0],v[1]])).forEach(([k,nom])=>{
+  const d=document.createElement("div");d.className="est"+(k[0]==="v"?" visa":"");
+  if(etat.est.indexOf(k)>=0){d.innerHTML=`<div class="encre" style="--rot:${rotDe(k)}deg;width:100%;height:100%">${estampeSVG(k)}</div>`;if(nouvelles.indexOf(k)>=0)d.classList.add("nouveau");}
+  else d.innerHTML=`<div class="vide">${nom}${k[0]==="e"?"<br>"+(+k.slice(1)+1)*100+" pts":""}</div>`;
+  g.appendChild(d);});
+ if(nouvelles.length){const n=nouvelles.length;toast(n>1?n+" nouvelles estampes dans ton passeport !":"Nouvelle estampe dans ton passeport !");}
+ nouvelles=[];document.querySelectorAll(".pts").forEach(e=>e.textContent=etat.pts);
+ $("passeport").hidden=false;
+}
+$("pp-fermer").onclick=()=>$("passeport").hidden=true;
+$("passeport").onclick=e=>{if(e.target.id==="passeport")$("passeport").hidden=true;};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("passeport").hidden=true;});
+$("pp-modifier").onclick=()=>{$("passeport").hidden=true;montre("ecran-identite");};
+
+/* =================== Code de voyage (Loi 25 : rien n'est stocké) =================== */
+function empreinte(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))>>>0;return h.toString(36).slice(-5).toUpperCase();}
+function codeVoyage(){const j=JSON.stringify(etat);const b=btoa(unescape(encodeURIComponent(j)));return "RH1."+b+"."+empreinte(b);}
+function litCode(c){
+ c=(c||"").trim().replace(/\s+/g,"");const p=c.split(".");if(p.length!==3||p[0]!=="RH1")return "Ce code ne ressemble pas à un code de voyage (il commence par RH1.).";
+ if(empreinte(p[1])!==p[2])return "Ce code est incomplet ou modifié : vérifie qu'il est copié au complet.";
+ try{const o=JSON.parse(decodeURIComponent(escape(atob(p[1]))));Object.keys(etat).forEach(k=>{if(o[k]!==undefined)etat[k]=o[k];});return null;}catch(e){return "Impossible de lire ce code.";}
+}
+$("btn-restaurer").onclick=()=>{const err=litCode($("code-restaure").value);if(err){toast(err);return;}
+ notevisite();modifie=false;majSceaux();majPoints(0);verifieEstampes(true);toast("Bon retour, "+etat.prenom+" ! Ton voyage reprend.");montre("ecran-gare");};
+
+/* =================== Bilan =================== */
+function majBilan(){
+ const nbN=Object.keys(etat.et).length, moy=etat.prem.qt?Math.round(100*etat.prem.qz/etat.prem.qt):null;
+ const fr=etat.frise, nbS=Object.values(etat.sch).filter(x=>x.fait).length;
+ const nbE=etat.est.filter(x=>x[0]==="e").length, nbV=etat.est.filter(x=>x[0]==="v").length;
+ const st=[[etat.pts+" / "+OBJECTIF,"points de voyage"],[nbN+" / 8","étapes réussies"],[moy===null?"—":moy+" %","du premier coup (étapes)"],[fr.m1.length+fr.m2.length+" / "+2*JX.frise.length,"placements sur la frise"],[nbS+" / 6","schémas complétés"],[etat.deb.fait?"✓":"—","grand débat"],[nbE+" · "+nbV,"estampes · visas"],[etat.vis.length,"jour(s) de voyage"]];
+ $("bi-stats").innerHTML=st.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join("");
+ let top=-1,max=0,tot=0;etat.err.slice(0,7).forEach((n,i)=>{tot+=n;if(n>max){max=n;top=i;}});
+ $("bi-boussole").innerHTML=top<0?"Aucune leçon ne t'a vraiment résisté pour l'instant.":`La leçon qui t'a le plus résisté : <strong>${FICHES[top].titre}</strong> (${max} erreur${max>1?"s":""} sur ${tot}). <button class="btn contour" style="font-size:15px;padding:4px 12px" onclick="ouvreFiche(${top})">Relire la fiche →</button>`;
+ const lignes=["LES ROUTES DE L'HISTOIRE · Chapitre 1, partie 1 (1840-1867)","Voyageur : "+etat.prenom+" "+etat.nom+" · "+etat.num,"Date : "+new Date().toLocaleDateString("fr-CA"),"Points : "+etat.pts+" / "+OBJECTIF,
+  "Étapes réussies : "+nbN+"/8 · "+NIV.map((n,i)=>"É"+(i+1)+" "+(etat.et[i]===undefined?"—":etat.et[i]+"★")).join(" "),"Réussite du premier coup : "+(moy===null?"—":moy+" %"),
+  "Ligne du temps : décennies "+fr.m1.length+"/"+JX.frise.length+", années "+fr.m2.length+"/"+JX.frise.length+", départages "+fr.m3.length+"/"+GROUPES_FRISE().length,
+  "Schémas complétés : "+nbS+"/6 · Grand débat : "+(etat.deb.fait?"terminé":"à faire")+" ("+etat.deb.ok.length+"/"+JX.debat.repliques.length+" du premier coup)",
+  "Estampes : "+nbE+"/10 · Visas : "+nbV+"/"+VISAS.length,"Erreurs par étape : "+etat.err.map((n,i)=>"É"+(i+1)+":"+n).join(" "),"Jours de voyage : "+etat.vis.length];
+ const txt=lignes.join("\n");$("bi-fiche").value=txt+"\nEmpreinte : "+empreinte(txt);
+ $("bi-code").value=codeVoyage();
+}
+function copie(id,msg){const t=$(id);t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).then(()=>toast(msg)).catch(()=>{document.execCommand("copy");toast(msg);});}
+$("bi-copier").onclick=()=>copie("bi-fiche","Fiche copiée : colle-la dans ton courriel ou sur Classroom.");
+$("bi-copier-code").onclick=()=>{copie("bi-code","Code de voyage copié. Garde-le précieusement !");modifie=false;};
+$("bi-telecharger").onclick=()=>{const a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent("Code de voyage — Les routes de l'histoire\n"+$("bi-code").value);a.download="code-voyage-"+(etat.prenom||"voyageur")+".txt";a.click();modifie=false;};
+
+/* =================== Démarrage =================== */
+$("couv").innerHTML=couvertureSVG();
+majSceaux();majPoints(0);
+
+</script>
+</body></html>
