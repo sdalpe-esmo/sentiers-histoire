@@ -199,6 +199,33 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
 .doc img{width:100%;max-height:180px;object-fit:contain;background:#efe4c5;border:1px solid var(--filet);display:block}
 .doc p{margin:8px 0 0;line-height:1.4}
 .doc-src{font-size:12px;color:var(--sepia);font-style:italic}
+
+/* chapitres de l'année */
+.chapitres{display:grid;gap:12px;max-width:760px;margin:0 auto}
+.chap{background:#f6efdc;border:1px solid var(--filet);border-left:6px solid #141b40;border-radius:3px;padding:12px 16px}
+.chap-tete{display:grid;grid-template-columns:auto 1fr auto;gap:2px 14px;align-items:baseline}
+.chap-n{font-family:var(--t-titre);color:var(--bordeaux);letter-spacing:.1em;font-size:15px;grid-row:span 2}
+.chap-t{font-size:19px;color:var(--marine)}
+.chap-d{font-size:14px;color:var(--sepia);font-style:italic;grid-column:2}
+.chap-f{grid-column:3;grid-row:1/span 2;align-self:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sepia);border:1px dashed var(--sepia);padding:3px 10px;border-radius:999px}
+.chap.venir{opacity:.72;border-left-color:#a89572;background:rgba(246,239,220,.6)}
+.parties{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.partie{display:grid;grid-template-columns:auto 1fr;gap:0 10px;text-align:left;border:1.5px solid var(--marine);border-radius:3px;background:#fbf7ec;padding:10px 12px;font-family:inherit;color:var(--encre);font-size:16px}
+.partie .p-n{grid-row:span 3;font-family:var(--t-titre);color:var(--marine);font-size:15px;letter-spacing:.06em}
+.partie .p-t{font-size:17px}.partie .p-d{font-size:13.5px;color:var(--sepia);font-style:italic}
+.partie .p-f{font-size:14px;color:var(--marine);font-weight:600;margin-top:4px}
+.partie.ouverte{cursor:pointer;transition:transform .15s,box-shadow .15s}
+.partie.ouverte:hover{transform:translateY(-2px);box-shadow:0 5px 12px rgba(29,40,86,.2)}
+.partie.venir{border-style:dashed;border-color:#a89572;opacity:.75}
+.partie.venir .p-n,.partie.venir .p-f{color:var(--sepia)}
+@media(max-width:620px){.parties{grid-template-columns:1fr}.chap-tete{grid-template-columns:1fr}.chap-n,.chap-d,.chap-f{grid-column:auto;grid-row:auto}.chap-f{justify-self:start;margin-top:4px}}
+
+.tab-verif{width:100%;border-collapse:collapse;font-size:15px;margin-top:10px;background:#fbf7ec}
+.tab-verif th,.tab-verif td{border:1px solid var(--filet);padding:6px 8px;text-align:left;vertical-align:top}
+.tab-verif th{background:#e6d8b4;font-weight:600}
+.tab-verif tr.v-ok td:last-child{background:#e3eedc}.tab-verif tr.v-doute td:last-child{background:#f6ecc9}.tab-verif tr.v-faux td:last-child{background:#f1d9d3}
+.tab-verif small{color:var(--sepia)}
+input:disabled{opacity:.7;cursor:not-allowed}
 </style></head><body>
 <svg class="fond" width="100%" height="100%" preserveAspectRatio="none" aria-hidden="true"><defs>
 <filter id="fpapier" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" seed="5" result="t"/><feColorMatrix in="t" type="matrix" values="0 0 0 0 .55  0 0 0 0 .43  0 0 0 0 .24  0 0 0 .2 0" result="tache"/><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9" result="f"/><feColorMatrix in="f" type="matrix" values="0 0 0 0 .3  0 0 0 0 .25  0 0 0 0 .15  0 0 0 .08 0" result="fibre"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="tache"/><feMergeNode in="fibre"/></feMerge></filter>
@@ -220,9 +247,22 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
   <p style="margin:10px 0 0"><a class="retour" href="/">← Tous les cours</a></p>
   <p class="sur-titre" style="text-align:center">Histoire du Québec et du Canada · 4ᵉ secondaire</p>
   <h1 style="text-align:center">Les routes de l'histoire</h1>
-  <p class="chapeau" style="text-align:center;margin:0 auto">Chapitre 1, partie 1 · De l'Acte d'Union à l'AANB (1840-1867)</p>
+  <p class="chapeau" style="text-align:center;margin:0 auto">De 1840 à nos jours</p>
   <div class="couv-scene"><div class="couv" id="couv" role="button" tabindex="0" aria-label="Ouvrir le passeport"></div></div>
   <p style="text-align:center"><button class="btn" id="btn-ouvrir">Ouvrir mon passeport</button></p>
+  <h2 style="text-align:center;border:none;margin-top:34px">Les chapitres de l'année</h2>
+  <div class="chapitres">
+   <div class="chap">
+    <div class="chap-tete"><span class="chap-n">Chapitre 1</span><span class="chap-t">La formation du régime fédéral canadien</span><span class="chap-d">1840-1896</span></div>
+    <div class="parties">
+     <button class="partie ouverte" id="btn-partie1"><span class="p-n">Partie 1</span><span class="p-t">De l'Acte d'Union à l'AANB</span><span class="p-d">1840-1867</span><span class="p-f">Embarquer →</span></button>
+     <div class="partie venir"><span class="p-n">Partie 2</span><span class="p-t">Le Dominion du Canada</span><span class="p-d">1867-1896</span><span class="p-f">À venir</span></div>
+    </div>
+   </div>
+   <div class="chap venir"><div class="chap-tete"><span class="chap-n">Chapitre 2</span><span class="chap-t">Les nationalismes et l'autonomie du Canada</span><span class="chap-d">1896-1945</span><span class="chap-f">À venir</span></div></div>
+   <div class="chap venir"><div class="chap-tete"><span class="chap-n">Chapitre 3</span><span class="chap-t">La modernisation du Québec et la Révolution tranquille</span><span class="chap-d">1945-1980</span><span class="chap-f">À venir</span></div></div>
+   <div class="chap venir"><div class="chap-tete"><span class="chap-n">Chapitre 4</span><span class="chap-t">Les choix de société dans le Québec contemporain</span><span class="chap-d">1980 à nos jours</span><span class="chap-f">À venir</span></div></div>
+  </div>
   <p class="pied">Conçu par Samuel Dalpé — © 2026, tous droits réservés. Aucune donnée n'est conservée sur un serveur : ton voyage se garde grâce à ton code de voyage.</p>
  </div>
 </section>
@@ -238,6 +278,7 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
    <div>
     <label for="f-prenom">PRÉNOM</label><input type="text" id="f-prenom" autocomplete="off" maxlength="30">
     <label for="f-nom">NOM</label><input type="text" id="f-nom" autocomplete="off" maxlength="30">
+    <p id="note-fige" hidden style="font-size:14px;color:var(--sepia);font-style:italic;margin:6px 0 0">Ton nom est inscrit dans ton passeport : il ne peut plus changer. Tu peux toujours modifier ton sceau.</p>
     <label>LETTRAGE</label><div class="opts" id="o-lettrage"></div>
     <label>ENCRE</label><div class="opts" id="o-encre"></div>
     <label>EMBLÈME EN FILIGRANE</label><div class="opts" id="o-embleme"></div>
@@ -336,6 +377,21 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
  </div>
 </section>
 
+<!-- ============ ZONE ENSEIGNANT ============ -->
+<section class="ecran" id="ecran-prof">
+ <div class="page">
+  <p style="margin:10px 0 0"><a class="retour" href="./">← Retour au site</a></p>
+  <p class="sur-titre">Réservé à l'enseignant</p><h1>Vérifier des certificats</h1>
+  <div id="prof-verrou" class="zone"><label for="prof-cle" style="font-size:14px;letter-spacing:.12em;color:var(--sepia)">CLÉ DE L'ENSEIGNANT</label><input type="password" id="prof-cle" style="width:100%;font-size:18px;padding:7px 10px;border:1px solid var(--filet);background:#fbf7ec"><p class="nav"><button class="btn" id="prof-ouvrir">Déverrouiller</button></p></div>
+  <div id="prof-outils" hidden>
+   <p class="chapeau">Colle ici un ou plusieurs certificats reçus (Routes ou Sentiers), tels quels. Chaque certificat est contrôlé : code intact, points cohérents avec les activités réalisées, et numéro de passeport ou de carnet unique.</p>
+   <textarea id="prof-certs" style="min-height:200px" placeholder="Colle les certificats ici…"></textarea>
+   <p class="nav"><button class="btn" id="prof-verifier">Vérifier</button></p>
+   <div id="prof-resultats"></div>
+  </div>
+ </div>
+</section>
+
 <!-- ============ BILAN ============ -->
 <section class="ecran" id="ecran-bilan">
  <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
@@ -346,6 +402,7 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
   <h3>Ma fiche pour l'enseignant</h3><p style="font-size:16px">Copie ta fiche et remets-la à ton enseignant (courriel ou Classroom).</p>
   <textarea id="bi-fiche" readonly style="min-height:200px"></textarea>
   <p class="nav"><button class="btn" id="bi-copier">Copier ma fiche</button></p>
+  <h3>Mon certificat de voyage</h3><div id="bi-cert" class="zone"></div>
   <h3>Mon code de voyage</h3><p style="font-size:16px">Garde ce code : il contient tout ton voyage. Colle-le à la page d'identité pour reprendre là où tu étais.</p>
   <textarea id="bi-code" readonly></textarea>
   <p class="nav"><button class="btn" id="bi-copier-code">Copier le code</button><button class="btn contour" id="bi-telecharger">Télécharger (.txt)</button></p>
@@ -2420,7 +2477,7 @@ const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"
 
 /* =================== État =================== */
 const etat={v:1,prenom:"",nom:"",num:"",sceau:{l:"italique",e:"marine",m:"fleur"},pts:0,
- et:{},qok:{},frise:{m1:[],m2:[],m3:[]},sch:{},deb:{fait:false,ok:[]},err:[0,0,0,0,0,0,0,0],prem:{qz:0,qt:0},est:[],estD:{},vis:[],oi:{}};
+ et:{},qok:{},frise:{m1:[],m2:[],m3:[]},sch:{},deb:{fait:false,ok:[]},err:[0,0,0,0,0,0,0,0],prem:{qz:0,qt:0},est:[],estD:{},vis:[],oi:{},depart:null};
 let modifie=false;
 function sauveDirty(){modifie=true;}
 window.addEventListener("beforeunload",e=>{if(modifie&&etat.pts>0){e.preventDefault();e.returnValue="";}});
@@ -2477,7 +2534,7 @@ function couvertureSVG(){return `<svg viewBox="0 0 430 600"><rect width="430" he
 <g filter="url(#dorure)" fill="url(#or)"><rect x="32" y="32" width="366" height="536" rx="3" fill="none" stroke="url(#or)" stroke-width="1.7"/><rect x="39" y="39" width="352" height="522" rx="2" fill="none" stroke="url(#or)" stroke-width=".7"/>
 <text x="215" y="120" text-anchor="middle" font-size="46" letter-spacing="5" font-family="EB Garamond,serif">PASSEPORT</text><text x="215" y="166" text-anchor="middle" font-size="27" letter-spacing="6" font-family="EB Garamond,serif">DU VOYAGEUR</text>
 <g transform="translate(215,332) scale(.152) translate(-2000,-1200)"><path d="${FLEUR_D}"/></g>
-<text x="215" y="494" text-anchor="middle" font-size="17" font-weight="600" letter-spacing="3.6" font-family="EB Garamond,serif">LES ROUTES DE L'HISTOIRE</text><text x="215" y="524" text-anchor="middle" font-size="17" font-weight="600" letter-spacing="5" font-family="EB Garamond,serif">1840 — 1867</text></g></svg>`;}
+<text x="215" y="494" text-anchor="middle" font-size="17" font-weight="600" letter-spacing="3.6" font-family="EB Garamond,serif">LES ROUTES DE L'HISTOIRE</text><text x="215" y="524" text-anchor="middle" font-size="15" font-weight="600" letter-spacing="3.4" font-family="EB Garamond,serif">DE 1840 À NOS JOURS</text></g></svg>`;}
 
 /* =================== Navigation =================== */
 let retenteNiv=null;
@@ -2502,6 +2559,8 @@ document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.tar
 /* =================== Identité =================== */
 function idInit(){
  $("f-prenom").value=etat.prenom;$("f-nom").value=etat.nom;
+ const fige=etat.pts>0&&!!etat.num;$("f-prenom").disabled=fige;$("f-nom").disabled=fige;
+ const nf=$("note-fige");if(nf)nf.hidden=!fige;
  const opts=(zone,liste,cle)=>{const z=$(zone);z.innerHTML="";liste.forEach(([id,nom,min,visa])=>{const b=document.createElement("button");
    const libre=(!min||etat.pts>=min)&&(!visa||etat.est.indexOf("v"+visa)>=0);
    const cond=min?min+" points de voyage":visa?"le visa « "+VISAS.find(v=>v[0]===visa)[1]+" »":"";
@@ -2517,11 +2576,12 @@ function idInit(){
 $("btn-embarquer").onclick=()=>{
  etat.prenom=$("f-prenom").value.trim();etat.nom=$("f-nom").value.trim();
  if(!etat.prenom||!etat.nom){toast("Inscris ton prénom et ton nom pour embarquer.");return;}
+ if(!etat.depart)etat.depart=Date.now();
  if(!etat.num)etat.num="RH-18"+(40+Math.floor(Math.random()*28))+"-"+String(Math.floor(Math.random()*10000)).padStart(4,"0");
  notevisite();sauveDirty();majSceaux();majPoints(0);montre("ecran-gare");
 };
 const ouvrir=()=>montre("ecran-identite");
-$("btn-ouvrir").onclick=ouvrir;$("couv").onclick=ouvrir;$("couv").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")ouvrir();};
+$("btn-ouvrir").onclick=ouvrir;$("btn-partie1").onclick=ouvrir;$("couv").onclick=ouvrir;$("couv").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")ouvrir();};
 function notevisite(){const j=Math.floor(Date.now()/86400000);if(etat.vis.indexOf(j)<0){etat.vis.push(j);etat.vis=etat.vis.slice(-20);}}
 
 /* =================== Gare centrale =================== */
@@ -2868,6 +2928,7 @@ function majBilan(){
   "Estampes : "+nbE+"/10 · Visas : "+nbV+"/"+VISAS.length,"Estampes datées : "+(etat.est.filter(k=>(etat.estD||{})[k]!==undefined).map(k=>(NOTES[k]?NOTES[k][0]:k)+" ("+dateTxt(etat.estD[k])+")").join(", ")||"—"),"Erreurs par étape : "+etat.err.map((n,i)=>"É"+(i+1)+":"+n).join(" "),"Jours de voyage : "+etat.vis.length];
  const txt=lignes.join("\n");$("bi-fiche").value=txt+"\nEmpreinte : "+empreinte(txt);
  $("bi-code").value=codeVoyage();
+ majCertificat();
 }
 function copie(id,msg){const t=$(id);t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).then(()=>toast(msg)).catch(()=>{document.execCommand("copy");toast(msg);});}
 $("bi-copier").onclick=()=>copie("bi-fiche","Fiche copiée : colle-la dans ton courriel ou sur Classroom.");
@@ -2917,6 +2978,77 @@ function oiBonne(q){
  const r=$("oi-retro");r.className="retro ok visible";r.innerHTML=`<strong>${g||"Bien vu. "}</strong>${q.expl}`;
  $("oi-nav").innerHTML=`<button class="btn">${oiQ<oiCur.questions.length-1?"Question suivante →":"Terminer l'exercice →"}</button>`;$("oi-nav").firstChild.onclick=()=>{oiQ++;oiCharge();};
 }
+/* =================== Certificats et vérification (commun aux deux sites) =================== */
+const CERT_SEL="esmo-us|certificat|2026";
+async function sha256hex(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("");}
+const b64e=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+const b64d=s=>JSON.parse(decodeURIComponent(escape(atob(s))));
+async function signeCert(p){return (await sha256hex(CERT_SEL+"|"+p)).slice(0,24);}
+async function creeCertificat(pref,meta,etatObj){const p=b64e({m:meta,e:etatObj});return pref+"."+p+"."+await signeCert(p);}
+const dateLongue=t=>new Date(t).toLocaleDateString("fr-CA",{day:"numeric",month:"long",year:"numeric"});
+async function verifieCertificats(texte,coherence){
+ const re=/(RHC1|SHC1)\.([A-Za-z0-9+/=]+)\.([0-9a-f]{24})/g,lignes=[],vus={};let m;
+ while((m=re.exec(texte))){
+  const L={pref:m[1],statut:"ok",notes:[]};
+  if(await signeCert(m[2])!==m[3]){L.statut="faux";L.notes.push("Le code a été modifié après sa création : certificat invalide.");lignes.push(L);continue;}
+  let o;try{o=b64d(m[2]);}catch(_){L.statut="faux";L.notes.push("Code illisible.");lignes.push(L);continue;}
+  L.m=o.m;L.e=o.e;
+  const cle=o.m.num||"?";vus[cle]=(vus[cle]||0)+1;
+  const pb=coherence?coherence(o.m.site,o.e,o.m):[];
+  if(pb.length){L.statut="doute";L.notes=L.notes.concat(pb);}
+  lignes.push(L);
+ }
+ const noms={};lignes.forEach(L=>{if(L.m){(noms[L.m.num]=noms[L.m.num]||new Set()).add((L.m.nom||"").toLowerCase());}});
+ lignes.forEach(L=>{if(!L.m||vus[L.m.num]<2)return;
+  if(noms[L.m.num].size>1){if(L.statut!=="faux")L.statut="doute";L.notes.push("Le numéro "+L.m.num+" apparaît sous des noms différents : un même voyage a sans doute été partagé entre élèves.");}
+  else L.notes.push("Ce certificat a été reçu plus d'une fois (même élève).");});
+ return lignes;
+}
+function tableauVerif(lignes){
+ if(!lignes.length)return "<p>Aucun code de vérification trouvé. Colle le certificat au complet, y compris la ligne qui commence par RHC1. ou SHC1.</p>";
+ const ico={ok:"✅ Authentique",doute:"⚠️ À vérifier",faux:"❌ Invalide"};
+ return `<table class="tab-verif"><thead><tr><th>Élève</th><th>Numéro</th><th>Émis le</th><th>Points</th><th>Statut</th></tr></thead><tbody>`+lignes.map(L=>`<tr class="v-${L.statut}"><td>${L.m?esc(L.m.nom):"—"}</td><td>${L.m?esc(L.m.num):"—"}</td><td>${L.m?dateLongue(L.m.emis):"—"}</td><td>${L.m?L.m.pts:"—"}</td><td><strong>${ico[L.statut]}</strong>${L.notes.length?"<br><small>"+L.notes.map(esc).join("<br>")+"</small>":""}</td></tr>`).join("")+`</tbody></table>`;
+}
+/* =================== Certificat de voyage (Routes) =================== */
+function sommeOk(o){return Object.values(o||{}).reduce((s,x)=>s+((x&&x.ok)||[]).length,0);}
+function coherenceRH(site,e,m){
+ const pb=[];if(site!=="RH")return pb;
+ const q=Object.values(e.qok||{}).reduce((s,l)=>s+l.length,0);
+ const fixe=10*q+2*((e.frise.m1||[]).length+(e.frise.m2||[]).length)+5*(e.frise.m3||[]).length+5*sommeOk(e.sch)+5*((e.deb&&e.deb.ok)||[]).length;
+ const oiMax=10*sommeOk(e.oi);
+ if(e.pts<fixe||e.pts>fixe+oiMax)pb.push("Les points ("+e.pts+") ne correspondent pas aux activités réalisées (attendu entre "+fixe+" et "+(fixe+oiMax)+").");
+ Object.keys(e.et||{}).forEach(n=>{const tot=NIV[n]?NIV[n].questions.length:0;if(((e.qok||{})[n]||[]).length<tot)pb.push("L'étape "+(+n+1)+" est marquée réussie sans que toutes ses questions soient répondues.");});
+ if(m.pts!==e.pts)pb.push("Les points affichés ne correspondent pas au voyage enregistré.");
+ if(e.pts<OBJECTIF)pb.push("Le terminus (1000 points) n'est pas atteint.");
+ if((e.vis||[]).length<=1)pb.push("Tout le voyage a été fait en une seule journée : c'est possible, mais inhabituel.");
+ return pb;
+}
+async function majCertificat(){
+ const z=$("bi-cert");if(!z)return;verifieEstampes(true);
+ if(etat.pts<OBJECTIF){z.innerHTML=`<p style="font-size:16px">Ton certificat de voyage se débloque au terminus, à ${OBJECTIF} points. Il te manque <strong>${OBJECTIF-etat.pts}</strong> points.</p>`;return;}
+ const nbN=Object.keys(etat.et).length,moy=etat.prem.qt?Math.round(100*etat.prem.qz/etat.prem.qt):0,nbE=etat.est.filter(x=>x[0]==="e").length,nbV=etat.est.filter(x=>x[0]==="v").length;
+ const meta={site:"RH",nom:(etat.prenom+" "+etat.nom).trim(),num:etat.num,pts:etat.pts,emis:Date.now(),depart:etat.depart||null};
+ const code=await creeCertificat("RHC1",meta,etat);
+ const txt=["CERTIFICAT DE VOYAGE","Les routes de l'histoire · Histoire du Québec et du Canada, 4e secondaire","Chapitre 1, partie 1 (1840-1867)","",
+  "Titulaire : "+meta.nom,"N° de passeport : "+etat.num,(etat.depart?"Premier embarquement : "+dateLongue(etat.depart)+" · ":"")+"Certificat émis le "+dateLongue(meta.emis),
+  "Points : "+etat.pts+" / "+OBJECTIF+" · Estampes : "+nbE+"/10 · Visas : "+nbV+"/"+VISAS.length,"Étapes réussies : "+nbN+"/8 · Réussite du premier coup : "+moy+" % · Jours de voyage : "+etat.vis.length,"",
+  "Code de vérification (à ne pas modifier) :",code].join("\n");
+ z.innerHTML=`<p style="font-size:16px">Bravo, ton passeport est complet ! Envoie ce certificat à ton enseignant : il pourra vérifier qu'il est authentique.</p><textarea id="bi-cert-txt" readonly style="min-height:230px"></textarea>
+  <p class="nav"><button class="btn" id="bi-cert-copier">Copier le certificat</button><a class="btn contour" id="bi-cert-mail">Envoyer par courriel</a><button class="btn contour" id="bi-cert-tel">Télécharger (.txt)</button></p>`;
+ $("bi-cert-txt").value=txt;
+ $("bi-cert-copier").onclick=()=>copie("bi-cert-txt","Certificat copié : colle-le dans un courriel ou sur Classroom.");
+ $("bi-cert-mail").href="mailto:?subject="+encodeURIComponent("Certificat de voyage – "+meta.nom)+"&body="+encodeURIComponent(txt);
+ $("bi-cert-tel").onclick=()=>{const a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(txt);a.download="certificat-voyage-"+(etat.prenom||"voyageur")+".txt";a.click();};
+}
+/* =================== Zone de l'enseignant (#prof) =================== */
+const CLE_PROF_HASH="1dfa26ff297cd720005fa1c3bc745e63d3ab4d54143228dacfef1a212af64057";
+function zoneProf(){if(location.hash==="#prof")montre("ecran-prof");}
+window.addEventListener("hashchange",zoneProf);
+$("prof-ouvrir").onclick=async()=>{const k=$("prof-cle").value.trim();if(await sha256hex(k)===CLE_PROF_HASH){$("prof-verrou").hidden=true;$("prof-outils").hidden=false;}else toast("Clé incorrecte.");};
+$("prof-cle").onkeydown=e=>{if(e.key==="Enter")$("prof-ouvrir").click();};
+$("prof-verifier").onclick=async()=>{const l=await verifieCertificats($("prof-certs").value,(s,e,m)=>s==="RH"?coherenceRH(s,e,m):coherenceAutre(s,e,m));$("prof-resultats").innerHTML=tableauVerif(l);};
+function coherenceAutre(site,e,m){const pb=[];if(site==="SH"){if(m.pts<750)pb.push("Le sommet (750 points) n'est pas atteint.");if((m.jours||0)<=1)pb.push("Tout le parcours a été fait en une seule journée : c'est possible, mais inhabituel.");}return pb;}
+zoneProf();
 
 </script>
 </body></html>
