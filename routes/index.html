@@ -226,6 +226,23 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
 .tab-verif tr.v-ok td:last-child{background:#e3eedc}.tab-verif tr.v-doute td:last-child{background:#f6ecc9}.tab-verif tr.v-faux td:last-child{background:#f1d9d3}
 .tab-verif small{color:var(--sepia)}
 input:disabled{opacity:.7;cursor:not-allowed}
+
+/* sauvegarde du code de voyage */
+.btn-sauve{position:relative;display:flex;align-items:center;gap:6px;background:#fbf7ec;color:var(--marine);border:1.5px solid var(--marine);border-radius:999px;padding:4px 14px 4px 10px;cursor:pointer;font-size:15px;line-height:1.1}
+.btn-sauve:hover{background:#fff}
+.bs-txt{display:flex;flex-direction:column;text-align:left}.bs-txt small{font-size:11.5px;font-style:italic;color:var(--sepia)}
+.bs-point{display:none;position:absolute;top:-3px;right:-3px;width:13px;height:13px;border-radius:50%;background:var(--bordeaux);border:2px solid #fbf7ec;animation:pulse 1.6s infinite}
+.btn-sauve.a-sauver{border-color:var(--bordeaux);color:var(--bordeaux)}
+.btn-sauve.a-sauver .bs-point{display:block}.btn-sauve.a-sauver small{color:var(--bordeaux)}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+.bloc-sauve{display:flex;align-items:center;gap:16px;margin:10px 0 4px;padding:12px 16px;background:#fbefe9;border:1px solid #d9b3a6;border-left:6px solid var(--bordeaux);border-radius:3px}
+.bloc-sauve.ok{background:#eef3e8;border-color:#b7c9a9;border-left-color:var(--vert)}
+.bs-grand{font-size:30px;flex:0 0 auto}
+.bloc-sauve .bp-texte strong{color:var(--bordeaux)}.bloc-sauve.ok .bp-texte strong{color:var(--vert)}
+.carte-code{position:relative;background:#f6efdc;border:1px solid var(--filet);border-radius:6px;padding:20px 22px;width:min(640px,100%);max-height:92vh;overflow:auto;box-shadow:0 30px 60px rgba(0,0,0,.5)}
+.alerte-code{background:#fbefe9;border-left:5px solid var(--bordeaux);padding:10px 14px;font-size:15.5px;margin-bottom:10px}
+#fc-code{min-height:110px}
+@media(max-width:600px){.bs-txt{display:none}.btn-sauve{padding:4px 8px}.bloc-sauve{flex-wrap:wrap}}
 </style></head><body>
 <svg class="fond" width="100%" height="100%" preserveAspectRatio="none" aria-hidden="true"><defs>
 <filter id="fpapier" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" seed="5" result="t"/><feColorMatrix in="t" type="matrix" values="0 0 0 0 .55  0 0 0 0 .43  0 0 0 0 .24  0 0 0 .2 0" result="tache"/><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9" result="f"/><feColorMatrix in="f" type="matrix" values="0 0 0 0 .3  0 0 0 0 .25  0 0 0 0 .15  0 0 0 .08 0" result="fibre"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="tache"/><feMergeNode in="fibre"/></feMerge></filter>
@@ -294,7 +311,7 @@ input:disabled{opacity:.7;cursor:not-allowed}
 
 <!-- ============ GARE CENTRALE ============ -->
 <section class="ecran" id="ecran-gare">
- <div class="barre"><div class="int"><a class="retour" href="/">← Tous les cours</a><div class="qui"><span class="chip">✦ <b class="pts">0</b> / 1000</span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
+ <div class="barre"><div class="int"><a class="retour" href="/">← Tous les cours</a><div class="qui"><span class="chip">✦ <b class="pts">0</b> / 1000</span><button class="btn-sauve" aria-label="Sauvegarder mon voyage (code de voyage)"><span class="bs-ico" aria-hidden="true">💾</span><span class="bs-txt">Sauvegarder<small class="bs-etat">mon voyage</small></span><i class="bs-point" aria-hidden="true"></i></button><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Chapitre 1 · Partie 1 · 1840-1867</p>
   <h1>La gare centrale</h1>
@@ -305,6 +322,11 @@ input:disabled{opacity:.7;cursor:not-allowed}
    <span class="bp-couv" id="bp-couv"></span>
    <span class="bp-texte"><strong>Mon passeport</strong><span id="bp-detail">Ton sceau, tes estampes de gare et tes visas d'exploits.</span></span>
    <span class="btn">Ouvrir mon passeport →</span>
+  </div>
+  <div class="bloc-sauve" id="bloc-sauve">
+   <span class="bs-grand" aria-hidden="true">💾</span>
+   <span class="bp-texte"><strong>Sauvegarde ton voyage à chaque séance</strong><span>Rien n'est enregistré sur un serveur ni dans ton ordinateur. Si tu fermes cet onglet sans copier ton <b>code de voyage</b>, tes points, tes estampes et ta progression sont perdus. <span id="bs-derniere"></span></span></span>
+   <button class="btn" id="bs-ouvrir">Copier mon code de voyage</button>
   </div>
   <h2>Réviser · les fiches</h2><div class="grille" id="liste-fiches"></div>
   <h2>Voyager · les étapes</h2><p style="margin:0 0 10px;font-size:16px;color:var(--sepia)">Trois erreurs permises par étape. Les points ne comptent qu'à la première bonne réponse.</p><div class="grille" id="liste-niveaux"></div>
@@ -321,13 +343,13 @@ input:disabled{opacity:.7;cursor:not-allowed}
 
 <!-- ============ FICHE ============ -->
 <section class="ecran" id="ecran-fiche">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-sauve" aria-label="Sauvegarder mon voyage (code de voyage)"><span class="bs-ico" aria-hidden="true">💾</span><span class="bs-txt">Sauvegarder<small class="bs-etat">mon voyage</small></span><i class="bs-point" aria-hidden="true"></i></button><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page"><div id="fiche-contenu"></div></div>
 </section>
 
 <!-- ============ ÉTAPE (QUIZ) ============ -->
 <section class="ecran" id="ecran-quiz">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-sauve" aria-label="Sauvegarder mon voyage (code de voyage)"><span class="bs-ico" aria-hidden="true">💾</span><span class="bs-txt">Sauvegarder<small class="bs-etat">mon voyage</small></span><i class="bs-point" aria-hidden="true"></i></button><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre" id="qz-sous"></p><h1 id="qz-titre"></h1><p class="chapeau" id="qz-consigne"></p>
   <div class="zone"><div class="hud"><span id="qz-prog"></span><span class="vies" id="qz-vies"></span></div><div id="qz-corps"></div><div class="retro" id="qz-retro" role="status"></div><div class="nav" id="qz-nav"></div></div>
@@ -336,7 +358,7 @@ input:disabled{opacity:.7;cursor:not-allowed}
 
 <!-- ============ LIGNE DU TEMPS ============ -->
 <section class="ecran" id="ecran-frise">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-sauve" aria-label="Sauvegarder mon voyage (code de voyage)"><span class="bs-ico" aria-hidden="true">💾</span><span class="bs-txt">Sauvegarder<small class="bs-etat">mon voyage</small></span><i class="bs-point" aria-hidden="true"></i></button><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Atelier · situer dans le temps</p><h1>La ligne du temps</h1>
   <p class="chapeau">Choisis une carte, puis clique à l'endroit où elle se place. Trois défis : la décennie, l'année exacte, puis l'ordre d'étapes qui s'enchaînent la même année.</p>
@@ -348,7 +370,7 @@ input:disabled{opacity:.7;cursor:not-allowed}
 
 <!-- ============ SCHÉMAS ============ -->
 <section class="ecran" id="ecran-schemas">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-sauve" aria-label="Sauvegarder mon voyage (code de voyage)"><span class="bs-ico" aria-hidden="true">💾</span><span class="bs-txt">Sauvegarder<small class="bs-etat">mon voyage</small></span><i class="bs-point" aria-hidden="true"></i></button><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Atelier · faire des liens</p><h1>Les schémas à compléter</h1>
   <p class="chapeau">Choisis une étiquette, puis la case pointillée où elle va. Attention aux leurres : certaines étiquettes ne vont nulle part.</p>
@@ -359,7 +381,7 @@ input:disabled{opacity:.7;cursor:not-allowed}
 
 <!-- ============ DÉBAT ============ -->
 <section class="ecran" id="ecran-debat">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-sauve" aria-label="Sauvegarder mon voyage (code de voyage)"><span class="bs-ico" aria-hidden="true">💾</span><span class="bs-txt">Sauvegarder<small class="bs-etat">mon voyage</small></span><i class="bs-point" aria-hidden="true"></i></button><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Atelier · prendre position</p><h1 id="db-titre"></h1>
   <p class="chapeau" id="db-contexte"></p><p style="font-size:14px;color:var(--sepia)" id="db-note"></p>
@@ -369,7 +391,7 @@ input:disabled{opacity:.7;cursor:not-allowed}
 
 <!-- ============ ATELIER DES OI ============ -->
 <section class="ecran" id="ecran-oi">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-sauve" aria-label="Sauvegarder mon voyage (code de voyage)"><span class="bs-ico" aria-hidden="true">💾</span><span class="bs-txt">Sauvegarder<small class="bs-etat">mon voyage</small></span><i class="bs-point" aria-hidden="true"></i></button><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Atelier · opérations intellectuelles</p><h1>L'atelier de l'historien·ne</h1>
   <p class="chapeau">Six exercices, un par opération intellectuelle de l'épreuve ministérielle. Lis le dossier documentaire, puis réponds en t'appuyant sur les documents : la réponse est toujours dans le dossier.</p>
@@ -394,7 +416,7 @@ input:disabled{opacity:.7;cursor:not-allowed}
 
 <!-- ============ BILAN ============ -->
 <section class="ecran" id="ecran-bilan">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-sauve" aria-label="Sauvegarder mon voyage (code de voyage)"><span class="bs-ico" aria-hidden="true">💾</span><span class="bs-txt">Sauvegarder<small class="bs-etat">mon voyage</small></span><i class="bs-point" aria-hidden="true"></i></button><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Terminus</p><h1>Mon bilan de voyage</h1>
   <div class="stats" id="bi-stats"></div>
@@ -408,6 +430,17 @@ input:disabled{opacity:.7;cursor:not-allowed}
   <p class="nav"><button class="btn" id="bi-copier-code">Copier le code</button><button class="btn contour" id="bi-telecharger">Télécharger (.txt)</button></p>
  </div>
 </section>
+
+<!-- ============ CODE DE VOYAGE ============ -->
+<div class="voile" id="fen-code" hidden role="dialog" aria-modal="true" aria-label="Mon code de voyage">
+ <div class="carte-code"><button class="fermer" id="fc-fermer" aria-label="Fermer">✕</button>
+  <p class="sur-titre" style="margin-top:0">Sauvegarde</p><h2 style="margin-top:4px;border:none">Mon code de voyage</h2>
+  <div class="alerte-code"><strong>Important :</strong> ce code est la <b>seule</b> sauvegarde de ton voyage. Le site ne garde rien, par respect de ta vie privée (Loi 25). Copie-le à la fin de chaque séance et garde-le en lieu sûr : un courriel à toi-même, Classroom ou un fichier.</div>
+  <textarea id="fc-code" readonly></textarea>
+  <p class="nav"><button class="btn" id="fc-copier">Copier le code</button><button class="btn contour" id="fc-tel">Télécharger (.txt)</button><a class="btn contour" id="fc-mail">M'envoyer par courriel</a></p>
+  <p style="font-size:15px;color:var(--sepia);margin:6px 0 0"><b>Pour reprendre ton voyage :</b> page d'accueil → « Ouvrir mon passeport » → section « Tu reviens de voyage ? » → colle ton code.</p>
+ </div>
+</div>
 
 <!-- ============ PASSEPORT OUVERT ============ -->
 <div class="voile" id="passeport" hidden role="dialog" aria-modal="true" aria-label="Mon passeport">
@@ -2478,8 +2511,16 @@ const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"
 /* =================== État =================== */
 const etat={v:1,prenom:"",nom:"",num:"",sceau:{l:"italique",e:"marine",m:"fleur"},pts:0,
  et:{},qok:{},frise:{m1:[],m2:[],m3:[]},sch:{},deb:{fait:false,ok:[]},err:[0,0,0,0,0,0,0,0],prem:{qz:0,qt:0},est:[],estD:{},vis:[],oi:{},depart:null};
-let modifie=false;
-function sauveDirty(){modifie=true;}
+let modifie=false,ptsSauve=0,heureSauve=null;
+function sauveDirty(){modifie=true;setTimeout(majSauvegarde,0);}
+function majSauvegarde(){
+ const a=modifie&&etat.pts>0;
+ document.querySelectorAll(".btn-sauve").forEach(b=>{b.classList.toggle("a-sauver",a);const s=b.querySelector(".bs-etat");if(s)s.textContent=a?"à faire !":"à jour";});
+ const bl=document.getElementById("bloc-sauve");if(bl){bl.classList.toggle("ok",!a&&heureSauve!==null);
+  const d=document.getElementById("bs-derniere");if(d)d.textContent=heureSauve?("Dernière sauvegarde : "+heureSauve+"."+(a?" Tu as progressé depuis : copie ton nouveau code.":"")):"Tu n'as pas encore sauvegardé ce voyage.";}
+ if(a&&etat.pts-ptsSauve>=50){ptsSauve=etat.pts;toast("Pense à sauvegarder : copie ton code de voyage (bouton 💾 en haut).");}
+}
+function marqueSauve(){modifie=false;ptsSauve=etat.pts;heureSauve=new Date().toLocaleTimeString("fr-CA",{hour:"2-digit",minute:"2-digit"});majSauvegarde();}
 window.addEventListener("beforeunload",e=>{if(modifie&&etat.pts>0){e.preventDefault();e.returnValue="";}});
 
 /* =================== Sceau =================== */
@@ -2910,7 +2951,7 @@ function litCode(c){
  try{const o=JSON.parse(decodeURIComponent(escape(atob(p[1]))));Object.keys(etat).forEach(k=>{if(o[k]!==undefined)etat[k]=o[k];});return null;}catch(e){return "Impossible de lire ce code.";}
 }
 $("btn-restaurer").onclick=()=>{const err=litCode($("code-restaure").value);if(err){toast(err);return;}
- notevisite();modifie=false;majSceaux();majPoints(0);verifieEstampes(true);toast("Bon retour, "+etat.prenom+" ! Ton voyage reprend.");montre("ecran-gare");};
+ notevisite();majSceaux();majPoints(0);verifieEstampes(true);marqueSauve();heureSauve=null;majSauvegarde();toast("Bon retour, "+etat.prenom+" ! Ton voyage reprend.");montre("ecran-gare");};
 
 /* =================== Bilan =================== */
 function majBilan(){
@@ -2932,12 +2973,25 @@ function majBilan(){
 }
 function copie(id,msg){const t=$(id);t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).then(()=>toast(msg)).catch(()=>{document.execCommand("copy");toast(msg);});}
 $("bi-copier").onclick=()=>copie("bi-fiche","Fiche copiée : colle-la dans ton courriel ou sur Classroom.");
-$("bi-copier-code").onclick=()=>{copie("bi-code","Code de voyage copié. Garde-le précieusement !");modifie=false;};
-$("bi-telecharger").onclick=()=>{const a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent("Code de voyage — Les routes de l'histoire\n"+$("bi-code").value);a.download="code-voyage-"+(etat.prenom||"voyageur")+".txt";a.click();modifie=false;};
+$("bi-copier-code").onclick=()=>{copie("bi-code","Code de voyage copié. Garde-le précieusement !");marqueSauve();};
+$("bi-telecharger").onclick=()=>{const a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent("Code de voyage — Les routes de l'histoire\n"+$("bi-code").value);a.download="code-voyage-"+(etat.prenom||"voyageur")+".txt";a.click();marqueSauve();};
 
 /* =================== Démarrage =================== */
 $("couv").innerHTML=couvertureSVG();
 majSceaux();majPoints(0);
+
+/* =================== Fenêtre du code de voyage =================== */
+function ouvreCode(){const c=codeVoyage();$("fc-code").value=c;
+ $("fc-mail").href="mailto:?subject="+encodeURIComponent("Mon code de voyage – Les routes de l'histoire")+"&body="+encodeURIComponent("Mon code de voyage (à coller dans « Tu reviens de voyage ? ») :\n\n"+c);
+ $("fen-code").hidden=false;}
+document.addEventListener("click",e=>{if(e.target.closest(".btn-sauve")||e.target.id==="bs-ouvrir")ouvreCode();});
+$("fc-fermer").onclick=()=>$("fen-code").hidden=true;
+$("fen-code").onclick=e=>{if(e.target.id==="fen-code")$("fen-code").hidden=true;};
+$("fc-copier").onclick=()=>{copie("fc-code","Code copié ! Colle-le dans un courriel à toi-même ou sur Classroom.");marqueSauve();};
+$("fc-tel").onclick=()=>{const a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent("Code de voyage — Les routes de l'histoire\n"+$("fc-code").value);a.download="code-voyage-"+(etat.prenom||"voyageur")+".txt";a.click();marqueSauve();toast("Fichier téléchargé : garde-le précieusement.");};
+$("fc-mail").addEventListener("click",()=>marqueSauve());
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("fen-code").hidden=true;});
+majSauvegarde();
 /* =================== Atelier des opérations intellectuelles =================== */
 
 let oiCur=null,oiQ=0,oiPropre=true;
