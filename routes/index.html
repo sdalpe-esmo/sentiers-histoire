@@ -2673,7 +2673,9 @@ function scListe(){$("sc-zone").innerHTML="";const l=$("sc-liste");l.innerHTML="
  JX.schemas.forEach((sc,i)=>{const d=etat.sch[sc.id]&&etat.sch[sc.id].fait;const b=document.createElement("button");b.className="carte";b.innerHTML=`<span class="n">Schéma ${i+1}</span><span class="t">${sc.titre}</span><span class="etat">${d?"✓":""}</span>`;b.onclick=()=>scOuvre(i);l.appendChild(b);});}
 function coupe(txt,w,t){const max=Math.floor((w-12)/(t*0.5)),out=[];let cur="";txt.split(" ").forEach(m=>{if((cur+" "+m).trim().length>max&&cur){out.push(cur);cur=m;}else cur=(cur+" "+m).trim();});out.push(cur);return out;}
 let scCur=null,scRemp={},scEtiq=null;
-function scOuvre(i){scCur=JX.schemas[i];scRemp={};scEtiq=null;$("sc-liste").style.display="none";scRend();}
+function scOuvre(i){scCur=JX.schemas[i];scRemp={};scEtiq=null;
+ const st=etat.sch[scCur.id];if(st&&!st.fait)st.ok.forEach(id=>{const n=scCur.noeuds.find(x=>x.id===id);if(n)scRemp[id]=n.trou||n.st;});
+ $("sc-liste").style.display="none";scRend();}
 function scRend(){
  const sc=scCur,N={};sc.noeuds.forEach(n=>N[n.id]=n);
  const bord=(a,b)=>{const ax=a.x+a.w/2,ay=a.y+a.h/2,bx=b.x+b.w/2,by=b.y+b.h/2,dx=bx-ax,dy=by-ay;const t=(n,dx,dy)=>Math.min(dx?(n.w/2)/Math.abs(dx):1e9,dy?(n.h/2)/Math.abs(dy):1e9);const ta=t(a,dx,dy),tb=t(b,-dx,-dy);return [ax+dx*ta,ay+dy*ta,bx-dx*tb,by-dy*tb];};
@@ -2710,7 +2712,7 @@ function scRend(){
 /* =================== Débat =================== */
 let dbOrdre=[],dbI=0,dbPropre=true;
 function dbInit(){const D=JX.debat;$("db-titre").textContent=D.titre;$("db-contexte").textContent=D.contexte;$("db-note").textContent=D.note;
- dbOrdre=melange(D.repliques.map((r,i)=>i));dbI=0;dbCharge();}
+ dbOrdre=melange(D.repliques.map((r,i)=>i).filter(i=>etat.deb.fait||etat.deb.ok.indexOf(i)<0));dbI=0;if(!etat.deb.fait&&etat.deb.ok.length)toast("Tu reprends le débat : "+etat.deb.ok.length+" réplique(s) déjà attribuée(s).");dbCharge();}
 function dbCharge(){const D=JX.debat,z=$("db-zone");
  if(dbI>=dbOrdre.length){etat.deb.fait=true;sauveDirty();verifieEstampes();z.innerHTML=`<p class="citation" style="font-style:normal">Débat terminé</p><p>Tu as démêlé les arguments des deux camps. En mars 1865, les députés adoptent le projet de fédération, sans consulter la population comme le réclamait Dorion.</p><p class="nav"><button class="btn" data-ecran="ecran-gare">Retour à la gare</button> <button class="btn contour" onclick="dbInit()">Rejouer</button></p>`;return;}
  dbPropre=true;const k=dbOrdre[dbI],r=D.repliques[k];
