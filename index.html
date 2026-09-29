@@ -484,29 +484,29 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 .trouvaille.tourne .tr-verso{display:block}
 
 /* ============ V6.0 : vestibule des cours (identité vert-gris) ============ */
-#ecran-vestibule{background:linear-gradient(#edf1ea,#e2e9df);min-height:100vh}
-.vestibule{padding:2.6rem 0 2rem;text-align:center}
+#ecran-vestibule{background:linear-gradient(#fbf1e4,#f2dfc6);min-height:100vh;position:relative;overflow:hidden}
+.vestibule{padding:2.4rem 2rem 1.6rem;text-align:center;background:rgba(252,245,236,.93);border-radius:14px;margin:2rem 0;box-shadow:0 10px 30px rgba(110,50,24,.12);position:relative}
 .vest-sur{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:#5c6b5e;font-weight:700}
-.vest-titre{font-size:clamp(2.5rem,8vw,4.2rem);line-height:1.05;color:#22352a;margin:.2rem 0 .8rem;font-weight:600}
+.vest-titre{font-size:clamp(2.5rem,8vw,4.2rem);line-height:1.05;color:#3b2416;margin:.2rem 0 .8rem;font-weight:600}
 .vest-filet{display:flex;align-items:center;gap:.7rem;justify-content:center;margin:.3rem 0 .9rem}
-.vest-filet span{height:2px;background:#3e6b4f;flex:0 0 92px;opacity:.5}
-.vest-ecole{color:#5c6b5e;font-size:1.05rem;margin:-.15rem 0 .55rem}
-.vest-note{color:#5c6b5e;margin-bottom:.3rem}
-#ecran-vestibule .tuiles span{background:#e7ece3}
+.vest-filet span{height:2px;background:#a8471f;flex:0 0 92px;opacity:.5}
+.vest-ecole{color:#7a5a45;font-size:1.05rem;margin:-.15rem 0 .55rem}
+.vest-note{color:#7a5a45;margin-bottom:.3rem}
+#ecran-vestibule .tuiles span{background:transparent}
 .vest-cours{display:grid;gap:1rem;margin:1.5rem 0 1.2rem;text-align:left}
-.cours{display:flex;align-items:center;gap:1.1rem;padding:1.05rem 1.25rem;border-radius:8px;border:2px solid #3e6b4f;background:#fff;font-family:inherit;font-size:1rem;transition:transform .18s,box-shadow .18s}
-.cours.ouvert:hover{transform:translateX(6px);box-shadow:0 8px 18px rgba(34,53,42,.18)}
-.cours-sec{flex:0 0 auto;background:#3e6b4f;color:#fff;border-radius:6px;padding:.5rem .65rem;font-weight:700;font-size:.92rem;line-height:1.15;text-align:center;letter-spacing:.02em}
+.cours{display:flex;align-items:center;gap:1.1rem;padding:1.05rem 1.25rem;border-radius:8px;border:2px solid #a8471f;background:#fff;font-family:inherit;font-size:1rem;transition:transform .18s,box-shadow .18s}
+.cours.ouvert:hover{transform:translateX(6px);box-shadow:0 8px 18px rgba(110,50,24,.2)}
+.cours-sec{flex:0 0 auto;background:#a8471f;color:#fff;border-radius:6px;padding:.5rem .65rem;font-weight:700;font-size:.92rem;line-height:1.15;text-align:center;letter-spacing:.02em}
 .cours-info{flex:1;display:flex;flex-direction:column;gap:.15rem}
-.cours-info strong{font-size:1.16rem;color:#22352a;line-height:1.25}
-.cours-info em{font-style:normal;color:#5c6b5e;font-size:.92rem}
-.cours-fleche{color:#3e6b4f;font-weight:700;white-space:nowrap}
+.cours-info strong{font-size:1.16rem;color:#3b2416;line-height:1.25}
+.cours-info em{font-style:normal;color:#7a5a45;font-size:.92rem}
+.cours-fleche{color:#a8471f;font-weight:700;white-space:nowrap}
 .cours.ouvert:hover .cours-fleche{text-decoration:underline}
 .cours.a-venir{border:2px dashed #9aa89d;background:#eef1ec;cursor:pointer}
 .cours.a-venir .cours-sec{background:#9aa89d}
 .cours.a-venir .cours-info strong{color:#5c6b5e}
 .cours-badge{background:#cdd8c3;color:#22352a;border:1px solid #3e6b4f;border-radius:6px;padding:.2rem .55rem;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;white-space:nowrap}
-#ecran-vestibule .pied{color:#6b776d}
+#ecran-vestibule .pied{color:#8a6a55}
 @media(max-width:560px){.cours{flex-wrap:wrap}.cours-fleche,.cours-badge{margin-left:auto}}
 
 /* ============ V6.1 : boucle de retente, éclair, boussole ============ */
@@ -583,6 +583,18 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 .bk-texte{flex:1;display:flex;flex-direction:column;font-size:.95rem;color:#4a4644}
 .bk-texte strong{font-size:1.15rem;color:#201e1d}
 @media(max-width:600px){.bc-txt{display:none}.btn-carnet{padding:2px}.bloc-carnet .btn{display:none}}
+
+/* ============ marque cliquable et site frère ============ */
+.marque-lien{background:none;border:none;padding:0;cursor:pointer;font-family:inherit;color:inherit;text-align:left}
+.marque-lien:hover{text-decoration:underline}
+.pastille-soeur{position:fixed;right:22px;bottom:22px;z-index:60;width:104px;height:104px;border-radius:50%;background:#fffaf3;border:2px solid #a8471f;box-shadow:0 0 0 4px #f6e2cc,0 0 0 5.5px #a8471f,0 8px 18px rgba(110,50,24,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;color:#3b2416;line-height:1;transition:transform .18s}
+.pastille-soeur:hover{transform:translateY(-3px) rotate(-4deg)}
+.ps-nom{font-size:1.25rem;font-weight:800;letter-spacing:.08em}
+.ps-math{font-size:1.05rem;font-style:italic;color:#a8471f;margin-top:.15rem}
+.tuiles-fond{position:absolute;inset:0;margin:0;z-index:0;overflow:hidden;align-content:start;gap:4px;padding:4px}
+.tuiles-fond span.vive{opacity:.55}
+#ecran-vestibule .bandeau-logos,#ecran-vestibule .page{position:relative;z-index:1}
+@media(max-width:600px){.pastille-soeur{width:78px;height:78px;right:12px;bottom:12px}.ps-nom{font-size:.95rem}.ps-math{font-size:.85rem}.vestibule{padding:1.6rem 1rem}}
 </style>
 </head>
 <body>
@@ -590,6 +602,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : PORTAIL ESMO ======================= -->
 <!-- ======================= ÉCRAN : VESTIBULE (choix du cours) ======================= -->
 <section class="ecran actif" id="ecran-vestibule">
+  <div class="tuiles tuiles-fond" data-rangs="auto" data-theme="vestibule" aria-hidden="true"></div>
   <div class="bandeau-logos"><div class="bandeau-int">
     <img id="esmo-src" src="data:image/png;base64,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" alt="ESMO — École secondaire Montessori Orford" style="height:42px">
     <img class="logo-ib" alt="Programme d'éducation intermédiaire de l'IB" style="height:42px">
@@ -598,9 +611,8 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
     <div class="vestibule">
       <h1 class="vest-titre">Les chemins de<br>l'univers social</h1>
       <p class="vest-ecole">École secondaire Montessori Orford</p>
-      <div class="vest-filet" aria-hidden="true"><span></span><svg width="22" height="20" viewBox="0 0 22 20"><path d="M11,1 L15,8 H12.5 L17,15 H5 L9.5,8 H7 Z" fill="#3e6b4f" stroke="#22352a" stroke-width="1.6" stroke-linejoin="round"/><rect x="9.9" y="15" width="2.2" height="4" fill="#22352a"/></svg><span></span></div>
+      <div class="vest-filet" aria-hidden="true"><span></span><svg width="22" height="20" viewBox="0 0 22 20"><path d="M11,1 L15,8 H12.5 L17,15 H5 L9.5,8 H7 Z" fill="#a8471f" stroke="#3b2416" stroke-width="1.6" stroke-linejoin="round"/><rect x="9.9" y="15" width="2.2" height="4" fill="#3b2416"/></svg><span></span></div>
       <p class="vest-note">Choisis ton chemin</p>
-      <div class="tuiles" data-rangs="2" data-theme="vestibule" aria-hidden="true"></div>
       <div class="vest-cours">
         <button class="cours ouvert" data-ecran="ecran-portail">
           <span class="cours-sec">3ᵉ<br>sec.</span>
@@ -613,6 +625,9 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
           <span class="cours-fleche">Entrer →</span>
         </a>
       </div>
+      <a class="pastille-soeur" href="https://www.esmomath.com/" target="_blank" rel="noopener" aria-label="ESMO math (esmomath.com)">
+        <span class="ps-nom">ESMO</span><span class="ps-math">math</span>
+      </a>
       <p class="pied" style="text-align:center">École secondaire Montessori Orford · Programme d'éducation intermédiaire de l'IB<br>Conçu par Samuel Dalpé — © 2026, tous droits réservés.</p>
     </div>
   </div>
@@ -737,7 +752,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : CARTE DU SENTIER ======================= -->
 <section class="ecran" id="ecran-carte">
   <div class="barre">
-    <span class="sur-titre" style="font-size:.7rem"><span class="logo-sapin"></span>Les sentiers de l'histoire</span>
+    <button class="sur-titre marque-lien" data-ecran="ecran-vestibule" title="Retour à la page d'accueil" style="font-size:.7rem"><span class="logo-sapin"></span>Les sentiers de l'histoire</button>
     <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span id="mini-avatar-1" class="mini-avatar"></span><span class="bc-txt">Mon carnet<small><span id="nom-affiche-1"></span> · <span class="bc-nb"></span></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span>
   </div>
   <div class="page">
@@ -1294,7 +1309,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : TABLEAU D'HONNEUR ======================= -->
 <section class="ecran" id="ecran-honneur">
   <div class="barre"><button class="retour" data-ecran="ecran-portail">← Portail</button>
-    <span class="qui"><span class="sur-titre" style="font-size:.7rem"><span class="logo-sapin"></span>Les sentiers de l'histoire</span></span></div>
+    <span class="qui"><button class="sur-titre marque-lien" data-ecran="ecran-vestibule" title="Retour à la page d'accueil" style="font-size:.7rem"><span class="logo-sapin"></span>Les sentiers de l'histoire</button></span></div>
   <div class="page">
     <p class="sur-titre">Chapitre 1 · Des origines à 1608</p>
     <h1 style="font-size:clamp(1.6rem,5vw,2.3rem)">Le tableau d'honneur des sommets</h1>
@@ -1537,7 +1552,7 @@ const TUILE_THEMES={
  oi:{c:["#201e1d","#0088b0"],f:[2,0],t:["","","#eae7e7","#e9f8ff"],d:.58},
  pei:{c:["#e0aa14","#0088b0","#201e1d"],f:[1,5,0],t:["","","#f7edd3"],d:.6},
  album:{c:["#0088b0","#d6006c","#e0aa14","#201e1d"],f:[0,1,5],t:["","","#fff1f4","#e9f8ff"],d:.6},
- vestibule:{c:["#3e6b4f","#6f9a7d","#22352a","#8fa08f"],f:[1,2,3],t:["","","#e0e7dd","#eef1ec"],d:.55}
+ vestibule:{c:["#a8471f","#d98c3f","#e0aa14","#6e3218"],f:[0,1,2,3,4,5],t:["","","","#f6e2cc","#fbecdc"],d:.5}
 };
 function formeTuile(coul,fx){
   const rot=90*Math.floor(Math.random()*4);
@@ -1580,9 +1595,11 @@ function tuiles(){
     const page=z.closest(".page");
     let larg=window.innerWidth;
     if(page){const mx=parseFloat(getComputedStyle(page).maxWidth);if(mx)larg=Math.min(mx,larg);}
-    larg-=38;
-    const cols=Math.max(10,Math.floor((larg+4)/22));
-    const rangs=parseInt(z.dataset.rangs||"2",10);
+    const fond=z.dataset.rangs==="auto";
+    if(!fond)larg-=38;
+    const cols=Math.max(10,Math.floor((larg+4)/(fond?30:22)));
+    const hautFond=fond?Math.max(window.innerHeight,(z.parentNode.scrollHeight||0)):0;
+    const rangs=fond?Math.ceil(hautFond/(larg/cols))+1:parseInt(z.dataset.rangs||"2",10);
     const theme=z.dataset.theme||"defaut";
     z.style.gridTemplateColumns="repeat("+cols+",1fr)";
     z.innerHTML="";
@@ -1597,7 +1614,7 @@ function tuiles(){
       const th=z.dataset.theme||"defaut";
       const sp=z.querySelectorAll("span");
       if(!sp.length)return;
-      const nb=2+Math.floor(Math.random()*3);
+      const nb=Math.max(2,Math.round(sp.length/70))+Math.floor(Math.random()*3);
       for(let i=0;i<nb;i++){
         peupleTuile(sp[Math.floor(Math.random()*sp.length)],true,th);
       }
