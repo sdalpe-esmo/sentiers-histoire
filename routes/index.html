@@ -129,7 +129,7 @@ h3{font-family:var(--t-titre);font-weight:400;font-size:21px;color:var(--bordeau
 .estampes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .est{aspect-ratio:1;position:relative;display:flex;align-items:center;justify-content:center}
 .est svg{width:100%;height:100%}
-.est .vide{width:86%;height:86%;border:1px dashed #a89572;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;color:#9a8762;font-style:italic;padding:4px;line-height:1.15}
+.est .vide{width:86%;height:86%;border:1px dashed #a89572;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:11px;color:#9a8762;font-style:italic;padding:4px;line-height:1.15}
 .est.visa .vide{border-radius:4px}
 @keyframes tamponne{0%{transform:scale(2.4) rotate(-20deg);opacity:0}60%{transform:scale(.92) rotate(var(--rot));opacity:1}100%{transform:scale(1) rotate(var(--rot));opacity:1}}
 .est .encre{transform:rotate(var(--rot))}
@@ -156,6 +156,49 @@ h3{font-family:var(--t-titre);font-weight:400;font-size:21px;color:var(--bordeau
 .stat span{font-size:14px;color:var(--sepia)}
 textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-height:90px}
 @media(max-width:700px){.pages{grid-template-columns:1fr}.form-id{grid-template-columns:1fr}.bacs,.camps,.assoc{grid-template-columns:1fr}.estampes{grid-template-columns:repeat(3,1fr)}}
+
+/* accès au passeport */
+.btn-passeport{display:flex;align-items:center;gap:8px;background:#141b40;color:#f2dfa2;border:1px solid #8e6e2a;border-radius:999px;padding:3px 14px 3px 3px;cursor:pointer;font-size:15px;line-height:1.1}
+.btn-passeport:hover{background:#1d2856}
+.btn-passeport .mini-sceau{width:38px;height:38px;border-radius:50%;background:#e8d9b3}
+.btn-passeport .mini-sceau svg{width:38px;height:38px}
+.bp-txt{display:flex;flex-direction:column;text-align:left}
+.bp-txt small{font-size:12px;color:#d8c38a;font-style:italic}
+.bloc-passeport{display:flex;align-items:center;gap:16px;margin:16px 0 4px;padding:12px 16px;background:#f6efdc;border:1px solid var(--filet);border-left:6px solid #141b40;border-radius:3px;cursor:pointer;transition:box-shadow .15s}
+.bloc-passeport:hover{box-shadow:0 5px 12px rgba(91,74,51,.25)}
+.bp-couv{flex:0 0 46px;height:64px;border-radius:4px 7px 7px 4px;overflow:hidden;box-shadow:2px 2px 0 #d8cba7}
+.bp-couv svg{width:46px;height:64px;display:block}
+.bp-texte{flex:1;display:flex;flex-direction:column;font-size:15px;color:var(--sepia)}
+.bp-texte strong{font-family:var(--t-titre);font-weight:400;font-size:21px;color:var(--marine)}
+@media(max-width:600px){.bp-txt{display:none}.btn-passeport{padding:3px}.bloc-passeport .btn{display:none}}
+
+/* livret multipage */
+.pp-nav{display:flex;justify-content:space-between;align-items:center;padding:8px 6px 2px;color:#d8c38a;font-style:italic;font-size:14px}
+.pp-nav button{background:transparent;border:1px solid #8e6e2a;color:#f2dfa2;border-radius:999px;padding:4px 14px;cursor:pointer;font-size:14px}
+.pp-nav button:disabled{opacity:.3;cursor:default}
+@keyframes feuillette{from{transform:perspective(1600px) rotateY(10deg);opacity:.25}to{transform:none;opacity:1}}
+.pages.tourne{animation:feuillette .45s ease-out both;transform-origin:left center}
+.folio{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;color:var(--sepia);font-style:italic}
+.est{cursor:default}.est.obtenue{cursor:pointer}
+.est.obtenue:hover{filter:drop-shadow(0 0 3px rgba(29,40,86,.35))}
+.est .vide .cond{display:block;margin-top:3px;font-style:normal;color:#8a7550;font-size:10px}
+.barre-prog{display:block;height:4px;background:#d8cba7;border-radius:2px;margin:4px auto 0;width:70%;overflow:hidden}
+.barre-prog i{display:block;height:100%;background:#1d2856}
+.note-voyage{margin-top:10px;background:#fbf7ec;border:1px solid var(--filet);border-left:4px solid var(--bordeaux);padding:8px 12px;font-size:14.5px;line-height:1.4}
+.note-voyage b{font-family:var(--t-titre);font-weight:400;color:var(--marine);font-size:17px}
+.note-voyage .date{display:block;font-size:12px;color:var(--sepia);font-style:italic}
+.geo-chip{display:inline-block;margin-top:6px;border:1px solid var(--marine);border-radius:999px;padding:1px 10px;font-size:13px;text-decoration:none;color:var(--marine)}
+.geo-chip:hover{background:var(--marine);color:#f6efdc}
+.carte-itin svg{width:100%;height:auto;display:block}
+
+/* atelier des OI */
+.dossier{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.doc{background:#fbf7ec;border:1px solid var(--filet);padding:10px 12px;border-radius:3px;font-size:15px}
+.doc-tete{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.doc-lettre{flex:0 0 28px;height:28px;border-radius:50%;background:var(--marine);color:#f6efdc;display:flex;align-items:center;justify-content:center;font-weight:700}
+.doc img{width:100%;max-height:180px;object-fit:contain;background:#efe4c5;border:1px solid var(--filet);display:block}
+.doc p{margin:8px 0 0;line-height:1.4}
+.doc-src{font-size:12px;color:var(--sepia);font-style:italic}
 </style></head><body>
 <svg class="fond" width="100%" height="100%" preserveAspectRatio="none" aria-hidden="true"><defs>
 <filter id="fpapier" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" seed="5" result="t"/><feColorMatrix in="t" type="matrix" values="0 0 0 0 .55  0 0 0 0 .43  0 0 0 0 .24  0 0 0 .2 0" result="tache"/><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9" result="f"/><feColorMatrix in="f" type="matrix" values="0 0 0 0 .3  0 0 0 0 .25  0 0 0 0 .15  0 0 0 .08 0" result="fibre"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="tache"/><feMergeNode in="fibre"/></feMerge></filter>
@@ -210,18 +253,24 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
 
 <!-- ============ GARE CENTRALE ============ -->
 <section class="ecran" id="ecran-gare">
- <div class="barre"><div class="int"><a class="retour" href="/">← Tous les cours</a><div class="qui"><span class="chip">✦ <b class="pts">0</b> / 1000</span><span class="mini-sceau" title="Ouvrir mon passeport"></span></div></div></div>
+ <div class="barre"><div class="int"><a class="retour" href="/">← Tous les cours</a><div class="qui"><span class="chip">✦ <b class="pts">0</b> / 1000</span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Chapitre 1 · Partie 1 · 1840-1867</p>
   <h1>La gare centrale</h1>
-  <p class="chapeau">De Montréal au 1ᵉʳ juillet 1867, chaque tranche de 100 points te vaut une nouvelle estampe dans ton passeport. Révise, voyage, puis prouve ce que tu sais.</p>
+  <p class="chapeau">Ton voyage suit la grande ligne du Grand Tronc, de Sarnia à Rivière-du-Loup. Chaque tranche de 100 points te fait avancer d'une gare et te vaut une estampe dans ton passeport; à 1000 points, tu entres dans le Dominion du Canada.</p>
   <div class="voie" id="voie"></div>
-  <div class="voie-legende"><span>Départ · 1840</span><span id="voie-msg"></span><span>Terminus · 1867</span></div>
+  <div class="voie-legende"><span>Sarnia · départ</span><span id="voie-msg"></span><span>Terminus · 1867</span></div>
+  <div class="bloc-passeport ouvre-passeport" role="button" tabindex="0" aria-label="Ouvrir mon passeport">
+   <span class="bp-couv" id="bp-couv"></span>
+   <span class="bp-texte"><strong>Mon passeport</strong><span id="bp-detail">Ton sceau, tes estampes de gare et tes visas d'exploits.</span></span>
+   <span class="btn">Ouvrir mon passeport →</span>
+  </div>
   <h2>Réviser · les fiches</h2><div class="grille" id="liste-fiches"></div>
   <h2>Voyager · les étapes</h2><p style="margin:0 0 10px;font-size:16px;color:var(--sepia)">Trois erreurs permises par étape. Les points ne comptent qu'à la première bonne réponse.</p><div class="grille" id="liste-niveaux"></div>
   <h2>Les ateliers</h2><div class="grille">
    <button class="carte" data-ecran="ecran-frise"><span class="n">Situer dans le temps</span><span class="t">La ligne du temps</span><span class="d">25 événements à placer</span><span class="etat" data-etat="frise"></span></button>
    <button class="carte" data-ecran="ecran-schemas"><span class="n">Faire des liens</span><span class="t">Les schémas à compléter</span><span class="d">6 schémas récapitulatifs</span><span class="etat" data-etat="schemas"></span></button>
+   <button class="carte" data-ecran="ecran-oi"><span class="n">Interroger des documents</span><span class="t">L'atelier de l'historien</span><span class="d">6 opérations intellectuelles de l'épreuve</span><span class="etat" data-etat="oi"></span></button>
    <button class="carte" data-ecran="ecran-debat"><span class="n">Prendre position</span><span class="t">Le grand débat de 1865</span><span class="d">Cartier contre Dorion</span><span class="etat" data-etat="debat"></span></button>
   </div>
   <h2>Terminus</h2><div class="grille"><button class="carte" data-ecran="ecran-bilan"><span class="n">1ᵉʳ juillet 1867</span><span class="t">Mon bilan de voyage</span><span class="d">Résultats, boussole des erreurs, code de voyage</span></button></div>
@@ -231,13 +280,13 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
 
 <!-- ============ FICHE ============ -->
 <section class="ecran" id="ecran-fiche">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page"><div id="fiche-contenu"></div></div>
 </section>
 
 <!-- ============ ÉTAPE (QUIZ) ============ -->
 <section class="ecran" id="ecran-quiz">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre" id="qz-sous"></p><h1 id="qz-titre"></h1><p class="chapeau" id="qz-consigne"></p>
   <div class="zone"><div class="hud"><span id="qz-prog"></span><span class="vies" id="qz-vies"></span></div><div id="qz-corps"></div><div class="retro" id="qz-retro" role="status"></div><div class="nav" id="qz-nav"></div></div>
@@ -246,10 +295,10 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
 
 <!-- ============ LIGNE DU TEMPS ============ -->
 <section class="ecran" id="ecran-frise">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Atelier · situer dans le temps</p><h1>La ligne du temps</h1>
-  <p class="chapeau">Choisis une carte, puis clique à l'endroit où elle se place. Trois défis : la décennie, l'année exacte, puis l'ordre des événements d'une même année.</p>
+  <p class="chapeau">Choisis une carte, puis clique à l'endroit où elle se place. Trois défis : la décennie, l'année exacte, puis l'ordre d'étapes qui s'enchaînent la même année.</p>
   <div class="onglets" id="fr-onglets"><button data-mode="1">1 · La décennie</button><button data-mode="2">2 · L'année</button><button data-mode="3">3 · La même année</button></div>
   <div class="legende"><span><i style="background:#c2552e"></i>Aspect politique</span><span><i style="background:#5f8f3a"></i>Aspect économique</span><span><i style="background:#2f7a95"></i>Aspect social</span><span><i style="background:#c9a23c"></i>Aspect territorial</span></div>
   <div class="zone" id="fr-zone"></div>
@@ -258,7 +307,7 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
 
 <!-- ============ SCHÉMAS ============ -->
 <section class="ecran" id="ecran-schemas">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Atelier · faire des liens</p><h1>Les schémas à compléter</h1>
   <p class="chapeau">Choisis une étiquette, puis la case pointillée où elle va. Attention aux leurres : certaines étiquettes ne vont nulle part.</p>
@@ -269,7 +318,7 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
 
 <!-- ============ DÉBAT ============ -->
 <section class="ecran" id="ecran-debat">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Atelier · prendre position</p><h1 id="db-titre"></h1>
   <p class="chapeau" id="db-contexte"></p><p style="font-size:14px;color:var(--sepia)" id="db-note"></p>
@@ -277,9 +326,19 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
  </div>
 </section>
 
+<!-- ============ ATELIER DES OI ============ -->
+<section class="ecran" id="ecran-oi">
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
+ <div class="page">
+  <p class="sur-titre">Atelier · opérations intellectuelles</p><h1>L'atelier de l'historien</h1>
+  <p class="chapeau">Six exercices, un par opération intellectuelle de l'épreuve ministérielle. Lis le dossier documentaire, puis réponds en t'appuyant sur les documents : la réponse est toujours dans le dossier.</p>
+  <div class="grille" id="oi-liste"></div><div id="oi-zone"></div>
+ </div>
+</section>
+
 <!-- ============ BILAN ============ -->
 <section class="ecran" id="ecran-bilan">
- <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><span class="mini-sceau"></span></div></div></div>
+ <div class="barre"><div class="int"><button class="retour" data-ecran="ecran-gare">← Gare centrale</button><div class="qui"><span class="chip">✦ <b class="pts">0</b></span><button class="btn-passeport" aria-label="Ouvrir mon passeport"><span class="mini-sceau"></span><span class="bp-txt">Mon passeport<small class="bp-nb"></small></span></button></div></div></div>
  <div class="page">
   <p class="sur-titre">Terminus</p><h1>Mon bilan de voyage</h1>
   <div class="stats" id="bi-stats"></div>
@@ -296,15 +355,8 @@ textarea{font-size:14px;font-family:"DejaVu Sans Mono",Consolas,monospace;min-he
 <!-- ============ PASSEPORT OUVERT ============ -->
 <div class="voile" id="passeport" hidden role="dialog" aria-modal="true" aria-label="Mon passeport">
  <div class="livret"><button class="fermer" id="pp-fermer" aria-label="Fermer">✕</button>
-  <div class="pages">
-   <div class="pg pg-g"><h4>PROVINCE DU CANADA</h4>
-    <div style="display:flex;gap:16px;align-items:flex-start"><div id="pp-sceau" style="flex:0 0 150px"></div>
-     <div><div class="champ"><span class="e">TITULAIRE</span><span class="v" id="pp-nom"></span></div><div class="champ"><span class="e">N° DE PASSEPORT</span><span class="v" id="pp-num" style="font-family:monospace;font-size:17px"></span></div><div class="champ"><span class="e">TRONÇON</span><span class="v">1840 – 1867 · Partie 1</span></div><div class="champ"><span class="e">POINTS DE VOYAGE</span><span class="v"><span class="pts">0</span> / 1000</span></div></div></div>
-    <p style="font-size:14px;margin-top:14px"><button class="btn contour" id="pp-modifier" style="font-size:14px;padding:5px 12px">Modifier mon sceau</button></p>
-    <div class="mrz" id="pp-mrz"></div>
-   </div>
-   <div class="pg pg-d"><h4>ESTAMPES ET VISAS</h4><div class="estampes" id="pp-estampes"></div></div>
-  </div>
+  <div class="pages" id="pp-pages"></div>
+  <div class="pp-nav"><button id="pp-prec">‹ Pages précédentes</button><span id="pp-folio"></span><button id="pp-suiv">Pages suivantes ›</button></div>
  </div>
 </div>
 
@@ -1500,13 +1552,11 @@ window.CH1P1_JEUX = {
   },
   {
    "an": 1854,
-   "m": 6,
    "t": "Signature du traité de réciprocité avec les États-Unis",
    "a": "eco"
   },
   {
    "an": 1854,
-   "m": 12,
    "t": "Abolition du régime seigneurial",
    "a": "eco"
   },
@@ -1536,19 +1586,16 @@ window.CH1P1_JEUX = {
   },
   {
    "an": 1866,
-   "m": 3,
    "t": "Fin du traité de réciprocité",
    "a": "eco"
   },
   {
    "an": 1866,
-   "m": 6,
    "t": "Premiers raids des Féniens",
    "a": "pol"
   },
   {
    "an": 1866,
-   "m": 12,
    "fin": 1867,
    "t": "Conférence de Londres",
    "a": "pol"
@@ -2359,19 +2406,21 @@ window.CH1P1_JEUX = {
 };
 
 window.CH1P1_FICHES = [{"titre": "L'Acte d'Union", "dates": "1839-1840", "blocs": [["Le rapport Durham (1839)", ["Après les rébellions de 1837-1838, Lord Durham est nommé gouverneur et enquête sur leurs causes.", "Il relève deux problèmes : le conflit entre Canadiens français et Britanniques, et un pouvoir concentré entre les mains du gouverneur et des conseils nommés.", "Il ajoute un argument économique : endetté par ses canaux, le Haut-Canada gagnerait à partager ses finances avec le Bas-Canada."]], ["Les solutions proposées", ["Unir les deux Canadas et favoriser une forte immigration britannique pour assimiler les Canadiens français.", "Accorder la responsabilité ministérielle, que Londres refuse pour garder le contrôle de la colonie."]], ["L'Acte d'Union (1840)", ["C'est la 4ᵉ constitution. Le Haut et le Bas-Canada forment la Province du Canada (Canada-Uni) : le Canada-Ouest et le Canada-Est.", "Union législative : une seule Chambre d'assemblée, un seul Conseil législatif, un seul Conseil exécutif.", "84 députés, 42 par section, alors que le Bas-Canada est plus peuplé : il est sous-représenté et les Canadiens français deviennent minoritaires.", "Les dettes sont fusionnées. Les lois civiles françaises restent au Bas-Canada, le droit criminel anglais s'applique partout, et les documents officiels sont rédigés en anglais seulement."]]]}, {"titre": "Le gouvernement responsable", "dates": "1841-1849", "blocs": [["Les élections de 1841", ["Deux camps s'affrontent : les conservateurs (tories), qui défendent le statu quo, et les réformistes, qui veulent un gouvernement responsable.", "Le gouverneur tente de truquer le vote (achat de votes, carte électorale, fiers-à-bras), mais les réformistes l'emportent."]], ["L'alliance Baldwin-LaFontaine", ["Robert Baldwin (Haut-Canada) et Louis-Hippolyte LaFontaine (Bas-Canada) s'allient.", "Ils appliquent la double majorité : une loi doit être appuyée par une majorité de députés de chaque section."]], ["Le gouvernement responsable (1848)", ["Lord Elgin laisse les réformistes choisir les ministres parmi les élus du parti majoritaire.", "Changement : le pouvoir passe au premier ministre et aux ministres, qui doivent garder la confiance de la Chambre.", "Continuité : les relations extérieures et la constitution relèvent toujours de Londres."]], ["Les lois de 1848-1849", ["Le français est de nouveau reconnu au Parlement, et une loi d'amnistie pardonne aux Patriotes.", "La loi d'indemnisation des victimes des soulèvements est sanctionnée le 25 avril 1849 : le soir même, des émeutiers incendient le Parlement de Montréal.", "En 1849, une loi retire le droit de vote aux femmes."]]]}, {"titre": "L'influence de l'Église catholique", "dates": "1840-1867", "blocs": [["Le retour en force de l'Église", ["Le clergé a condamné les rébellions : il gagne la confiance des autorités britanniques.", "La Loi sur l'instruction publique de 1841 pose les bases du premier système d'écoles publiques, organisé selon la religion.", "Mgr Ignace Bourget, évêque de Montréal dès 1840, recrute en Europe de nombreux religieux et religieuses."]], ["Deux idéologies qui s'opposent", ["L'ultramontanisme : l'Église est au-dessus de l'État, fidèle au pape, présente dans toutes les sphères de la vie; elle fait respecter l'Index, la liste des livres interdits établie par Rome.", "L'anticléricalisme : l'État doit être laïque et l'Église se limiter à la religion. Ses foyers : l'Institut canadien de Montréal (1844) et le journal L'Avenir (1847-1852)."]], ["Le nationalisme de survivance", ["En réaction à la menace d'assimilation du rapport Durham, la survie du peuple canadien-français repose sur la foi, la langue, les familles nombreuses et la vie rurale.", "Le clergé s'en fait le principal défenseur."]]]}, {"titre": "L'économie coloniale et les Premières Nations", "dates": "1840-1866", "blocs": [["L'agriculture", ["Le Haut-Canada exporte ses céréales vers le Royaume-Uni; au Bas-Canada, la crise agricole persiste.", "La forte natalité rend les terres rares : c'est l'exode rural.", "Le régime seigneurial est aboli en 1854."]], ["L'industrie forestière", ["Le bois est le principal produit d'exportation du Bas-Canada, et le port de Québec est l'un des plus grands d'Amérique du Nord.", "L'Outaouais, le Saguenay et la Mauricie se développent autour des scieries."]], ["Les effets sur les Premières Nations", ["Privées de leur rôle d'alliées dans le commerce des fourrures, elles voient leurs territoires reculer devant la coupe forestière et la colonisation.", "La commission Bagot (rapport en 1844) recommande la sédentarisation dans des territoires réservés et des pensionnats pour assimiler les enfants.", "En 1851, une loi crée des réserves au Bas-Canada, à condition d'abandonner le nomadisme et de pratiquer l'agriculture."]], ["Du protectionnisme à la réciprocité", ["En 1846, le Royaume-Uni abolit les Corn Laws et adopte le libre-échange : les produits coloniaux perdent leur marché privilégié.", "En 1854, le traité de réciprocité ouvre le marché américain au blé et au bois; il prend fin en 1866."]]]}, {"titre": "La première phase d'industrialisation", "dates": "vers 1850", "blocs": [["L'immigration transatlantique", ["Chômage, pauvreté et famine en Irlande poussent des milliers de Britanniques à émigrer.", "En 1847, le typhus fait des milliers de victimes, notamment au poste de quarantaine de Grosse-Île.", "La plupart s'établissent au Haut-Canada; au Bas-Canada, ils choisissent des lieux déjà anglophones."]], ["L'industrialisation", ["La machine à vapeur mécanise la production; les usines s'installent à Montréal et à Toronto, où se trouvent la main-d'œuvre et les transports.", "La division du travail confie à chaque ouvrier une tâche simple et répétitive : la productivité augmente.", "Secteurs : alimentation, tabac, cuir, textile, bois de sciage, fer et acier.", "Capitalisme industriel : les capitaux viennent surtout de la bourgeoisie d'affaires britannique."]], ["Les transports", ["On agrandit les canaux (Lachine, Welland) et on modernise les ports.", "Le chemin de fer fonctionne toute l'année. Le Grand Tronc, fondé en 1852, relie Montréal à Toronto puis aux ports américains."]]]}, {"titre": "Vers la fédération canadienne", "dates": "1851-1864", "blocs": [["Des problèmes économiques", ["La fin du traité de réciprocité (1866) ferme un grand marché : on envisage une union politique, plus durable qu'une entente commerciale.", "Le Grand Tronc, lourdement endetté, menace de faire faillite."]], ["Des problèmes de défense", ["Londres demande à ses colonies d'assurer elles-mêmes leur défense.", "Les États-Unis inquiètent : expansion vers l'ouest et hostilité du Nord pendant la guerre de Sécession.", "Les Féniens, patriotes irlandais installés aux États-Unis, attaquent les colonies de 1866 à 1871."]], ["Des problèmes politiques", ["Les partis se transforment : libéraux-conservateurs (Macdonald) et Clear Grits (Brown) au Haut-Canada, Bleus (Cartier) et Rouges au Bas-Canada.", "Clear Grits et Bleus sont incompatibles : la double majorité devient impossible et une dizaine de gouvernements se succèdent de 1854 à 1864.", "Depuis 1851, le Haut-Canada est plus peuplé : George Brown réclame la représentation proportionnelle (Rep by Pop)."]], ["La Grande Coalition (1864)", ["Macdonald, Brown et Cartier s'allient pour réformer la constitution de 1840; le Parti rouge reste à l'écart."]]]}, {"titre": "L'Acte de l'Amérique du Nord britannique", "dates": "1864-1867", "blocs": [["Les conférences", ["Charlottetown (septembre 1864) : les colonies s'entendent sur le principe du fédéralisme et d'un chemin de fer intercolonial.", "Québec (octobre 1864) : union fédérale centralisée, représentation selon la population, adoption des 72 résolutions.", "Le Parti rouge s'oppose au projet; la Nouvelle-Écosse et le Nouveau-Brunswick l'acceptent contre la promesse de l'Intercolonial; Terre-Neuve et l'Île-du-Prince-Édouard se retirent. Les Autochtones sont exclus des négociations.", "Londres (1866-1867) : la constitution est rédigée puis approuvée par le Parlement britannique."]], ["Le Dominion du Canada (1ᵉʳ juillet 1867)", ["Quatre provinces : Ontario, Québec, Nouveau-Brunswick et Nouvelle-Écosse. Capitale fédérale : Ottawa.", "Le Royaume-Uni garde les relations internationales et le pouvoir de modifier la constitution. Le monarque britannique reste chef d'État, mais le premier ministre dirige : c'est une monarchie constitutionnelle."]], ["Le fédéralisme canadien", ["Deux paliers de gouvernement, chacun dans ses champs de compétence : au fédéral la défense, le droit criminel, la monnaie, la poste; aux provinces l'éducation, le droit civil, les municipalités, les forêts; partagés : immigration, agriculture, transports, pêcheries.", "Le fédéral détient le droit de désaveu et les pouvoirs résiduaires.", "Le Québec conserve le droit civil français; les autres provinces appliquent la common law.", "Grâce aux droits de douane, le fédéral a plus de revenus; les provinces dépendent de ses subventions."]]]}];
+window.CH1P1_OI = {"docs": {"carte": {"titre": "Le Canada-Uni après l'Acte d'Union (1840)", "desc": "Carte de la Province du Canada créée en 1840 : le Canada-Ouest (ancien Haut-Canada) et le Canada-Est (ancien Bas-Canada) sont réunis en une seule colonie, le long du Saint-Laurent et des Grands Lacs.", "img": "https://documents.recitus.qc.ca/components/com_gdwgestion/download.php?fileid=964", "src": "Service national du RÉCIT, domaine de l'univers social — licence CC BY-NC-SA.", "page": "https://documents.recitus.qc.ca/2e-cycle/document/le-canada-uni-apres-l-acte-d-union-en-1840"}, "gouv": {"titre": "Le gouvernement responsable", "desc": "Après 1840, Londres refuse la responsabilité ministérielle. L'alliance des réformistes de Baldwin et de LaFontaine remporte les élections de 1841, mais la colonie ne l'obtient qu'en 1848 : les ministres doivent désormais être issus de la majorité élue et garder son appui, sinon ils démissionnent.", "img": "https://documents.recitus.qc.ca/components/com_gdwgestion/download.php?fileid=982", "src": "Service national du RÉCIT, domaine de l'univers social — licence CC BY-NC-SA.", "page": "https://documents.recitus.qc.ca/2e-cycle/document/document-8-le-gouvernement-responsable"}, "protec": {"titre": "La fin du protectionnisme britannique", "desc": "À partir de 1846, le Royaume-Uni, devenu une grande puissance industrielle, adopte le libre-échange et abolit les tarifs qui favorisaient le bois et les grains de ses colonies. Les marchands de la colonie perdent les conditions de leur prospérité.", "img": "https://documents.recitus.qc.ca/components/com_gdwgestion/download.php?fileid=940", "src": "Image : Robert Auchmuty Sproule, Le port de Montréal (1830), Musée McCord — licence CC BY-NC-ND. Texte : d'après J.-P. Charland, Histoire du Canada contemporain (2007).", "page": "https://documents.recitus.qc.ca/2e-cycle/document/document-3-la-fin-du-protectionnisme-britannique-342"}, "recip": {"titre": "Le traité de réciprocité", "desc": "Signé en 1854 pour dix ans, le traité laisse passer sans droits de douane des produits agricoles et des matières premières entre la colonie et les États-Unis, en échange d'un accès aux pêcheries. Aucun produit manufacturé n'y est inclus. Les États-Unis y mettent fin en 1866.", "img": "https://documents.recitus.qc.ca/components/com_gdwgestion/download.php?fileid=970", "src": "Graphique : RÉCIT univers social, d'après l'Annuaire de l'économie politique et de la statistique (1861). Texte : d'après J.-P. Charland (2007).", "page": "https://documents.recitus.qc.ca/2e-cycle/document/document-1-le-traite-de-reciprocite"}, "reppop": {"titre": "Le Rep by pop", "desc": "L'Acte d'Union accorde autant de députés au Canada-Est qu'au Canada-Ouest. Dans les années 1850, le Canada-Ouest, devenu plus peuplé, réclame une représentation proportionnelle à sa population. En 1865, George Brown affirme que l'union des provinces mettra fin à cette injustice.", "img": "https://documents.recitus.qc.ca/components/com_gdwgestion/download.php?fileid=936", "src": "Graphique : RÉCIT univers social, d'après Cardin et Couture (2000). Texte : discours de George Brown, 8 février 1865.", "page": "https://documents.recitus.qc.ca/2e-cycle/document/document-1-le-rep-by-pop-340"}, "defense": {"titre": "La défense du Canada", "desc": "Dans les années 1860, on craint une invasion américaine : pendant la guerre de Sécession, l'Angleterre a semblé favoriser le Sud, et le Nord victorieux lui en garde rancune. On parle même, aux États-Unis, d'annexer le Canada-Uni.", "img": "https://documents.recitus.qc.ca/components/com_gdwgestion/download.php?fileid=938", "src": "Image : diorama d'une bataille de la guerre de Sécession, Library of Congress — domaine public. Texte : d'après Lacoursière, Provencher et Vaugeois (2001).", "page": "https://documents.recitus.qc.ca/2e-cycle/document/document-2-la-defense-du-canada-341"}, "coalition": {"titre": "Mettre fin à l'instabilité politique", "desc": "À l'été 1864, les Clear Grits de George Brown s'allient à leurs adversaires conservateurs de John A. Macdonald : c'est la Grande Coalition, formée contre la promesse d'un système fédéral avec une représentation proportionnelle. De 1854 à 1864, les ministères s'étaient succédé sans sortir de l'impasse.", "img": "https://documents.recitus.qc.ca/components/com_gdwgestion/download.php?fileid=942", "src": "Image : C. W. Jefferys, Rencontre entre George Brown et John A. Macdonald (1950) — domaine public. Texte : d'après Cardin et Couture (2000).", "page": "https://documents.recitus.qc.ca/2e-cycle/document/document-4-mettre-fin-a-l-instabilite-politique-343"}, "interco": {"titre": "Un chemin de fer intercolonial", "desc": "Unies, les colonies pourraient financer un chemin de fer reliant la Nouvelle-Écosse au Canada-Uni. Les échanges seraient facilités, et le Canada-Uni aurait accès au port d'Halifax, ouvert toute l'année, alors que celui de Montréal est pris par les glaces l'hiver.", "img": "https://documents.recitus.qc.ca/components/com_gdwgestion/download.php?fileid=944", "src": "Service national du RÉCIT, domaine de l'univers social — licence CC BY-NC-SA.", "page": "https://documents.recitus.qc.ca/2e-cycle/document/document-5-un-chemin-de-fer-intercolonial-344"}, "brown": {"titre": "Discours de George Brown (1865)", "desc": "Devant l'Assemblée, Brown se dit favorable à l'union : elle abolira les barrières commerciales entre les colonies, ouvrira un marché de quatre millions de personnes et offrira un nouveau débouché si les États-Unis abolissent le traité de réciprocité.", "img": "https://documents.recitus.qc.ca/components/com_gdwgestion/download.php?fileid=946", "src": "Image : Notman & Fraser, George Brown (1880), Bibliothèque et Archives Canada — domaine public. Texte : discours du 8 février 1865.", "page": "https://documents.recitus.qc.ca/2e-cycle/document/document-6-discours-de-george-brown-a-l-assemblee-legislative-345"}}, "exercices": [{"id": "o1", "oi": "Situer dans le temps et dans l'espace", "titre": "La Province du Canada et ses grands jalons", "docs": ["carte", "gouv", "protec", "recip", "coalition"], "questions": [{"t": "qcm", "q": "D'après le document A, quel territoire forme la Province du Canada en 1840 ?", "options": ["Le Canada-Ouest et le Canada-Est, réunis le long du Saint-Laurent et des Grands Lacs", "Les colonies des Maritimes", "La Terre de Rupert", "Les quatre provinces du Dominion"], "bonne": 0, "expl": "Situer dans l'espace, c'est repérer le territoire sur la carte : l'ancien Haut-Canada devient le Canada-Ouest et l'ancien Bas-Canada, le Canada-Est. Les Maritimes restent des colonies distinctes jusqu'en 1867."}, {"t": "ordre", "q": "Classe les documents B, C, D et E selon l'ordre chronologique des faits qu'ils présentent.", "hint": "Clique du plus ancien au plus récent.", "items": ["Document C — la fin du protectionnisme britannique (1846)", "Document B — l'obtention du gouvernement responsable (1848)", "Document D — la signature du traité de réciprocité (1854)", "Document E — la formation de la Grande Coalition (1864)"], "expl": "À l'épreuve, on te demande souvent d'ordonner quatre faits. Repère d'abord la date de chacun dans les documents, puis compare-les deux à deux."}]}, {"id": "o2", "oi": "Dégager des différences et des similitudes", "titre": "Deux décisions qui bouleversent le commerce", "docs": ["protec", "recip"], "questions": [{"t": "qcm", "q": "Quelle similitude peut-on dégager entre les documents A et B ?", "options": ["Dans les deux cas, une décision prise à l'étranger change les conditions du commerce de la colonie", "Dans les deux cas, la colonie obtient le gouvernement responsable", "Les deux documents portent sur la vente de produits manufacturés", "Les deux décisions sont prises par le Parlement de la colonie"], "bonne": 0, "expl": "Une similitude est un point commun précis : Londres (1846) puis Washington (1854 et 1866) décident des règles qui touchent les exportations de la colonie."}, {"t": "qcm", "q": "Quelle différence peut-on dégager entre les documents A et B ?", "options": ["La fin du protectionnisme ferme un marché privilégié, alors que le traité de 1854 en ouvre un nouveau", "Le document A concerne les États-Unis, et le document B, le Royaume-Uni", "Le document A porte sur la politique, et le document B, sur la religion", "Il n'y a aucune différence entre les deux documents"], "bonne": 0, "expl": "Une différence oppose les deux réalités sur un même aspect : l'une retire un avantage commercial, l'autre en accorde un (jusqu'à son abolition en 1866)."}]}, {"id": "o3", "oi": "Déterminer des causes et des conséquences", "titre": "Pourquoi une fédération ?", "docs": ["reppop", "defense", "interco", "coalition"], "questions": [{"t": "qcm", "q": "Quel document présente une cause militaire de la formation de la fédération ?", "options": ["Document A", "Document B", "Document C", "Document D"], "bonne": 1, "expl": "Le document B décrit la crainte d'une invasion américaine après la guerre de Sécession : unies, les colonies pourraient mieux se défendre."}, {"t": "qcm", "q": "Quel document présente une conséquence de l'instabilité ministérielle ?", "options": ["Document A", "Document B", "Document C", "Document D"], "bonne": 3, "expl": "La paralysie politique pousse Brown et Macdonald à s'allier dans la Grande Coalition de 1864 : c'est une conséquence directe de l'instabilité."}, {"t": "qcm", "q": "Quelle cause économique de la fédération le document C met-il en évidence ?", "options": ["Unies, les colonies pourraient financer un chemin de fer et accéder au port d'Halifax, ouvert toute l'année", "Les colonies veulent abolir le régime seigneurial", "Le Royaume-Uni exige que ses colonies adoptent le libre-échange", "Les colonies veulent exporter leurs produits manufacturés en Europe"], "bonne": 0, "expl": "Une cause répond à la question « pourquoi ? » : le projet ferroviaire, trop coûteux pour une seule colonie, devient réalisable par l'union."}]}, {"id": "o4", "oi": "Déterminer des changements et des continuités", "titre": "Le gouvernement responsable : qu'est-ce qui change ?", "docs": ["gouv", "carte"], "questions": [{"t": "qcm", "q": "D'après le document A, qu'est-ce qui change en 1848 ?", "options": ["Les ministres doivent être issus de la majorité élue et garder son appui", "Le Canada-Est et le Canada-Ouest redeviennent deux colonies séparées", "Le Royaume-Uni cède ses relations extérieures à la colonie", "Le gouverneur est désormais élu par la population"], "bonne": 0, "expl": "Le changement porte sur qui détient le pouvoir exécutif : il passe du gouverneur et de ses conseillers nommés à des ministres responsables devant les élus."}, {"t": "qcm", "q": "Entre 1840 et 1848, qu'est-ce qui demeure (continuité) ?", "options": ["La colonie reste une seule Province du Canada, avec une seule Chambre d'assemblée", "Le gouverneur choisit seul ses ministres", "Londres refuse toujours la responsabilité ministérielle", "Les réformistes restent exclus du pouvoir"], "bonne": 0, "expl": "Une continuité est ce qui ne bouge pas : l'union législative créée en 1840 (document B) reste en place. Les trois autres énoncés ont changé en 1848."}]}, {"id": "o5", "oi": "Mettre en relation des faits", "titre": "Classer les causes de la fédération", "docs": ["reppop", "defense", "interco", "brown"], "questions": [{"t": "assoc", "q": "Associe chaque document à la cause qu'il illustre.", "paires": [["Document A", "Cause politique : la représentation proportionnelle"], ["Document B", "Cause militaire : la crainte d'une invasion américaine"], ["Document C", "Cause économique : un chemin de fer intercolonial"], ["Document D", "Cause économique : un nouveau marché intérieur"]], "expl": "Mettre en relation, c'est associer un fait à ce qu'il représente. Classer les causes par aspect (politique, militaire, économique) prépare aussi la section B de l'épreuve."}]}, {"id": "o6", "oi": "Établir des liens de causalité", "titre": "Des marchés qui se ferment… et une union qui s'ouvre", "docs": ["protec", "recip", "brown"], "questions": [{"t": "ordre", "q": "Remets les faits dans l'ordre de leur enchaînement logique.", "hint": "Chaque fait entraîne le suivant.", "items": ["Le Royaume-Uni abolit ses tarifs préférentiels (document A)", "La colonie trouve un nouveau partenaire : le traité de réciprocité avec les États-Unis (document B)", "Les États-Unis menacent d'abolir le traité, ce qu'ils feront en 1866 (document B)", "George Brown défend l'union des colonies pour créer un nouveau marché (document C)"], "expl": "Un lien de causalité montre comment un fait en entraîne un autre : chaque perte de marché pousse la colonie à chercher une solution plus durable."}, {"t": "qcm", "q": "Quel énoncé exprime le mieux le lien de causalité entre ces trois documents ?", "options": ["Parce que la colonie perd ses marchés privilégiés, ses dirigeants voient dans l'union des colonies un marché intérieur plus sûr", "Parce que George Brown est élu, le Royaume-Uni abolit le protectionnisme", "Parce que le traité de réciprocité réussit, la colonie n'a plus besoin de s'unir", "Il n'existe aucun lien entre ces documents"], "bonne": 0, "expl": "Un bon lien de causalité nomme la cause, la conséquence et le mot qui les unit (parce que, donc, ce qui entraîne)."}]}]};
+
 </script>
 <script>
 "use strict";
 const $=id=>document.getElementById(id);
 const melange=a=>{const c=[...a];for(let i=c.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[c[i],c[j]]=[c[j],c[i]];}return c;};
-const NIV=window.CH1P1_DATA.niveaux, JX=window.CH1P1_JEUX, FICHES=window.CH1P1_FICHES;
+const NIV=window.CH1P1_DATA.niveaux, JX=window.CH1P1_JEUX, FICHES=window.CH1P1_FICHES, OI=window.CH1P1_OI;
 const OBJECTIF=1000;
 function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3200);}
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
 /* =================== État =================== */
 const etat={v:1,prenom:"",nom:"",num:"",sceau:{l:"italique",e:"marine",m:"fleur"},pts:0,
- et:{},qok:{},frise:{m1:[],m2:[],m3:[]},sch:{},deb:{fait:false,ok:[]},err:[0,0,0,0,0,0,0,0],prem:{qz:0,qt:0},est:[],vis:[]};
+ et:{},qok:{},frise:{m1:[],m2:[],m3:[]},sch:{},deb:{fait:false,ok:[]},err:[0,0,0,0,0,0,0,0],prem:{qz:0,qt:0},est:[],estD:{},vis:[],oi:{}};
 let modifie=false;
 function sauveDirty(){modifie=true;}
 window.addEventListener("beforeunload",e=>{if(modifie&&etat.pts>0){e.preventDefault();e.returnValue="";}});
@@ -2385,6 +2434,10 @@ const EMBLEMES={
  locomotive:{nom:"Locomotive",svg:c=>`<g fill="none" stroke="${c}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" transform="translate(2,2) scale(1.2)"><path d="M-16,-7 L14,-7 Q17,-7 17,-4 L17,3 L-16,3 Z"/><path d="M-6,-7 L-6,3 M4,-7 L4,3"/><path d="M9,-7 L9,-17 M14,-7 L14,-17 M7,-19 L16,-19 L14,-17 L9,-17 Z"/><path d="M-27,3 L-27,-15 L-15,-15 L-15,3 M-29,-15 L-13,-15 M-24,-11 L-18,-11 L-18,-5 L-24,-5 Z"/><path d="M17,3 L24,11 L17,11"/><path d="M-30,11 L24,11"/><circle cx="-10" cy="5.5" r="5.5"/><circle cx="3" cy="5.5" r="5.5"/><circle cx="13" cy="8" r="3"/><circle cx="-22" cy="8" r="3"/><path d="M12,-21 Q8,-26 12,-30 Q17,-33 14,-38" stroke-width="1.1"/></g>`},
  vapeur:{nom:"Bateau à vapeur",svg:c=>`<g fill="none" stroke="${c}" stroke-width="1.35" stroke-linejoin="round" stroke-linecap="round" transform="translate(1,4) scale(1.12)"><path d="M-31,6 L29,6 Q27,13 20,14 L-26,14 Q-31,11 -31,6 Z" fill="${c}" fill-opacity=".35"/><path d="M-25,6 L-25,-2 L21,-2 L21,6"/><path d="M-17,-2 L-17,-8 L13,-8 L13,-2"/><path d="M-12,6 A10,10 0 0 1 8,6 Z" fill="${c}" fill-opacity=".25"/><path d="M-2,6 L-2,-4 M-2,6 L-8.6,-1 M-2,6 L4.6,-1"/><path d="M3,-8 L3,-30 M8,-8 L8,-30 M1.5,-30 L9.5,-30"/><path d="M-26,-2 L-26,-15 M-26,-15 L-18,-13 L-26,-11"/><path d="M6,-34 Q2,-39 7,-42 Q13,-45 10,-50"/><path d="M-35,18 Q-29,15 -23,18 T-11,18 T1,18 T13,18 T25,18 T37,18" stroke-width="1"/></g>`},
  castor:{nom:"Castor de 1851",min:500,svg:c=>`<g transform="translate(0,-2) scale(1.12)" fill="${c}"><path d="M-18,4 C-20,-8 -6,-14 6,-12 C14,-11 18,-7 20,-3 C24,-5 28,-3 28,0 C28,3 24,5 20,5 C16,8 8,9 0,8 C-8,8 -16,8 -18,4 Z"/><path d="M-17,3 C-26,1 -33,5 -33,10 C-31,14 -24,12 -17,7 Z"/><circle cx="19" cy="-6" r="2"/><rect x="-34" y="11" width="66" height="4" rx="2"/></g>`},
+ pont:{nom:"Pont Victoria",visa:"ar",svg:c=>`<g fill="none" stroke="${c}" stroke-width="1.6" stroke-linejoin="round"><rect x="-38" y="-8" width="76" height="9" fill="${c}" fill-opacity=".3"/><path d="M-38,-4 L38,-4"/><path d="M-32,1 L-32,18 M-16,1 L-16,18 M0,1 L0,18 M16,1 L16,18 M32,1 L32,18" stroke-width="4.5"/><path d="M-40,22 Q-33,19 -26,22 T-12,22 T2,22 T16,22 T30,22 T44,22" stroke-width="1"/><path d="M22,-8 L22,-16 L30,-16 L30,-8" /></g>`},
+ parlement:{nom:"Parlement",visa:"tr",svg:c=>`<g fill="none" stroke="${c}" stroke-width="1.5" stroke-linejoin="round"><path d="M-32,-4 L0,-20 L32,-4 Z" fill="${c}" fill-opacity=".3"/><rect x="-30" y="-4" width="60" height="4"/><path d="M-24,0 L-24,18 M-14,0 L-14,18 M-4,0 L-4,18 M6,0 L6,18 M16,0 L16,18 M26,0 L26,18" stroke-width="2.4"/><rect x="-34" y="18" width="68" height="4" fill="${c}" fill-opacity=".3"/><path d="M0,-20 L0,-30 M0,-30 L8,-27 L0,-24"/></g>`},
+ horloge:{nom:"Horloge de gare",visa:"ch",svg:c=>`<g fill="none" stroke="${c}" stroke-linecap="round"><circle r="24" stroke-width="2"/><circle r="20" stroke-width=".8"/>${Array.from({length:12},(_,i)=>{const a=i*Math.PI/6;return `<line x1="${(17*Math.sin(a)).toFixed(1)}" y1="${(-17*Math.cos(a)).toFixed(1)}" x2="${(20*Math.sin(a)).toFixed(1)}" y2="${(-20*Math.cos(a)).toFixed(1)}" stroke-width="${i%3?1:2}"/>`;}).join("")}<path d="M0,0 L-8,-8 M0,0 L0,-15" stroke-width="2"/><circle r="1.8" fill="${c}"/></g>`},
+ couronne:{nom:"Couronne",visa:"co",svg:c=>`<g stroke="${c}" stroke-width="1.5" stroke-linejoin="round"><path d="M-24,10 L-28,-12 L-13,0 L0,-19 L13,0 L28,-12 L24,10 Z" fill="${c}" fill-opacity=".35"/><rect x="-25" y="10" width="50" height="7" fill="${c}" fill-opacity=".5"/><circle cx="-28" cy="-13" r="2.6" fill="${c}"/><circle cx="0" cy="-20" r="2.6" fill="${c}"/><circle cx="28" cy="-13" r="2.6" fill="${c}"/></g>`},
  aucun:{nom:"Sans emblème",svg:()=>""}
 };
 function rosace(R,a,m,n){let d="";for(let k=0;k<n;k++){const ph=2*Math.PI*k/n;let p=[];for(let t=0;t<=360;t+=4){const th=t*Math.PI/180,r=R+a*Math.sin(m*th+ph);p.push((r*Math.cos(th)).toFixed(1)+","+(r*Math.sin(th)).toFixed(1));}d+="M"+p.join(" L")+" Z ";}return d;}
@@ -2408,11 +2461,14 @@ function sceauSVG(cfg,taille,vieux){
  <circle r="47" fill="#e8d9b3"/><g clip-path="url(#c${id})" opacity=".2">${emb}</g>
  <circle r="47" fill="none" stroke="${c}" stroke-width="1.2"/><circle r="42" fill="none" stroke="${c}" stroke-width=".45"/>${lettres}</g></svg>`;
 }
-function majSceaux(){document.querySelectorAll(".mini-sceau").forEach(e=>{e.innerHTML=sceauSVG(etat.sceau,44,false);});}
+function majSceaux(){document.querySelectorAll(".mini-sceau").forEach(e=>{e.innerHTML=sceauSVG(etat.sceau,44,false);});const bc=$("bp-couv");if(bc&&!bc.innerHTML)bc.innerHTML=couvertureSVG();}
+function majComptePasseport(){const tot=ESCALES.length+VISAS.length,n=etat.est.length,ne=etat.est.filter(x=>x[0]==="e").length,nv=n-ne;
+ document.querySelectorAll(".bp-nb").forEach(e=>e.textContent=n+" / "+tot+" estampes");
+ const d=$("bp-detail");if(d)d.textContent=n?("Tu as "+ne+" estampe"+(ne>1?"s":"")+" de gare et "+nv+" visa"+(nv>1?"s":"")+" sur "+tot+". Clique pour les voir."):"Ton sceau, tes estampes de gare et tes visas d'exploits. Ta première estampe t'attend à 100 points.";}
 function majPoints(n){
  if(n){etat.pts+=n;sauveDirty();}
  document.querySelectorAll(".pts").forEach(e=>e.textContent=etat.pts);
- majVoie();verifieEstampes();
+ majVoie();verifieEstampes();majComptePasseport();
 }
 
 /* =================== Couverture =================== */
@@ -2432,24 +2488,29 @@ function montre(id){
  if(id==="ecran-frise")frInit();
  if(id==="ecran-schemas")scListe();
  if(id==="ecran-debat")dbInit();
+ if(id==="ecran-oi")oiListe();
  if(id==="ecran-bilan")majBilan();
  if(id==="ecran-identite")idInit();
  if(id!=="ecran-fiche"&&id!=="ecran-quiz")retenteNiv=null;
 }
 document.addEventListener("click",e=>{
  const b=e.target.closest("[data-ecran]");if(b){e.preventDefault();montre(b.dataset.ecran);return;}
- if(e.target.closest(".mini-sceau"))ouvrePasseport();
+ if(e.target.closest(".btn-passeport,.ouvre-passeport,.mini-sceau"))ouvrePasseport();
+});
+document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.closest&&e.target.closest(".ouvre-passeport")){e.preventDefault();ouvrePasseport();}
 });
 /* =================== Identité =================== */
 function idInit(){
  $("f-prenom").value=etat.prenom;$("f-nom").value=etat.nom;
- const opts=(zone,liste,cle)=>{const z=$(zone);z.innerHTML="";liste.forEach(([id,nom,min])=>{const b=document.createElement("button");const libre=!min||etat.pts>=min;
+ const opts=(zone,liste,cle)=>{const z=$(zone);z.innerHTML="";liste.forEach(([id,nom,min,visa])=>{const b=document.createElement("button");
+   const libre=(!min||etat.pts>=min)&&(!visa||etat.est.indexOf("v"+visa)>=0);
+   const cond=min?min+" points de voyage":visa?"le visa « "+VISAS.find(v=>v[0]===visa)[1]+" »":"";
    b.textContent=(libre?"":"🔒 ")+nom;b.className=(etat.sceau[cle]===id?"choisi":"")+(libre?"":" verrou");
-   if(!libre)b.title="Se débloque à "+min+" points";
-   b.onclick=()=>{if(!libre){toast("À mériter : "+min+" points de voyage.");return;}etat.sceau[cle]=id;sauveDirty();idInit();};z.appendChild(b);});};
+   if(!libre)b.title="Se débloque avec "+cond;
+   b.onclick=()=>{if(!libre){toast("À mériter : "+cond+".");return;}etat.sceau[cle]=id;sauveDirty();idInit();};z.appendChild(b);});};
  opts("o-lettrage",[["italique","Italique"],["romain","Capitales"],["gras","Gras"]],"l");
  opts("o-encre",[["marine","Marine"],["bordeaux","Bordeaux"],["vert","Vert bouteille"],["sepia","Sépia"]],"e");
- opts("o-embleme",Object.entries(EMBLEMES).map(([k,v])=>[k,v.nom,v.min]),"m");
+ opts("o-embleme",Object.entries(EMBLEMES).map(([k,v])=>[k,v.nom,v.min,v.visa]),"m");
  $("sceau-apercu").innerHTML=sceauSVG(etat.sceau,210,true);
 }
 ["f-prenom","f-nom"].forEach(id=>$(id).addEventListener("input",()=>{etat.prenom=$("f-prenom").value.trim();etat.nom=$("f-nom").value.trim();$("sceau-apercu").innerHTML=sceauSVG(etat.sceau,210,true);}));
@@ -2464,15 +2525,15 @@ $("btn-ouvrir").onclick=ouvrir;$("couv").onclick=ouvrir;$("couv").onkeydown=e=>{
 function notevisite(){const j=Math.floor(Date.now()/86400000);if(etat.vis.indexOf(j)<0){etat.vis.push(j);etat.vis=etat.vis.slice(-20);}}
 
 /* =================== Gare centrale =================== */
-const ESCALES=[["Kingston","Capitale · 1841"],["Montréal","Parlement · 1849"],["Grosse-Île","Quarantaine · 1847"],["Québec","Port du bois"],["Toronto","Usines · 1850"],["Ottawa","Capitale · 1857"],["Charlottetown","Conférence · 1864"],["Saint-Jean","Nouveau-Brunswick"],["Halifax","Intercolonial"],["Dominion du Canada","1ᵉʳ juillet 1867"]];
+const ESCALES=[["Guelph","Canada-Ouest"],["Toronto","Canada-Ouest"],["Kingston","Capitale 1841-1844"],["Brockville","Grand Tronc"],["Montréal","Pont Victoria · 1859"],["Saint-Hyacinthe","Canada-Est"],["Richmond","Vers Portland"],["Lévis","Face à Québec"],["Rivière-du-Loup","Terminus · 1860"],["Dominion du Canada","1ᵉʳ juillet 1867"]];
 function majVoie(){
  const z=$("voie");if(!z)return;
  const W=900,x0=30,x1=870,f=Math.min(1,etat.pts/OBJECTIF),xl=x0+(x1-x0)*f;
  let s=`<svg viewBox="0 0 ${W} 90"><line x1="${x0}" y1="62" x2="${x1}" y2="62" stroke="#5b4a33" stroke-width="2"/><line x1="${x0}" y1="70" x2="${x1}" y2="70" stroke="#5b4a33" stroke-width="2"/>`;
  for(let x=x0;x<=x1;x+=14)s+=`<line x1="${x}" y1="58" x2="${x}" y2="74" stroke="#8a7550" stroke-width="3"/>`;
- s+=`<line x1="${x0}" y1="62" x2="${xl}" y2="62" stroke="#1d2856" stroke-width="3"/><line x1="${x0}" y1="70" x2="${xl}" y2="70" stroke="#1d2856" stroke-width="3"/>`;
+ s+=`<circle cx="${x0}" cy="66" r="6" fill="#1d2856"/><text x="${x0}" y="88" text-anchor="middle" font-size="10.5" fill="#5b4a33" font-family="EB Garamond,serif">Sarnia</text><line x1="${x0}" y1="62" x2="${xl}" y2="62" stroke="#1d2856" stroke-width="3"/><line x1="${x0}" y1="70" x2="${xl}" y2="70" stroke="#1d2856" stroke-width="3"/>`;
  ESCALES.forEach((e,i)=>{const x=x0+(x1-x0)*(i+1)/10,ok=etat.pts>=(i+1)*100;
-  s+=`<circle cx="${x}" cy="66" r="6" fill="${ok?'#1d2856':'#eee2c4'}" stroke="#1d2856" stroke-width="1.6"/><text x="${x}" y="88" text-anchor="middle" font-size="10.5" fill="#5b4a33" font-family="EB Garamond,serif">${e[0].replace("Dominion du Canada","1867")}</text>`;});
+  s+=`<circle cx="${x}" cy="66" r="6" fill="${ok?'#1d2856':'#eee2c4'}" stroke="#1d2856" stroke-width="1.6"/><text x="${x}" y="88" text-anchor="middle" font-size="10.5" fill="#5b4a33" font-family="EB Garamond,serif">${e[0].replace("Dominion du Canada","1867").replace("Rivière-du-Loup","Riv.-du-Loup").replace("Saint-Hyacinthe","St-Hyacinthe")}</text>`;});
  s+=`<g transform="translate(${Math.max(xl-18,48)},34)"><g fill="none" stroke="#1f1a15" stroke-width="1.6" stroke-linejoin="round"><path d="M-16,12 L-16,-2 L4,-2 L4,-10 L12,-10 L12,-2 L18,-2 L22,8 L22,12 Z" fill="#1d2856"/><path d="M-12,-2 L-12,-12 L-6,-12 L-6,-2" fill="#1d2856"/><path d="M8,-12 Q4,-18 9,-22 Q15,-25 12,-30" stroke="#8a7550"/></g><circle cx="-10" cy="16" r="5" fill="#eee2c4" stroke="#1f1a15" stroke-width="1.6"/><circle cx="4" cy="16" r="5" fill="#eee2c4" stroke="#1f1a15" stroke-width="1.6"/><circle cx="16" cy="17" r="3.5" fill="#eee2c4" stroke="#1f1a15" stroke-width="1.6"/></g></svg>`;
  z.innerHTML=s;
  const prochaine=ESCALES.find((e,i)=>etat.pts<(i+1)*100);
@@ -2489,6 +2550,7 @@ function majGare(){
  document.querySelector('[data-etat="frise"]').textContent=(fr.m1.length+fr.m2.length)?(Math.round(100*(fr.m1.length+fr.m2.length+fr.m3.length*3)/(2*nbF+GROUPES_FRISE().length*3))+" %"):"";
  const nbS=Object.values(etat.sch).filter(x=>x.fait).length;document.querySelector('[data-etat="schemas"]').textContent=nbS?nbS+"/6":"";
  document.querySelector('[data-etat="debat"]').textContent=etat.deb.fait?"✓":"";
+ const nbO=Object.values(etat.oi).filter(x=>x.fait).length;document.querySelector('[data-etat="oi"]').textContent=nbO?nbO+"/6":"";
 }
 
 /* =================== Fiches =================== */
@@ -2596,7 +2658,7 @@ function frRend(){
    else{const d=Math.abs(+t.dataset.an-e.an);toast(d<=2?"Tout près ! Encore un petit effort.":(+t.dataset.an<e.an?"Plus tard que ça.":"Plus tôt que ça."));}});
  }else{
   const G=GROUPES_FRISE();
-  z.innerHTML=`<p>Certaines années sont chargées. Remets leurs événements dans l'ordre, du premier au dernier.</p>`+G.map(g=>{const fait=etat.frise.m3.indexOf(g.an)>=0;
+  z.innerHTML=`<p>Certaines années voient une étape en entraîner une autre. Remets-les dans l'ordre, de la cause à la conséquence.</p>`+G.map(g=>{const fait=etat.frise.m3.indexOf(g.an)>=0;
    return `<div class="fiche-bloc" data-an="${g.an}"><h3>${g.an}</h3>${fait?g.ids.map((i,k)=>`<div>${k+1}. ${F[i].t}</div>`).join("")+`<p style="color:var(--vert);margin:6px 0 0">✓ Réussi</p>`:`<div class="ordre-choisis"></div><div class="choix">${melange(g.ids).map(i=>`<button data-i="${i}">${F[i].t}</button>`).join("")}</div>`}</div>`;}).join("");
   z.querySelectorAll(".fiche-bloc").forEach(bl=>{const an=+bl.dataset.an,g=G.find(x=>x.an===an);let pos=0;
    bl.querySelectorAll(".choix button").forEach(b=>b.onclick=()=>{if(b.disabled)return;
@@ -2660,57 +2722,119 @@ function dbCharge(){const D=JX.debat,z=$("db-zone");
    $("db-nav").innerHTML=`<button class="btn">Réplique suivante →</button>`;$("db-nav").firstChild.onclick=()=>{dbI++;dbCharge();};}
   else{dbPropre=false;b.classList.add("mauvaise");b.disabled=true;rr.className="retro oups visible";rr.innerHTML="Pas ce camp. Relis l'argument : qui a intérêt à le défendre ?";}});
 }
-/* =================== Estampes et visas =================== */
+/* =================== Estampes, visas, notes de voyage =================== */
 const VISAS=[
- ["gr","Gouvernement responsable","1848 · étape 2",()=>etat.et[1]!==undefined],
- ["gc","Grande Coalition","1864 · étape 6",()=>etat.et[5]!==undefined],
- ["co","Constitution de 1867","Épreuve finale",()=>etat.et[7]!==undefined],
- ["ch","Chronologiste","Ligne du temps",()=>frComplete()],
- ["ar","Architecte de la fédération","Six schémas",()=>Object.values(etat.sch).filter(x=>x.fait).length>=JX.schemas.length],
- ["tr","Tribune de 1865","Le grand débat",()=>etat.deb.fait]];
+ ["gr","Gouvernement responsable","1848 · étape 2","Réussis l'étape 2",()=>etat.et[1]!==undefined,null],
+ ["gc","Grande Coalition","1864 · étape 6","Réussis l'étape 6",()=>etat.et[5]!==undefined,null],
+ ["co","Constitution de 1867","Épreuve finale","Réussis l'épreuve finale",()=>etat.et[7]!==undefined,null],
+ ["ch","Chronologiste","Ligne du temps","Complète la ligne du temps",()=>frComplete(),()=>{const f=etat.frise,t=2*JX.frise.length+GROUPES_FRISE().length;return (f.m1.length+f.m2.length+f.m3.length)/t;}],
+ ["ar","Architecte de la fédération","Six schémas","Complète les 6 schémas",()=>Object.values(etat.sch).filter(x=>x.fait).length>=JX.schemas.length,()=>Object.values(etat.sch).filter(x=>x.fait).length/JX.schemas.length],
+ ["tr","Tribune de 1865","Le grand débat","Termine le grand débat",()=>etat.deb.fait,()=>etat.deb.fait?1:0],
+ ["hi","Historien","Atelier des OI","Termine les 6 exercices d'OI",()=>Object.values(etat.oi).filter(x=>x.fait).length>=OI.exercices.length,()=>Object.values(etat.oi).filter(x=>x.fait).length/OI.exercices.length]];
+const NOTES={
+ e0:["Guelph","Au cœur du Canada-Ouest agricole, le Grand Tronc emporte les céréales vers les ports. La ligne rejoindra Sarnia, sur la frontière américaine, en 1859.",43.545,-80.248],
+ e1:["Toronto","Avec Montréal, la grande ville industrielle de la colonie. Depuis 1856, le Grand Tronc la relie à Montréal en une seule journée de train.",43.645,-79.380],
+ e2:["Kingston","Première capitale de la Province du Canada, de 1841 à 1844, avant que le Parlement ne déménage à Montréal.",44.231,-76.486],
+ e3:["Brockville","Sur la ligne Montréal-Toronto, le train longe le Saint-Laurent. Contrairement aux canaux, il roule même quand le fleuve gèle.",44.590,-75.684],
+ e4:["Montréal","Mis en service en 1859, le pont Victoria permet enfin au Grand Tronc de franchir le Saint-Laurent. C'est aussi à Montréal que le Parlement brûle, en 1849.",45.491,-73.543],
+ e5:["Saint-Hyacinthe","Au Canada-Est, le chemin de fer relie les campagnes à Montréal et transforme les échanges des villages qu'il traverse.",45.628,-72.957],
+ e6:["Richmond","Un carrefour : une ligne file vers Portland, port américain libre de glaces l'hiver; l'autre continue vers Lévis.",45.662,-72.145],
+ e7:["Lévis","En face de Québec. Faute de pont, les voyageurs traversent le fleuve en bateau pour gagner la ville, grand port du bois.",46.805,-71.180],
+ e8:["Rivière-du-Loup","Terminus du Grand Tronc en 1860. Pour atteindre les Maritimes, il faudra le chemin de fer Intercolonial, promis en 1867 et achevé en 1876.",47.834,-69.536],
+ e9:["Dominion du Canada","Le 1ᵉʳ juillet 1867, l'AANB crée le Dominion du Canada. Ottawa en devient la capitale fédérale. Ton voyage est complet !",45.424,-75.699],
+ vgr:["Gouvernement responsable","En 1848, Lord Elgin laisse Baldwin et LaFontaine choisir les ministres parmi les élus : le pouvoir passe à la Chambre."],
+ vgc:["Grande Coalition","En 1864, Macdonald, Brown et Cartier, pourtant adversaires, s'allient pour sortir de la paralysie politique."],
+ vco:["Constitution de 1867","Tu as franchi l'épreuve finale : de l'union législative à la fédération, tu relies les grandes étapes de la période."],
+ vch:["Chronologiste","Tu sais situer les grands jalons de 1840 à 1867 et reconnaître quelles étapes en entraînent d'autres."],
+ var:["Architecte de la fédération","Tu maîtrises la structure du pouvoir, de 1840 à 1867, et le partage des compétences entre les deux paliers."],
+ vtr:["Tribune de 1865","En mars 1865, les députés adoptent le projet de fédération sans consulter la population, comme le réclamait Dorion."],
+ vhi:["Historien","Tu sais interroger un dossier documentaire : situer, comparer, expliquer des causes et des conséquences, repérer changements et continuités."]};
 const COUL_EST=["#1f3d8a","#8f2b22","#5a2a63","#2f4f3a"];
-function acquises(){const a=[];ESCALES.forEach((e,i)=>{if(etat.pts>=(i+1)*100)a.push("e"+i);});VISAS.forEach(v=>{if(v[3]())a.push("v"+v[0]);});return a;}
+const MOIS=["JANV.","FÉVR.","MARS","AVR.","MAI","JUIN","JUIL.","AOÛT","SEPT.","OCT.","NOV.","DÉC."];
+const jourDe=()=>Math.floor(Date.now()/86400000);
+function dateTxt(j,long){if(j===undefined)return "";const d=new Date(j*86400000);return long?d.toLocaleDateString("fr-CA",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}):d.getUTCDate()+" "+MOIS[d.getUTCMonth()]+" "+d.getUTCFullYear();}
+function acquises(){const a=[];ESCALES.forEach((e,i)=>{if(etat.pts>=(i+1)*100)a.push("e"+i);});VISAS.forEach(v=>{if(v[4]())a.push("v"+v[0]);});return a;}
 let nouvelles=[];
 function verifieEstampes(silencieux){
  const a=acquises(),n=a.filter(x=>etat.est.indexOf(x)<0);if(!n.length)return;
- n.forEach(x=>etat.est.push(x));sauveDirty();
+ etat.estD=etat.estD||{};n.forEach(x=>{etat.est.push(x);if(!silencieux)etat.estD[x]=jourDe();});sauveDirty();majComptePasseport();
  if(silencieux)return;
- nouvelles=nouvelles.concat(n);setTimeout(()=>{ouvrePasseport();},450);
+ nouvelles=nouvelles.concat(n);setTimeout(()=>ouvrePasseport(nouvelles.some(x=>x[0]==="v")&&!nouvelles.some(x=>x[0]==="e")?1:0),450);
 }
 function rotDe(k){let h=0;for(const c of k)h=(h*31+c.charCodeAt(0))>>>0;return ((h%15)-7);}
 function estampeSVG(k){
- const i=+k.slice(1);
+ const i=+k.slice(1),dt=dateTxt((etat.estD||{})[k]);
  if(k[0]==="e"){const e=ESCALES[i],c=COUL_EST[i%4],id="t"+k;
-  const centre=i===9?`<text y="6" text-anchor="middle" font-size="15" fill="${c}" font-family="EB Garamond,serif" font-weight="600">1867</text>`:`<g fill="none" stroke="${c}" stroke-width="1.6" stroke-linejoin="round"><path d="M-14,6 L-14,-4 L2,-4 L2,-10 L8,-10 L8,-4 L12,-4 L15,3 L15,6 Z"/><circle cx="-9" cy="9" r="3.4"/><circle cx="2" cy="9" r="3.4"/><circle cx="11" cy="9.5" r="2.5"/></g>`;
-  return `<svg viewBox="-60 -60 120 120"><defs><path id="h${id}" d="M-42,0 A42,42 0 0 1 42,0"/><path id="b${id}" d="M-46,0 A46,46 0 0 0 46,0"/></defs><g filter="url(#encre)" style="mix-blend-mode:multiply" opacity=".88"><circle r="54" fill="none" stroke="${c}" stroke-width="3"/><circle r="48" fill="none" stroke="${c}" stroke-width="1"/><circle r="27" fill="none" stroke="${c}" stroke-width="1"/>
+  const icone=i===9?`<text y="2" text-anchor="middle" font-size="15" fill="${c}" font-family="EB Garamond,serif" font-weight="600">1867</text>`:`<g fill="none" stroke="${c}" stroke-width="1.6" stroke-linejoin="round" transform="translate(0,-4)"><path d="M-14,6 L-14,-4 L2,-4 L2,-10 L8,-10 L8,-4 L12,-4 L15,3 L15,6 Z"/><circle cx="-9" cy="9" r="3.4"/><circle cx="2" cy="9" r="3.4"/><circle cx="11" cy="9.5" r="2.5"/></g>`;
+  return `<svg viewBox="-60 -60 120 120"><defs><path id="h${id}" d="M-42,0 A42,42 0 0 1 42,0"/><path id="b${id}" d="M-46,0 A46,46 0 0 0 46,0"/></defs><g filter="url(#encre)" style="mix-blend-mode:multiply" opacity=".88"><circle r="54" fill="none" stroke="${c}" stroke-width="3"/><circle r="48" fill="none" stroke="${c}" stroke-width="1"/><circle r="29" fill="none" stroke="${c}" stroke-width="1"/>
   <text font-size="${e[0].length>12?9:11}" font-weight="700" letter-spacing="1.5" fill="${c}" font-family="DejaVu Sans Condensed,Arial Narrow,sans-serif"><textPath href="#h${id}" startOffset="50%" text-anchor="middle">${e[0].toUpperCase()}</textPath></text>
-  <text font-size="8.5" letter-spacing="1.2" fill="${c}" font-family="DejaVu Sans Condensed,Arial Narrow,sans-serif" dy="8"><textPath href="#b${id}" startOffset="50%" text-anchor="middle">${e[1].toUpperCase()}</textPath></text>${centre}</g></svg>`;}
+  <text font-size="8.5" letter-spacing="1.2" fill="${c}" font-family="DejaVu Sans Condensed,Arial Narrow,sans-serif" dy="8"><textPath href="#b${id}" startOffset="50%" text-anchor="middle">${e[1].toUpperCase()}</textPath></text>${icone}
+  ${dt?`<text y="20" text-anchor="middle" font-size="7.5" font-weight="700" letter-spacing=".6" fill="${c}" font-family="DejaVu Sans Condensed,sans-serif">${dt}</text>`:""}</g></svg>`;}
  const v=VISAS.find(x=>"v"+x[0]===k);
- return `<svg viewBox="-60 -60 120 120"><g filter="url(#encre)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-54" y="-40" width="108" height="80" fill="none" stroke="#1d2856" stroke-width="2.6"/><rect x="-49" y="-35" width="98" height="70" fill="none" stroke="#1d2856" stroke-width=".9"/>
-  <text y="-16" text-anchor="middle" font-size="13" letter-spacing="5" font-weight="700" fill="#1d2856" font-family="DejaVu Sans Condensed,sans-serif">VISA</text>
-  ${coupe(v[1].toUpperCase(),150,8).map((l,j)=>`<text y="${0+j*10}" text-anchor="middle" font-size="8" font-weight="700" fill="#1d2856" font-family="DejaVu Sans Condensed,sans-serif">${l}</text>`).join("")}
-  <text y="27" text-anchor="middle" font-size="8.5" font-style="italic" fill="#1d2856" font-family="EB Garamond,serif">${v[2]}</text></g>
-  <g transform="translate(40,34)"><circle r="13" fill="#8a1d15"/><circle r="9" fill="none" stroke="#5a0f0a" stroke-width="1.5"/><text y="3.5" text-anchor="middle" font-size="9" font-style="italic" fill="#5a0f0a" font-family="EB Garamond,serif">RH</text></g></svg>`;
+ return `<svg viewBox="-60 -60 120 120"><g filter="url(#encre)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-54" y="-42" width="108" height="84" fill="none" stroke="#1d2856" stroke-width="2.6"/><rect x="-49" y="-37" width="98" height="74" fill="none" stroke="#1d2856" stroke-width=".9"/>
+  <text y="-20" text-anchor="middle" font-size="13" letter-spacing="5" font-weight="700" fill="#1d2856" font-family="DejaVu Sans Condensed,sans-serif">VISA</text>
+  ${coupe(v[1].toUpperCase(),112,8).map((l,j)=>`<text y="${-5+j*10}" text-anchor="middle" font-size="8" font-weight="700" fill="#1d2856" font-family="DejaVu Sans Condensed,sans-serif">${l}</text>`).join("")}
+  <text y="20" text-anchor="middle" font-size="8.5" font-style="italic" fill="#1d2856" font-family="EB Garamond,serif">${v[2]}</text>
+  ${dt?`<text y="32" text-anchor="middle" font-size="7" font-weight="700" letter-spacing=".6" fill="#1d2856" font-family="DejaVu Sans Condensed,sans-serif">${dt}</text>`:""}</g>
+  <g transform="translate(40,36)"><circle r="13" fill="#8a1d15"/><circle r="9" fill="none" stroke="#5a0f0a" stroke-width="1.5"/><text y="3.5" text-anchor="middle" font-size="9" font-style="italic" fill="#5a0f0a" font-family="EB Garamond,serif">RH</text></g></svg>`;
 }
-function ouvrePasseport(){
- $("pp-sceau").innerHTML=sceauSVG(etat.sceau,150,true);
- $("pp-nom").textContent=(etat.prenom+" "+etat.nom).trim()||"—";$("pp-num").textContent=etat.num||"—";
- const sans=s=>(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase().replace(/[^A-Z]/g,"<");
- $("pp-mrz").textContent=("P<CAN<<"+sans(etat.nom)+"<<"+sans(etat.prenom)+"<".repeat(30)).slice(0,44)+"\n"+(etat.num||"").replace(/-/g,"")+"<ROUTES<DE<L<HISTOIRE<1867";
- const g=$("pp-estampes");g.innerHTML="";
- ESCALES.map((e,i)=>["e"+i,e[0]]).concat(VISAS.map(v=>["v"+v[0],v[1]])).forEach(([k,nom])=>{
-  const d=document.createElement("div");d.className="est"+(k[0]==="v"?" visa":"");
-  if(etat.est.indexOf(k)>=0){d.innerHTML=`<div class="encre" style="--rot:${rotDe(k)}deg;width:100%;height:100%">${estampeSVG(k)}</div>`;if(nouvelles.indexOf(k)>=0)d.classList.add("nouveau");}
-  else d.innerHTML=`<div class="vide">${nom}${k[0]==="e"?"<br>"+(+k.slice(1)+1)*100+" pts":""}</div>`;
-  g.appendChild(d);});
+/* ---------- carte de l'itinéraire (projection simple) ---------- */
+const PJ=(la,lo)=>[((lo+84)*0.695*34).toFixed(1),((49.6-la)*34).toFixed(1)];
+const polyP=pts=>pts.map(p=>PJ(p[0],p[1]).join(",")).join(" ");
+const LACS=[[[43.25,-79.8],[43.2,-79.0],[43.25,-78.0],[43.3,-77.3],[43.5,-76.4],[44.1,-76.3],[44.2,-76.6],[44.0,-77.0],[43.95,-78.0],[43.85,-78.8],[43.65,-79.4],[43.3,-79.8]],
+ [[41.7,-83.4],[41.4,-82.6],[41.5,-81.5],[42.0,-80.5],[42.5,-79.3],[42.9,-78.9],[42.85,-79.6],[42.6,-80.5],[42.55,-81.5],[42.25,-82.5],[42.0,-83.1]],
+ [[43.0,-82.4],[43.6,-82.5],[44.3,-82.1],[45.0,-83.4],[45.8,-83.6],[46.0,-82.0],[45.3,-81.3],[44.7,-81.3],[44.0,-81.7],[43.3,-81.7]]];
+const FLEUVE=[[44.2,-76.5],[44.6,-75.7],[45.0,-74.7],[45.45,-73.6],[46.05,-73.1],[46.35,-72.55],[46.8,-71.2]];
+const ESTUAIRE=[[46.85,-71.2],[47.4,-70.5],[47.85,-69.9],[48.35,-69.1],[48.95,-68.2],[49.35,-67.1],[48.95,-67.1],[48.65,-67.9],[48.2,-68.8],[47.75,-69.55],[47.25,-70.35],[46.78,-71.1]];
+const TRACE=[[42.975,-82.405],[43.545,-80.248],[43.645,-79.380],[44.231,-76.486],[44.590,-75.684],[45.491,-73.543],[45.628,-72.957],[45.662,-72.145],[46.805,-71.180],[47.834,-69.536]];
+function carteItineraire(){
+ let s=`<svg viewBox="0 0 400 270"><rect width="400" height="270" fill="#efe4c5"/><g fill="#c9d3cc" stroke="#6f7f86" stroke-width=".8">${LACS.map(l=>`<polygon points="${polyP(l)}"/>`).join("")}<polygon points="${polyP(ESTUAIRE)}"/></g>
+ <polyline points="${polyP(FLEUVE)}" fill="none" stroke="#6f7f86" stroke-width="3.2" stroke-linecap="round"/><polyline points="${polyP(FLEUVE)}" fill="none" stroke="#c9d3cc" stroke-width="1.8" stroke-linecap="round"/>
+ <g font-family="EB Garamond,serif" font-style="italic" fill="#7a6a4f" font-size="10"><text x="${PJ(44.6,-80.2)[0]}" y="${PJ(44.6,-80.2)[1]}">CANADA-OUEST</text><text x="${PJ(47.7,-74)[0]}" y="${PJ(47.7,-74)[1]}">CANADA-EST</text><text x="${PJ(43.1,-74.6)[0]}" y="${PJ(43.1,-74.6)[1]}">ÉTATS-UNIS</text><text x="${PJ(48.6,-70.2)[0]}" y="${PJ(48.6,-70.2)[1]}" font-size="8.5">fleuve Saint-Laurent</text></g>
+ <polyline points="${polyP([[45.662,-72.145],[43.66,-70.26]])}" fill="none" stroke="#5b4a33" stroke-width="1.4" stroke-dasharray="4 3"/><text x="${PJ(43.9,-71.6)[0]}" y="${PJ(43.9,-71.6)[1]}" font-size="8.5" font-style="italic" fill="#5b4a33" font-family="EB Garamond,serif">vers Portland</text>
+ <polyline points="${polyP(TRACE)}" fill="none" stroke="#1f1a15" stroke-width="3"/><polyline points="${polyP(TRACE)}" fill="none" stroke="#efe4c5" stroke-width="1.4" stroke-dasharray="3 3"/>`;
+ const noms=["Sarnia"].concat(ESCALES.slice(0,9).map(e=>e[0]));
+ TRACE.forEach((p,i)=>{const [x,y]=PJ(p[0],p[1]),ok=i===0||etat.pts>=i*100,haut=i%2===0;
+  s+=`<circle cx="${x}" cy="${y}" r="${ok?4.2:3.2}" fill="${ok?'#8f2b22':'#efe4c5'}" stroke="#1f1a15" stroke-width="1.2"/><text x="${x}" y="${+y+(haut?-7:13)}" text-anchor="middle" font-size="8.5" fill="${ok?'#1f1a15':'#9a8762'}" font-family="EB Garamond,serif" font-weight="${ok?600:400}">${noms[i]}</text>`;});
+ const o=PJ(45.424,-75.699);s+=`<g><rect x="${+o[0]-3}" y="${+o[1]-3}" width="6" height="6" fill="${etat.pts>=1000?'#8f2b22':'#efe4c5'}" stroke="#1f1a15" stroke-width="1"/><text x="${o[0]}" y="${+o[1]-6}" text-anchor="middle" font-size="8" font-style="italic" fill="#5b4a33" font-family="EB Garamond,serif">Ottawa</text></g>`;
+ s+=`<g transform="translate(22,258)" font-family="EB Garamond,serif" font-size="9" fill="#5b4a33"><circle r="4" fill="#8f2b22" stroke="#1f1a15"/><text x="8" y="3">gare atteinte</text><circle cx="80" r="3.2" fill="#efe4c5" stroke="#1f1a15"/><text x="88" y="3">gare à venir</text><text x="165" y="3">▬ ligne du Grand Tronc (1856-1860)</text></g></svg>`;
+ return s;
+}
+/* ---------- le livret ---------- */
+let ppSpread=0,ppNote=null;
+function cellule(k,nom,cond,prog){
+ if(etat.est.indexOf(k)>=0)return `<div class="est obtenue${k[0]==="v"?" visa":""}${nouvelles.indexOf(k)>=0?" nouveau":""}" data-k="${k}" title="Clique pour lire la note"><div class="encre" style="--rot:${rotDe(k)}deg;width:100%;height:100%">${estampeSVG(k)}</div></div>`;
+ return `<div class="est${k[0]==="v"?" visa":""}"><div class="vide">${nom}<span class="cond">${cond}</span>${prog!==null&&prog!==undefined?`<span class="barre-prog"><i style="width:${Math.round(100*prog)}%"></i></span>`:""}</div></div>`;
+}
+function noteHTML(k){if(!k||!NOTES[k])return "";const n=NOTES[k],d=(etat.estD||{})[k];
+ return `<div class="note-voyage"><b>${n[0]}</b>${d!==undefined?`<span class="date">Estampe obtenue le ${dateTxt(d,true)}</span>`:""}${n[1]}${n[2]?`<br><a class="geo-chip" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${n[2]}&mlon=${n[3]}#map=12/${n[2]}/${n[3]}">📍 ${n[0]} sur la carte</a>`:""}</div>`;}
+function pageIdentite(){const sans=s=>(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase().replace(/[^A-Z]/g,"<");
+ const mrz=("P<CAN<<"+sans(etat.nom)+"<<"+sans(etat.prenom)+"<".repeat(30)).slice(0,44)+"\n"+(etat.num||"").replace(/-/g,"")+"<ROUTES<DE<L<HISTOIRE<1867";
+ return `<div class="pg pg-g"><h4>PROVINCE DU CANADA</h4><div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap"><div style="flex:0 0 150px">${sceauSVG(etat.sceau,150,true)}</div>
+ <div><div class="champ"><span class="e">TITULAIRE</span><span class="v">${esc((etat.prenom+" "+etat.nom).trim()||"—")}</span></div><div class="champ"><span class="e">N° DE PASSEPORT</span><span class="v" style="font-family:monospace;font-size:17px">${etat.num||"—"}</span></div><div class="champ"><span class="e">TRONÇON</span><span class="v">1840 – 1867 · Partie 1</span></div><div class="champ"><span class="e">POINTS DE VOYAGE</span><span class="v">${etat.pts} / 1000</span></div></div></div>
+ <p style="font-size:14px;margin-top:12px"><button class="btn contour" id="pp-modifier" style="font-size:14px;padding:5px 12px">Modifier mon sceau</button></p><div class="mrz">${esc(mrz)}</div><div class="folio">1</div></div>`;}
+function pageGares(){return `<div class="pg pg-d"><h4>ESTAMPES DE GARE</h4><div class="estampes">${ESCALES.map((e,i)=>cellule("e"+i,e[0],(i+1)*100+" points",null)).join("")}</div><p style="font-size:12.5px;color:var(--sepia);font-style:italic;margin:8px 0 0">Clique une estampe pour lire sa note de voyage.</p>${ppNote&&ppNote[0]==="e"?noteHTML(ppNote):""}<div class="folio">2</div></div>`;}
+function pageVisas(){return `<div class="pg pg-g"><h4>VISAS D'EXPLOITS</h4><div class="estampes" style="grid-template-columns:repeat(3,1fr)">${VISAS.map(v=>cellule("v"+v[0],v[1],v[3],v[5]?v[5]():null)).join("")}</div><p style="font-size:12.5px;color:var(--sepia);font-style:italic;margin:8px 0 0">Certains visas débloquent un nouvel emblème pour ton sceau.</p>${ppNote&&ppNote[0]==="v"?noteHTML(ppNote):""}<div class="folio">3</div></div>`;}
+function pageItin(){return `<div class="pg pg-d"><h4>ITINÉRAIRE</h4><div class="carte-itin">${carteItineraire()}</div><p style="font-size:13px;color:var(--sepia);margin:8px 0 0">La grande ligne du Grand Tronc relie Sarnia à Rivière-du-Loup en 1860, en passant par Toronto, Montréal et Lévis. Un embranchement mène au port américain de Portland.</p><div class="folio">4</div></div>`;}
+function rendLivret(anime){
+ const p=$("pp-pages");p.innerHTML=ppSpread===0?pageIdentite()+pageGares():pageVisas()+pageItin();
+ if(anime){p.classList.remove("tourne");void p.offsetWidth;p.classList.add("tourne");}
+ $("pp-prec").disabled=ppSpread===0;$("pp-suiv").disabled=ppSpread===1;$("pp-folio").textContent=ppSpread===0?"Pages 1-2 · identité et gares":"Pages 3-4 · visas et itinéraire";
+ const m=$("pp-modifier");if(m)m.onclick=()=>{$("passeport").hidden=true;montre("ecran-identite");};
+ p.querySelectorAll(".est.obtenue").forEach(d=>d.onclick=()=>{ppNote=d.dataset.k;nouvelles=[];rendLivret(false);});
+}
+function ouvrePasseport(spread){
+ ppSpread=typeof spread==="number"?spread:0;ppNote=nouvelles.length?nouvelles[nouvelles.length-1]:null;
+ rendLivret(false);
  if(nouvelles.length){const n=nouvelles.length;toast(n>1?n+" nouvelles estampes dans ton passeport !":"Nouvelle estampe dans ton passeport !");}
  nouvelles=[];document.querySelectorAll(".pts").forEach(e=>e.textContent=etat.pts);
  $("passeport").hidden=false;
 }
+$("pp-prec").onclick=()=>{ppSpread=0;ppNote=null;rendLivret(true);};
+$("pp-suiv").onclick=()=>{ppSpread=1;ppNote=null;rendLivret(true);};
 $("pp-fermer").onclick=()=>$("passeport").hidden=true;
 $("passeport").onclick=e=>{if(e.target.id==="passeport")$("passeport").hidden=true;};
 document.addEventListener("keydown",e=>{if(e.key==="Escape")$("passeport").hidden=true;});
-$("pp-modifier").onclick=()=>{$("passeport").hidden=true;montre("ecran-identite");};
 
 /* =================== Code de voyage (Loi 25 : rien n'est stocké) =================== */
 function empreinte(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))>>>0;return h.toString(36).slice(-5).toUpperCase();}
@@ -2728,15 +2852,15 @@ function majBilan(){
  const nbN=Object.keys(etat.et).length, moy=etat.prem.qt?Math.round(100*etat.prem.qz/etat.prem.qt):null;
  const fr=etat.frise, nbS=Object.values(etat.sch).filter(x=>x.fait).length;
  const nbE=etat.est.filter(x=>x[0]==="e").length, nbV=etat.est.filter(x=>x[0]==="v").length;
- const st=[[etat.pts+" / "+OBJECTIF,"points de voyage"],[nbN+" / 8","étapes réussies"],[moy===null?"—":moy+" %","du premier coup (étapes)"],[fr.m1.length+fr.m2.length+" / "+2*JX.frise.length,"placements sur la frise"],[nbS+" / 6","schémas complétés"],[etat.deb.fait?"✓":"—","grand débat"],[nbE+" · "+nbV,"estampes · visas"],[etat.vis.length,"jour(s) de voyage"]];
+ const st=[[etat.pts+" / "+OBJECTIF,"points de voyage"],[nbN+" / 8","étapes réussies"],[moy===null?"—":moy+" %","du premier coup (étapes)"],[fr.m1.length+fr.m2.length+" / "+2*JX.frise.length,"placements sur la frise"],[nbS+" / 6","schémas complétés"],[etat.deb.fait?"✓":"—","grand débat"],[Object.values(etat.oi).filter(x=>x.fait).length+" / 6","exercices d'OI"],[nbE+" · "+nbV,"estampes · visas"],[etat.vis.length,"jour(s) de voyage"]];
  $("bi-stats").innerHTML=st.map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join("");
  let top=-1,max=0,tot=0;etat.err.slice(0,7).forEach((n,i)=>{tot+=n;if(n>max){max=n;top=i;}});
  $("bi-boussole").innerHTML=top<0?"Aucune leçon ne t'a vraiment résisté pour l'instant.":`La leçon qui t'a le plus résisté : <strong>${FICHES[top].titre}</strong> (${max} erreur${max>1?"s":""} sur ${tot}). <button class="btn contour" style="font-size:15px;padding:4px 12px" onclick="ouvreFiche(${top})">Relire la fiche →</button>`;
  const lignes=["LES ROUTES DE L'HISTOIRE · Chapitre 1, partie 1 (1840-1867)","Voyageur : "+etat.prenom+" "+etat.nom+" · "+etat.num,"Date : "+new Date().toLocaleDateString("fr-CA"),"Points : "+etat.pts+" / "+OBJECTIF,
   "Étapes réussies : "+nbN+"/8 · "+NIV.map((n,i)=>"É"+(i+1)+" "+(etat.et[i]===undefined?"—":etat.et[i]+"★")).join(" "),"Réussite du premier coup : "+(moy===null?"—":moy+" %"),
   "Ligne du temps : décennies "+fr.m1.length+"/"+JX.frise.length+", années "+fr.m2.length+"/"+JX.frise.length+", départages "+fr.m3.length+"/"+GROUPES_FRISE().length,
-  "Schémas complétés : "+nbS+"/6 · Grand débat : "+(etat.deb.fait?"terminé":"à faire")+" ("+etat.deb.ok.length+"/"+JX.debat.repliques.length+" du premier coup)",
-  "Estampes : "+nbE+"/10 · Visas : "+nbV+"/"+VISAS.length,"Erreurs par étape : "+etat.err.map((n,i)=>"É"+(i+1)+":"+n).join(" "),"Jours de voyage : "+etat.vis.length];
+  "Atelier des OI : "+Object.values(etat.oi).filter(x=>x.fait).length+"/6 exercices · Schémas complétés : "+nbS+"/6 · Grand débat : "+(etat.deb.fait?"terminé":"à faire")+" ("+etat.deb.ok.length+"/"+JX.debat.repliques.length+" du premier coup)",
+  "Estampes : "+nbE+"/10 · Visas : "+nbV+"/"+VISAS.length,"Estampes datées : "+(etat.est.filter(k=>(etat.estD||{})[k]!==undefined).map(k=>(NOTES[k]?NOTES[k][0]:k)+" ("+dateTxt(etat.estD[k])+")").join(", ")||"—"),"Erreurs par étape : "+etat.err.map((n,i)=>"É"+(i+1)+":"+n).join(" "),"Jours de voyage : "+etat.vis.length];
  const txt=lignes.join("\n");$("bi-fiche").value=txt+"\nEmpreinte : "+empreinte(txt);
  $("bi-code").value=codeVoyage();
 }
@@ -2748,6 +2872,46 @@ $("bi-telecharger").onclick=()=>{const a=document.createElement("a");a.href="dat
 /* =================== Démarrage =================== */
 $("couv").innerHTML=couvertureSVG();
 majSceaux();majPoints(0);
+/* =================== Atelier des opérations intellectuelles =================== */
+
+let oiCur=null,oiQ=0,oiPropre=true;
+function oiListe(){
+ $("oi-zone").innerHTML="";const l=$("oi-liste");l.style.display="";l.innerHTML="";
+ OI.exercices.forEach((ex,i)=>{const st=etat.oi[ex.id],fait=st&&st.fait;const b=document.createElement("button");b.className="carte";
+  b.innerHTML=`<span class="n">OI · ${ex.oi}</span><span class="t">${ex.titre}</span><span class="d">${ex.docs.length} document${ex.docs.length>1?"s":""} · ${ex.questions.length} question${ex.questions.length>1?"s":""}</span><span class="etat">${fait?"✓":""}</span>`;
+  b.onclick=()=>oiOuvre(i);l.appendChild(b);});
+}
+function oiOuvre(i){oiCur=OI.exercices[i];oiQ=0;$("oi-liste").style.display="none";
+ const L="ABCDEFGH";
+ const docs=oiCur.docs.map((k,j)=>{const d=OI.docs[k];return `<div class="doc"><div class="doc-tete"><span class="doc-lettre">${L[j]}</span><strong>${d.titre}</strong></div>
+  <a href="${d.img}" target="_blank" rel="noopener" title="Agrandir"><img src="${d.img}" alt="${esc(d.titre)}" loading="lazy" onerror="this.parentNode.style.display='none'"></a>
+  <p>${d.desc}</p><p class="doc-src">${d.src} <a href="${d.page}" target="_blank" rel="noopener">Document original (RÉCIT univers social)</a></p></div>`;}).join("");
+ $("oi-zone").innerHTML=`<p class="nav"><button class="btn contour" id="oi-retour">← Tous les exercices</button></p><p class="sur-titre">Opération intellectuelle</p><h2 style="margin-top:2px">${oiCur.oi}</h2><h3 style="margin-top:0">${oiCur.titre}</h3>
+  <p style="font-weight:600;margin:14px 0 6px">Dossier documentaire</p><div class="dossier">${docs}</div><div class="zone" id="oi-q"></div>`;
+ $("oi-retour").onclick=oiListe;oiCharge();
+}
+function oiCharge(){
+ const z=$("oi-q"),q=oiCur.questions[oiQ];oiPropre=true;
+ if(!q){const st=etat.oi[oiCur.id]=etat.oi[oiCur.id]||{fait:false,ok:[]};st.fait=true;sauveDirty();verifieEstampes();
+  z.innerHTML=`<div class="retro ok visible"><strong>Exercice terminé.</strong> Tu as réalisé l'opération « ${oiCur.oi} » à partir de documents, comme à l'épreuve ministérielle.</div><p class="nav"><button class="btn" id="oi-fin">Exercice suivant →</button></p>`;
+  $("oi-fin").onclick=()=>{const i=OI.exercices.indexOf(oiCur);if(i<OI.exercices.length-1)oiOuvre(i+1);else oiListe();};return;}
+ let h=`<div class="hud"><span>Question ${oiQ+1} / ${oiCur.questions.length}</span></div><p class="q-texte">${q.q}</p>`;
+ if(q.t==="qcm")h+=`<div class="choix">`+melange(q.options.map((o,ix)=>({o,ok:ix===q.bonne}))).map(x=>`<button data-ok="${x.ok?1:0}">${x.o}</button>`).join("")+`</div>`;
+ else if(q.t==="ordre")h+=`<p style="font-size:15px;color:var(--sepia);margin-top:-6px">${q.hint||""}</p><div class="ordre-choisis" id="oi-ch"></div><div class="choix" id="oi-it">${melange(q.items.map((t,ix)=>`<button data-i="${ix}">${t}</button>`)).join("")}</div>`;
+ else if(q.t==="assoc")h+=`<div class="assoc"><div class="col choix" id="oi-g">${q.paires.map((p,ix)=>`<button data-i="${ix}">${p[0]}</button>`).join("")}</div><div class="col choix" id="oi-d">${melange(q.paires.map((p,ix)=>`<button data-i="${ix}">${p[1]}</button>`)).join("")}</div></div>`;
+ h+=`<div class="retro" id="oi-retro"></div><div class="nav" id="oi-nav"></div>`;z.innerHTML=h;
+ const rate=b=>{oiPropre=false;b.classList.add("mauvaise");const r=$("oi-retro");r.className="retro oups visible";r.innerHTML="Pas tout à fait. Retourne aux documents : la réponse s'y trouve.";};
+ if(q.t==="qcm")z.querySelectorAll(".choix button").forEach(b=>b.onclick=()=>{if(b.disabled)return;if(b.dataset.ok==="1"){z.querySelectorAll(".choix button").forEach(x=>{x.disabled=true;if(x!==b)x.classList.add("estompe");});b.classList.add("bonne");oiBonne(q);}else{b.disabled=true;rate(b);}});
+ if(q.t==="ordre"){let pos=0;z.querySelectorAll("#oi-it button").forEach(b=>b.onclick=()=>{if(b.disabled)return;if(+b.dataset.i===pos){b.disabled=true;b.classList.add("bonne");pos++;$("oi-ch").innerHTML+=`<span class="pas">${pos}. ${b.textContent}</span>`;if(pos===q.items.length)oiBonne(q);}else{rate(b);setTimeout(()=>b.classList.remove("mauvaise"),600);}});}
+ if(q.t==="assoc"){let sel=null,faits=0;z.querySelectorAll("#oi-g button").forEach(b=>b.onclick=()=>{if(b.disabled)return;z.querySelectorAll("#oi-g button").forEach(x=>x.classList.remove("choisi"));b.classList.add("choisi");sel=b;});
+  z.querySelectorAll("#oi-d button").forEach(b=>b.onclick=()=>{if(b.disabled||!sel)return;if(sel.dataset.i===b.dataset.i){[sel,b].forEach(x=>{x.disabled=true;x.classList.remove("choisi");x.classList.add("bonne");});sel=null;faits++;if(faits===q.paires.length)oiBonne(q);}else{rate(b);setTimeout(()=>b.classList.remove("mauvaise"),600);}});}
+}
+function oiBonne(q){
+ const st=etat.oi[oiCur.id]=etat.oi[oiCur.id]||{fait:false,ok:[]};let g="";
+ if(st.ok.indexOf(oiQ)<0){st.ok.push(oiQ);if(oiPropre){majPoints(10);g="+10 points ! ";}else sauveDirty();}
+ const r=$("oi-retro");r.className="retro ok visible";r.innerHTML=`<strong>${g||"Bien vu. "}</strong>${q.expl}`;
+ $("oi-nav").innerHTML=`<button class="btn">${oiQ<oiCur.questions.length-1?"Question suivante →":"Terminer l'exercice →"}</button>`;$("oi-nav").firstChild.onclick=()=>{oiQ++;oiCharge();};
+}
 
 </script>
 </body></html>
