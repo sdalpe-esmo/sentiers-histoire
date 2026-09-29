@@ -567,6 +567,22 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 
 /* ============ V7.2 : sentier escarpé ============ */
 .chip-defi{display:inline-block;background:var(--color-text);color:#e0aa14;border-radius:999px;padding:.14rem .6rem;font-size:.72rem;font-weight:700;letter-spacing:.09em;margin-left:.4rem;vertical-align:2px}
+
+/* ============ accès au carnet ============ */
+.btn-carnet{display:inline-flex;align-items:center;gap:.45rem;background:#fff;border:2px solid var(--color-text,#201e1d);border-radius:999px;padding:2px 12px 2px 2px;cursor:pointer;font-family:inherit;font-size:.9rem;line-height:1.1;color:#201e1d}
+.btn-carnet:hover{background:#e9f8ff}
+.btn-carnet .mini-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;background:#f3f2f2;display:flex;align-items:flex-end;justify-content:center}
+.btn-carnet .mini-avatar svg{width:32px;height:auto}
+.bc-txt{display:flex;flex-direction:column;text-align:left;font-weight:700}
+.bc-txt small{font-weight:400;font-size:.72rem;color:#0088b0}
+.bc-txt small .bc-nb{font-size:inherit}
+.bloc-carnet{display:flex;align-items:center;gap:1rem;margin:1rem 0 .2rem;padding:.8rem 1rem;background:#fff;border:2px solid #201e1d;border-left:8px solid #0088b0;border-radius:8px;cursor:pointer;text-align:left}
+.bloc-carnet:hover{box-shadow:0 6px 14px rgba(32,30,29,.15)}
+.bk-avatar{flex:0 0 56px;height:56px;border-radius:50%;overflow:hidden;background:#f3f2f2;border:2px solid #201e1d;display:flex;align-items:flex-end;justify-content:center}
+.bk-avatar svg{width:52px;height:auto}
+.bk-texte{flex:1;display:flex;flex-direction:column;font-size:.95rem;color:#4a4644}
+.bk-texte strong{font-size:1.15rem;color:#201e1d}
+@media(max-width:600px){.bc-txt{display:none}.btn-carnet{padding:2px}.bloc-carnet .btn{display:none}}
 </style>
 </head>
 <body>
@@ -591,7 +607,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
           <span class="cours-info"><strong>Les sentiers de l'histoire</strong><em>Histoire du Québec et du Canada · Des origines à 1840</em></span>
           <span class="cours-fleche">Entrer →</span>
         </button>
-        <a class="cours ouvert" href="/routes/" style="text-decoration:none;color:inherit">
+        <a class="cours ouvert" href="/routes/" style="text-decoration:none;color:inherit;text-align:center">
           <span class="cours-sec">4ᵉ<br>sec.</span>
           <span class="cours-info"><strong>Les routes de l'histoire</strong><em>Histoire du Québec et du Canada · De 1840 à nos jours</em></span>
           <span class="cours-fleche">Entrer →</span>
@@ -722,7 +738,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <section class="ecran" id="ecran-carte">
   <div class="barre">
     <span class="sur-titre" style="font-size:.7rem"><span class="logo-sapin"></span>Les sentiers de l'histoire</span>
-    <span class="qui"><span id="mini-avatar-1"></span><span id="nom-affiche-1"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span id="mini-avatar-1" class="mini-avatar"></span><span class="bc-txt">Mon carnet<small><span id="nom-affiche-1"></span> · <span class="bc-nb"></span></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span>
   </div>
   <div class="page">
     <div class="carte-tete">
@@ -740,6 +756,11 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
         <p class="prog-texte"><strong><span id="prog-pts-txt">0</span> / 750 points</strong> — <span id="prog-msg">Le sentier t'attend !</span></p>
       </div>
       <p style="margin:.7rem 0 0"><button class="btn contour" id="btn-eclair">Randonnée éclair · 5 questions en 3 minutes</button></p>
+      <div class="bloc-carnet ouvre-carnet" role="button" tabindex="0" aria-label="Ouvrir mon carnet de randonnée">
+        <span class="bk-avatar mini-avatar"></span>
+        <span class="bk-texte"><strong>Mon carnet de randonnée</strong><span id="bk-detail">Ta progression, tes trouvailles et la boutique pour modifier ton personnage.</span></span>
+        <span class="btn">Ouvrir mon carnet →</span>
+      </div>
     </div>
 
     <div class="section-carte" style="margin-top:.4rem">
@@ -787,7 +808,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRANS : FICHES ======================= -->
 <section class="ecran" id="ecran-frise">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page fiche">
     <p class="sur-titre">Fiche · Chapitre 1</p>
     <h1><span class="num">F</span> La frise chronologique</h1>
@@ -817,7 +838,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 
 <section class="ecran" id="ecran-d1">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page fiche">
     <p class="sur-titre">Fiche · Chapitre 1</p>
     <h1><span class="num">1</span> Le peuplement de l'Amérique et les modes de vie</h1>
@@ -873,7 +894,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 
 <section class="ecran" id="ecran-d2">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page fiche">
     <p class="sur-titre">Fiche · Chapitre 1</p>
     <h1><span class="num">2</span> Organisation sociale, pouvoir et culture</h1>
@@ -907,7 +928,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 
 <section class="ecran" id="ecran-d3">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page fiche">
     <p class="sur-titre">Fiche · Chapitre 1</p>
     <h1><span class="num">3</span> Les réseaux d'échanges autochtones</h1>
@@ -931,7 +952,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 
 <section class="ecran" id="ecran-d4">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page fiche">
     <p class="sur-titre">Fiche · Chapitre 1</p>
     <h1><span class="num">4</span> Les explorations européennes et les premiers contacts</h1>
@@ -970,7 +991,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : GRANDE RANDONNÉE ======================= -->
 <section class="ecran" id="ecran-rando">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Jeu A</p>
@@ -994,7 +1015,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : CARTES MÉMOIRE ======================= -->
 <section class="ecran" id="ecran-cartes">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Jeu B</p>
@@ -1026,7 +1047,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : FAMILLES ======================= -->
 <section class="ecran" id="ecran-familles">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Jeu C</p>
@@ -1061,7 +1082,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : FEU DE CAMP ======================= -->
 <section class="ecran" id="ecran-feu">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Jeu D</p>
@@ -1095,7 +1116,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : QUI SUIS-JE ? ======================= -->
 <section class="ecran" id="ecran-quisuis">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Jeu E</p>
@@ -1122,7 +1143,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : CHASSE À L'INTRUS ======================= -->
 <section class="ecran" id="ecran-intrus">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Jeu F</p>
@@ -1148,7 +1169,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : ATELIER DES OI ======================= -->
 <section class="ecran" id="ecran-oi">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Atelier</p>
@@ -1172,7 +1193,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : DÉFI PEI ======================= -->
 <section class="ecran" id="ecran-pei">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Défi PEI · Individus et sociétés</p>
@@ -1196,7 +1217,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : PAROLES D'HISTOIRE ======================= -->
 <section class="ecran" id="ecran-dial">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Jeu G</p>
@@ -1231,7 +1252,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : RANDONNÉE ÉCLAIR ======================= -->
 <section class="ecran" id="ecran-eclair">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Répétition espacée</p>
@@ -1257,7 +1278,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : ALBUM DE DÉCOUVERTES ======================= -->
 <section class="ecran" id="ecran-album">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <div class="jeu-tete">
       <p class="sur-titre">Collection</p>
@@ -1336,7 +1357,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 <!-- ======================= ÉCRAN : SOMMET ======================= -->
 <section class="ecran" id="ecran-sommet">
   <div class="barre"><button class="retour" data-ecran="ecran-carte">← Carte</button>
-    <span class="qui"><span class="mini-avatar"></span><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
+    <span class="qui"><button class="btn-carnet" aria-label="Ouvrir mon carnet de randonnée"><span class="mini-avatar"></span><span class="bc-txt">Mon carnet<small class="bc-nb"></small></span></button><span class="chip-pts">✦ <span class="pts-val">0</span> pts</span></span></div>
   <div class="page">
     <p class="sur-titre">▲ Le sommet</p>
     <h1 style="font-size:clamp(1.6rem,5vw,2.2rem)">Ton bilan de randonnée</h1>
@@ -1430,11 +1451,13 @@ const etat = {
   dialogues:{faits:{},premier:0},
   visites:[],
   erreurs:{d1:0,d2:0,d3:0,d4:0},
-  lus:{}, meta:{feel:null,revoir:null}
+  lus:{}, meta:{feel:null,revoir:null},
+  enCours:{}
 };
 
 function majPoints(n){
   etat.points += n;
+  setTimeout(()=>{try{majCompteCarnet();}catch(_){}},0);
   document.querySelectorAll(".pts-val").forEach(e=>e.textContent=etat.points);
   document.querySelectorAll(".chip-pts").forEach(c=>{c.classList.remove("pulse");void c.offsetWidth;c.classList.add("pulse");});
   if(n>0&&!mouvementReduit){
@@ -1636,6 +1659,11 @@ document.addEventListener("click",e=>{
 function majEtatsCarte(){
   document.querySelectorAll("[data-etat]").forEach(el=>{
     const k=el.dataset.etat;
+    const ec=etat.enCours||{};
+    if(k==="cartes"&&!etat.cartes.fait&&ec.fc){el.textContent="en cours : "+ec.fc.vues.length+"/"+CARTES.length;}
+    if(k==="familles"&&!etat.familles.fait&&ec.fam){el.textContent="en cours : "+ec.fam.faits.length+"/"+FAMILLES.length;}
+    if(k==="quisuis"&&!etat.quisuis.fait&&ec.qs){el.textContent="en cours : "+ec.qs.idx+"/"+ENIGMES.length;}
+    if(k==="intrus"&&!etat.intrus.fait&&ec.in){el.textContent="en cours : "+ec.in.idx+"/"+INTRUS.length;}
     if(["frise","d1","d2","d3","d4"].indexOf(k)>=0 && etat.lus[k]){el.textContent="lu ✓";el.classList.add("ok");}
     if(k==="rando"){const n=etat.rando.reussis;if(n){el.textContent="niveaux réussis : "+n+"/8";el.classList.add("ok");}}
     if(k==="cartes"&&etat.cartes.fait){el.textContent=etat.cartes.sues+"/"+etat.cartes.total+" ✓";el.classList.add("ok");}
@@ -1860,11 +1888,12 @@ function ouvreCarnet(){
 }
 function fermeCarnet(){$("carnet").hidden=true;}
 document.addEventListener("click",ev=>{
-  const cible=ev.target.closest&&ev.target.closest(".mini-avatar,#avatar-apercu,.prog-perso");
+  const cible=ev.target.closest&&ev.target.closest(".btn-carnet,.ouvre-carnet,.mini-avatar,#avatar-apercu,.prog-perso");
   if(cible){ouvreCarnet();return;}
   if(ev.target.id==="carnet")fermeCarnet();
 });
 document.addEventListener("keydown",ev=>{
+  if((ev.key==="Enter"||ev.key===" ")&&ev.target.closest&&ev.target.closest(".ouvre-carnet")){ev.preventDefault();ouvreCarnet();return;}
   if(ev.key==="Escape"&&!$("carnet").hidden)fermeCarnet();
   if(ev.key==="Escape"&&!$("revelation").hidden)revelSuivante();
 });
@@ -1876,12 +1905,18 @@ document.addEventListener("click",ev=>{
   if(ev.target.id==="carnet-atelier"){fermeCarnet();montre("ecran-accueil");}
   if(ev.target.id==="carnet-voir-album"){fermeCarnet();montre("ecran-album");}
 });
+function majCompteCarnet(){
+  const n=compteDecouvertes(),t=DECOUVERTES.length;
+  document.querySelectorAll(".bc-nb").forEach(e=>e.textContent=n+" / "+t+" trouvailles");
+  const d=$("bk-detail");if(d)d.textContent="Tu as "+etat.points+" points et "+n+" trouvaille"+(n>1?"s":"")+" sur "+t+". Clique pour voir ta progression et modifier ton personnage.";
+}
 function majAvatars(){
   $("avatar-apercu").innerHTML = dessineAvatar(avatar,238);
   const mini = dessineAvatar(avatar,30);
   document.querySelectorAll(".mini-avatar").forEach(e=>{e.innerHTML=mini;});
   $("mini-avatar-1").innerHTML = mini;
   const pp=$("prog-perso");if(pp){pp.innerHTML=dessineAvatar(avatar,64);}
+  try{majCompteCarnet();}catch(_){}
 }
 const DEBLOCAGES={
  chapeau:{castor:{pts:100,txt:"100 points"},tricorne:{tr:10,txt:"la trouvaille « Le tricorne » (250 points)"}},
@@ -2329,8 +2364,10 @@ const CARTES = [
 ];
 let deck=[],fcIdx=0,fcFlipped=false,fcSues=0,fcVues=0,fcARevoir=0;
 function fcInit(){
-  deck=melange(CARTES.map(c=>({...c,revue:false})));
-  fcIdx=0;fcSues=0;fcVues=0;fcARevoir=0;fcFlipped=false;
+  const ec=(!etat.cartes.fait&&etat.enCours.fc)||null,deja=ec?ec.vues:[];
+  deck=melange(CARTES.map((c,i)=>({...c,i,revue:false})).filter(c=>deja.indexOf(c.i)<0));
+  fcIdx=0;fcSues=ec?ec.sues:0;fcVues=deja.length;fcARevoir=0;fcFlipped=false;
+  if(!deck.length){deck=[];fcFin();return;}
   $("fc-fin").hidden=true;$("fc").style.display="";$("fc-actions").hidden=true;
   fcAffiche();
 }
@@ -2347,14 +2384,15 @@ $("fc").addEventListener("click",()=>{
 });
 function fcSuiv(su){
   const c=deck[fcIdx];
-  if(!c.revue){fcVues++;if(su){fcSues++;if(!etat.cartes.fait)majPoints(5);}}
+  if(!c.revue){fcVues++;if(su){fcSues++;if(!etat.cartes.fait)majPoints(5);}
+    if(!etat.cartes.fait){const e=etat.enCours.fc=etat.enCours.fc||{vues:[],sues:0};if(e.vues.indexOf(c.i)<0)e.vues.push(c.i);e.sues=fcSues;}}
   if(!su){deck.push({...c,revue:true});if(!c.revue)fcARevoir++;}
   else if(c.revue&&fcARevoir>0){fcARevoir--;}
   fcIdx++;
   if(fcIdx>=deck.length){fcFin();}else{fcAffiche();}
 }
 function fcFin(){
-  etat.cartes={sues:fcSues,total:CARTES.length,fait:true};
+  etat.cartes={sues:fcSues,total:CARTES.length,fait:true};delete etat.enCours.fc;
   $("fc").style.display="none";$("fc-actions").hidden=true;
   $("fc-fin").hidden=false;
   $("fc-bilan").textContent="Tu en savais "+fcSues+" sur "+CARTES.length+" du premier coup.";
@@ -2384,9 +2422,12 @@ const FAMILLES = [
 const NOMS_FAM={inuit:"les Inuit",algo:"les Algonquiens",iro:"les Iroquoiens"};
 let fOrdre=[],fIdx=0,fPremier=0,fPropre=true;
 function famInit(){
-  fOrdre=melange(FAMILLES);fIdx=0;fPremier=0;fPropre=true;
+  const ec=(!etat.familles.fait&&etat.enCours.fam)||null,deja=ec?ec.faits:[];
+  fOrdre=melange(FAMILLES.map((x,i)=>({...x,i})).filter(x=>deja.indexOf(x.i)<0));fIdx=0;fPremier=ec?ec.premier:0;fPropre=true;
   $("fam-fin").hidden=true;$("fam-jeu").style.display="";
   ["inuit","algo","iro"].forEach(r=>$("panier-"+r).innerHTML="");
+  deja.forEach(i=>{const x=FAMILLES[i];if(!x)return;const j=document.createElement("span");j.className="jeton";j.textContent=x.t;$("panier-"+x.r).appendChild(j);});
+  if(!fOrdre.length){famFin();return;}
   famAffiche();
 }
 function famAffiche(){
@@ -2402,6 +2443,7 @@ document.querySelectorAll(".fam-btn").forEach(b=>b.addEventListener("click",()=>
     const j=document.createElement("span");j.className="jeton";j.textContent=ind.t;
     $("panier-"+ind.r).appendChild(j);
     r.textContent="Bien classé chez "+NOMS_FAM[ind.r]+" !";r.className="fam-retro ok";
+    if(!etat.familles.fait){const e=etat.enCours.fam=etat.enCours.fam||{faits:[],premier:0};if(e.faits.indexOf(ind.i)<0)e.faits.push(ind.i);e.premier=fPremier;}
     fIdx++;
     if(fIdx>=fOrdre.length){setTimeout(famFin,650);}else{setTimeout(famAffiche,650);}
   }else{
@@ -2412,7 +2454,7 @@ document.querySelectorAll(".fam-btn").forEach(b=>b.addEventListener("click",()=>
   }
 }));
 function famFin(){
-  etat.familles={premier:fPremier,total:FAMILLES.length,fait:true};
+  etat.familles={premier:fPremier,total:FAMILLES.length,fait:true};delete etat.enCours.fam;
   $("fam-jeu").style.display="none";
   $("fam-fin").hidden=false;
   $("fam-score").textContent=fPremier+" indices sur "+FAMILLES.length+" classés du premier coup.";
@@ -2473,11 +2515,13 @@ const ENIGME_DOSSIER=["d4","d1","d3","d4","d4","d2","d2","d1","d4","d3"];
 let qsIdx=0,qsRevele=0,qsErreurs=0,qsPts=0;
 function qsValeur(){return Math.max(2,10-3*qsRevele-3*qsErreurs);}
 function qsInit(){
-  qsIdx=0;qsPts=0;
+  const ec=(!etat.quisuis.fait&&etat.enCours.qs)||null;
+  qsIdx=ec?ec.idx:0;qsPts=ec?ec.pts:0;
   $("qs-fin").hidden=true;
   $("qs-indices").style.display="";$("qs-choix").style.display="";
   $("qs-plus").style.display="";
   document.querySelector("#ecran-quisuis .hud-niveau").style.display="";
+  if(qsIdx>=ENIGMES.length){qsFin();return;}
   qsCharge();
 }
 function qsCharge(){
@@ -2508,7 +2552,7 @@ function qsRep(b,ok){
   if(ok){
     b.classList.add("bonne");
     document.querySelectorAll("#qs-choix button").forEach(x=>{x.disabled=true;if(x!==b)x.classList.add("estompe");});
-    const g=qsValeur();qsPts+=g;if(!etat.quisuis.fait)majPoints(g);
+    const g=qsValeur();qsPts+=g;if(!etat.quisuis.fait){majPoints(g);etat.enCours.qs={idx:qsIdx+1,pts:qsPts};}
     $("qs-plus").disabled=true;
     $("qs-retro").className="retro ok visible";
     $("qs-retro").innerHTML="<strong>+"+g+" points&nbsp;!</strong> "+e.expl+chipsGeo(e.expl+" "+e.ind.join(" "));
@@ -2525,7 +2569,7 @@ function qsRep(b,ok){
   }
 }
 function qsFin(){
-  etat.quisuis={pts:qsPts,total:ENIGMES.length*10,fait:true};
+  etat.quisuis={pts:qsPts,total:ENIGMES.length*10,fait:true};delete etat.enCours.qs;
   $("qs-indices").style.display="none";$("qs-choix").style.display="none";
   $("qs-plus").style.display="none";
   document.querySelector("#ecran-quisuis .hud-niveau").style.display="none";
@@ -2560,10 +2604,12 @@ const INTRUS=[
 const INTRUS_DOSSIER=["d1","d1","d4","d1","d1","d4","d4","d2"];
 let inIdx=0,inPremier=0,inPropre=true;
 function inInit(){
-  inIdx=0;inPremier=0;
+  const ec=(!etat.intrus.fait&&etat.enCours.in)||null;
+  inIdx=ec?ec.idx:0;inPremier=ec?ec.premier:0;
   $("in-fin").hidden=true;
   $("in-choix").style.display="";$("in-question").style.display="";
   document.querySelector("#ecran-intrus .hud-niveau").style.display="";
+  if(inIdx>=INTRUS.length){inFin();return;}
   inCharge();
 }
 function inCharge(){
@@ -2579,6 +2625,7 @@ function inCharge(){
       if(b.disabled)return;
       if(ch.ok){
         if(inPropre){inPremier++;if(!etat.intrus.fait)majPoints(5);}
+        if(!etat.intrus.fait)etat.enCours.in={idx:inIdx+1,premier:inPremier};
         b.style.borderColor="var(--vert)";b.style.background="#e8f3ea";
         document.querySelectorAll("#in-choix button").forEach(x=>x.disabled=true);
         $("in-retro").className="retro ok visible";
@@ -2599,7 +2646,7 @@ function inCharge(){
   });
 }
 function inFin(){
-  etat.intrus={premier:inPremier,total:INTRUS.length,fait:true};
+  etat.intrus={premier:inPremier,total:INTRUS.length,fait:true};delete etat.enCours.in;
   $("in-choix").style.display="none";$("in-question").style.display="none";
   document.querySelector("#ecran-intrus .hud-niveau").style.display="none";
   $("in-retro").className="retro";$("in-retro").innerHTML="";$("in-suivant").hidden=true;
@@ -3702,7 +3749,8 @@ function etatVersCode(){
     etat.visites.slice(-12),
     [etat.eclair.faites,etat.eclair.jourPts||0,etat.eclair.defis||0],
     [etat.erreurs.d1||0,etat.erreurs.d2||0,etat.erreurs.d3||0,etat.erreurs.d4||0],
-    [etat.dialogues.faits.cartier?1:0,etat.dialogues.faits.donnacona?1:0,etat.dialogues.premier||0]];
+    [etat.dialogues.faits.cartier?1:0,etat.dialogues.faits.donnacona?1:0,etat.dialogues.premier||0],
+    etat.enCours];
   const b=btoa(unescape(encodeURIComponent(JSON.stringify(arr))));
   return "SH1."+b+"."+codeValidation(b);
 }
@@ -3740,6 +3788,7 @@ function codeVersEtat(code){
     const dg=a[18]||[0,0,0];etat.dialogues={faits:{},premier:dg[2]||0};
     if(dg[0])etat.dialogues.faits.cartier=true;
     if(dg[1])etat.dialogues.faits.donnacona=true;
+    etat.enCours=(a[19]&&typeof a[19]==="object")?a[19]:{};
     $("prenom").value=etat.prenom;
     $("ci-nom").textContent=etat.prenom||"à inscrire…";
     $("nom-affiche-1").textContent=etat.prenom||"Randonneur·euse";
@@ -3801,6 +3850,7 @@ $("btn-reprendre").addEventListener("click",()=>{
   const r=$("reprise-retro");
   if(res===true){
     r.textContent="";r.className="reprise-retro";
+    try{fcInit();famInit();qsInit();inInit();majAvatars();}catch(_){}
     montre("ecran-carte");
     toast("Content de te revoir"+(etat.prenom?", "+etat.prenom:"")+" ! Ta randonnée reprend où tu l'avais laissée.");
   }else{r.textContent=res;r.className="reprise-retro oups";}
