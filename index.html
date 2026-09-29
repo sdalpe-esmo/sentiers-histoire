@@ -601,6 +601,20 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 .tab-verif th{background:#eae7e7}
 .tab-verif tr.v-ok td:last-child{background:#e8f3ea}.tab-verif tr.v-doute td:last-child{background:#fbf1d6}.tab-verif tr.v-faux td:last-child{background:#fbe3e8}
 #prenom:disabled{opacity:.7;cursor:not-allowed}
+
+/* ============ sauvegarde (même bandeau que les Routes) ============ */
+.btn-sauve{position:relative;display:inline-flex;align-items:center;gap:.35rem;background:#fff;color:#201e1d;border:2px solid #201e1d;border-radius:999px;padding:3px 12px 3px 9px;cursor:pointer;font-family:inherit;font-size:.9rem;line-height:1.1;margin-right:.5rem}
+.btn-sauve:hover{background:#e9f8ff}
+.btn-sauve .bs-txt{display:flex;flex-direction:column;text-align:left;font-weight:700}
+.btn-sauve .bs-txt small{font-weight:400;font-size:.72rem;color:#6d6866}
+.btn-sauve.a-camper{border-color:#d6006c;color:#d6006c}
+.btn-sauve.a-camper .bs-txt small{color:#d6006c}
+.bloc-sauve{display:flex;align-items:center;gap:1rem;margin:.7rem 0 .2rem;padding:.8rem 1rem;background:#fff1f4;border:2px solid #201e1d;border-left:8px solid #d6006c;border-radius:8px;text-align:left}
+.bloc-sauve.ok{background:#eef6ef;border-left-color:#3e6b4f}
+.bs-grand{font-size:1.9rem;flex:0 0 auto}
+.bloc-sauve .bk-texte strong{color:#d6006c}.bloc-sauve.ok .bk-texte strong{color:#3e6b4f}
+.alerte-code{background:#fff1f4;border-left:5px solid #d6006c;padding:.6rem .8rem;font-size:.93rem;margin:.6rem 0}
+@media(max-width:600px){.btn-sauve .bs-txt{display:none}.btn-sauve{padding:3px 7px}.bloc-sauve{flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -781,6 +795,11 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
         <span class="bk-avatar mini-avatar"></span>
         <span class="bk-texte"><strong>Mon carnet de randonnée</strong><span id="bk-detail">Ta progression, tes trouvailles et la boutique pour modifier ton personnage.</span></span>
         <span class="btn">Ouvrir mon carnet →</span>
+      </div>
+      <div class="bloc-sauve" id="bloc-sauve">
+        <span class="bs-grand" aria-hidden="true">💾</span>
+        <span class="bk-texte"><strong>Sauvegarde ta randonnée à chaque séance</strong><span>Rien n'est enregistré sur un serveur ni dans ton ordinateur. Si tu fermes cet onglet sans copier ton <b>code de campement</b>, tes points, tes trouvailles et ta progression sont perdus. <span id="bs-derniere"></span></span></span>
+        <button class="btn" id="bs-ouvrir" type="button">Copier mon code de campement</button>
       </div>
     </div>
 
@@ -1447,14 +1466,16 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 
 <div class="voile" id="voile-camp" hidden>
   <div class="panneau" role="dialog" aria-modal="true" aria-labelledby="camp-titre">
-    <h2 id="camp-titre" style="font-size:1.3rem">Ton campement</h2>
-    <p style="margin-top:.5rem;font-size:.95rem">Rien n'est enregistré nulle part&nbsp;: ce <strong>code de campement</strong> EST ta sauvegarde. Copie-le et garde-le (il figure aussi dans ta fiche envoyée par courriel), puis colle-le à l'accueil lors de ta prochaine visite&nbsp;: prénom, personnage, points, étoiles et exercices complétés seront restaurés.</p>
+    <h2 id="camp-titre" style="font-size:1.3rem">Mon code de campement</h2>
+    <div class="alerte-code"><strong>Important&nbsp;:</strong> ce code est la <b>seule</b> sauvegarde de ta randonnée. Le site ne garde rien, par respect de ta vie privée (Loi 25). Copie-le à la fin de chaque séance et garde-le en lieu sûr&nbsp;: un courriel à toi-même, Classroom ou un fichier.</div>
     <div class="code-boite" id="camp-code"></div>
     <div style="display:flex;gap:.6rem;flex-wrap:wrap">
       <button class="btn" id="camp-copier">Copier le code</button>
       <button class="btn contour" id="camp-telecharger">Télécharger (.txt)</button>
+      <a class="btn contour" id="camp-mail">M'envoyer par courriel</a>
       <button class="btn contour" id="camp-fermer">Fermer</button>
     </div>
+    <p style="font-size:.9rem;margin-top:.6rem;color:#4a4644"><b>Pour reprendre ta randonnée&nbsp;:</b> à l'accueil, colle ton code dans « Tu reviens au campement&nbsp;? » : prénom, personnage, points, étoiles, trouvailles et jeux entamés seront restaurés.</p>
   </div>
 </div>
 
@@ -3837,21 +3858,29 @@ function codeVersEtat(code){
   }catch(e){return "Impossible de lire ce code — vérifie qu'il est copié au complet.";}
 }
 let campePoints=0;
-function marquerCampe(){campePoints=etat.points;majCampAlerte();}
+let heureCampe=null,rappelCampe=0;
+function marquerCampe(){campePoints=etat.points;rappelCampe=etat.points;heureCampe=new Date().toLocaleTimeString("fr-CA",{hour:"2-digit",minute:"2-digit"});majCampAlerte();}
 function majCampAlerte(){
   const alerte=etat.points>campePoints;
-  document.querySelectorAll(".btn-camp").forEach(b=>b.classList.toggle("a-camper",alerte));
+  document.querySelectorAll(".btn-camp").forEach(b=>{b.classList.toggle("a-camper",alerte);const s=b.querySelector(".bs-etat");if(s)s.textContent=alerte?"à faire !":(heureCampe?"à jour":"ma randonnée");});
+  const bl=$("bloc-sauve");if(bl){bl.classList.toggle("ok",!alerte&&heureCampe!==null);
+    const d=$("bs-derniere");if(d)d.textContent=heureCampe?("Dernière sauvegarde : "+heureCampe+"."+(alerte?" Tu as progressé depuis : copie ton nouveau code.":"")):"Tu n'as pas encore sauvegardé ta randonnée.";}
+  if(alerte&&etat.points-rappelCampe>=50){rappelCampe=etat.points;toast("Pense à sauvegarder : copie ton code de campement (bouton 💾 en haut).");}
 }
 window.addEventListener("beforeunload",e=>{
   if(etat.points>campePoints&&etat.points>0){e.preventDefault();e.returnValue="";}
 });
 document.querySelectorAll(".barre").forEach(b=>{
   const btn=document.createElement("button");
-  btn.className="retour btn-camp";btn.type="button";btn.textContent="Campement";
+  btn.className="btn-camp btn-sauve";btn.type="button";btn.setAttribute("aria-label","Sauvegarder ma randonnée (code de campement)");
+  btn.innerHTML='<span class="bs-ico" aria-hidden="true">💾</span><span class="bs-txt">Sauvegarder<small class="bs-etat">ma randonnée</small></span>';
   btn.addEventListener("click",ouvreCampement);
-  b.insertBefore(btn,b.querySelector(".qui"));
+  const q=b.querySelector(".qui");if(q)q.insertBefore(btn,q.firstChild);else b.appendChild(btn);
 });
-function ouvreCampement(){$("camp-code").textContent=etatVersCode();$("voile-camp").hidden=false;}
+function ouvreCampement(){const c=etatVersCode();$("camp-code").textContent=c;
+  $("camp-mail").href="mailto:?subject="+encodeURIComponent("Mon code de campement – Les sentiers de l'histoire")+"&body="+encodeURIComponent("Mon code de campement (à coller à l'accueil lors de ma prochaine visite) :\n\n"+c);
+  $("voile-camp").hidden=false;}
+document.addEventListener("click",e=>{if(e.target.id==="bs-ouvrir")ouvreCampement();if(e.target.id==="camp-mail")marquerCampe();});
 $("camp-fermer").addEventListener("click",()=>{$("voile-camp").hidden=true;});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("voile-camp").hidden=true;}});
 $("voile-camp").addEventListener("click",e=>{if(e.target===$("voile-camp"))$("voile-camp").hidden=true;});
