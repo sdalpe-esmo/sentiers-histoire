@@ -595,6 +595,12 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
 .tuiles-fond span.vive{opacity:.55}
 #ecran-vestibule .bandeau-logos,#ecran-vestibule .page{position:relative;z-index:1}
 @media(max-width:600px){.pastille-soeur{width:78px;height:78px;right:12px;bottom:12px}.ps-nom{font-size:.95rem}.ps-math{font-size:.85rem}.vestibule{padding:1.6rem 1rem}}
+
+.tab-verif{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:.6rem;background:#fff}
+.tab-verif th,.tab-verif td{border:1px solid #cfcaca;padding:.35rem .5rem;text-align:left;vertical-align:top}
+.tab-verif th{background:#eae7e7}
+.tab-verif tr.v-ok td:last-child{background:#e8f3ea}.tab-verif tr.v-doute td:last-child{background:#fbf1d6}.tab-verif tr.v-faux td:last-child{background:#fbe3e8}
+#prenom:disabled{opacity:.7;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -1353,6 +1359,13 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
       <div class="code-boite" id="prof-url" hidden></div>
     </details>
     <details class="zone-prof">
+      <summary>Zone de l'enseignant — vérifier des certificats</summary>
+      <p style="font-size:.95rem;margin:.6rem 0">Colle ici un ou plusieurs certificats reçus (Sentiers ou Routes), tels quels. L'outil contrôle que le code est intact, que le parcours est complet et qu'un même numéro de carnet n'est pas partagé entre élèves.</p>
+      <textarea id="prof-certs" style="min-height:120px" placeholder="Colle les certificats ici…" spellcheck="false"></textarea>
+      <p style="margin-top:.6rem"><button class="btn" id="prof-verif-certs">Vérifier</button></p>
+      <div id="prof-certs-res"></div>
+    </details>
+    <details class="zone-prof">
       <summary>Zone de l'enseignant — vérifier une fiche d'élève</summary>
       <p style="font-size:.95rem;margin:.6rem 0">Colle la fiche reçue par courriel, telle quelle. L'outil <strong>recalcule le code de validation</strong> à partir des résultats déclarés, puis — si la fiche contient un <strong>code de campement</strong> — le décode et <strong>croise chaque valeur</strong>. Une fiche dont un seul chiffre a été retouché échoue au test.</p>
       <textarea id="verif-texte" style="min-height:140px" placeholder="RÉSULTATS — Les sentiers de l'histoire · Chapitre 1…" spellcheck="false"></textarea>
@@ -1387,6 +1400,7 @@ textarea{width:100%;border:1px solid var(--color-text);border-radius:var(--radiu
     </div>
 
     <div class="bloc-carte" id="revoir-calc" style="margin-bottom:1rem"></div>
+    <div class="bloc-carte" id="cert-sommet" style="margin-bottom:1rem"></div>
     <div class="bloc-carte" id="bloc-honneur" hidden style="border-color:var(--vert)">
       <strong>Sommet atteint — bravo&nbsp;!</strong>
       <p style="font-size:.95rem;margin:.4rem 0 .5rem">Voici ton <strong>code d'honneur</strong>. Remets-le à ton enseignant&nbsp;: ton personnage et ton prénom apparaîtront au <em>tableau d'honneur</em> de la classe — sans ton pointage.</p>
@@ -1467,11 +1481,12 @@ const etat = {
   visites:[],
   erreurs:{d1:0,d2:0,d3:0,d4:0},
   lus:{}, meta:{feel:null,revoir:null},
-  enCours:{}
+  enCours:{}, num:"", depart:null
 };
 
 function majPoints(n){
   etat.points += n;
+  if(etat.points>0){const pr=$("prenom");if(pr&&!pr.disabled&&etat.prenom){pr.disabled=true;pr.title="Ton prénom est inscrit dans ton carnet : il ne peut plus changer.";}}
   setTimeout(()=>{try{majCompteCarnet();}catch(_){}},0);
   document.querySelectorAll(".pts-val").forEach(e=>e.textContent=etat.points);
   document.querySelectorAll(".chip-pts").forEach(c=>{c.classList.remove("pulse");void c.offsetWidth;c.classList.add("pulse");});
@@ -1990,7 +2005,8 @@ $("prenom").addEventListener("input",()=>{
   $("ci-nom").textContent=$("prenom").value.trim()||"à inscrire…";
 });
 $("btn-depart").addEventListener("click",()=>{
-  etat.prenom=$("prenom").value.trim();
+  if(!$("prenom").disabled)etat.prenom=$("prenom").value.trim();
+  if(!etat.depart)etat.depart=Date.now();
   $("nom-affiche-1").textContent=etat.prenom||"Randonneur·euse";
   majAvatars();
   montre("ecran-carte");
@@ -3031,6 +3047,7 @@ function codeValidation(base){
   return h.toString(36).toUpperCase().padStart(6,"0").slice(-6);
 }
 function majSommet(){
+  setTimeout(()=>{try{majCertificatSH();}catch(_){}},0);
   const oiNb=Object.keys(etat.oi.faits).length;
   const peiNb=Object.keys(etat.pei.faits).length;
   const er=etat.erreurs||{d1:0,d2:0,d3:0,d4:0};
@@ -3767,7 +3784,8 @@ function etatVersCode(){
     [etat.eclair.faites,etat.eclair.jourPts||0,etat.eclair.defis||0],
     [etat.erreurs.d1||0,etat.erreurs.d2||0,etat.erreurs.d3||0,etat.erreurs.d4||0],
     [etat.dialogues.faits.cartier?1:0,etat.dialogues.faits.donnacona?1:0,etat.dialogues.premier||0],
-    etat.enCours];
+    etat.enCours,
+    [etat.num||"",etat.depart||0]];
   const b=btoa(unescape(encodeURIComponent(JSON.stringify(arr))));
   return "SH1."+b+"."+codeValidation(b);
 }
@@ -3806,6 +3824,7 @@ function codeVersEtat(code){
     if(dg[0])etat.dialogues.faits.cartier=true;
     if(dg[1])etat.dialogues.faits.donnacona=true;
     etat.enCours=(a[19]&&typeof a[19]==="object")?a[19]:{};
+    const nd=a[20]||["",0];etat.num=String(nd[0]||"");etat.depart=nd[1]||null;
     $("prenom").value=etat.prenom;
     $("ci-nom").textContent=etat.prenom||"à inscrire…";
     $("nom-affiche-1").textContent=etat.prenom||"Randonneur·euse";
@@ -3867,7 +3886,7 @@ $("btn-reprendre").addEventListener("click",()=>{
   const r=$("reprise-retro");
   if(res===true){
     r.textContent="";r.className="reprise-retro";
-    try{fcInit();famInit();qsInit();inInit();majAvatars();}catch(_){}
+    try{fcInit();famInit();qsInit();inInit();majAvatars();if(etat.points>0&&etat.prenom){$("prenom").disabled=true;$("prenom").title="Ton prénom est inscrit dans ton carnet : il ne peut plus changer.";}}catch(_){}
     montre("ecran-carte");
     toast("Content de te revoir"+(etat.prenom?", "+etat.prenom:"")+" ! Ta randonnée reprend où tu l'avais laissée.");
   }else{r.textContent=res;r.className="reprise-retro oups";}
@@ -4047,6 +4066,58 @@ function verifierFiche(){
     +'</ul><div class="verdict '+(toutOk?"ok":"non")+'">'+(toutOk?"Fiche cohérente : le code de validation et le code de campement racontent la même histoire.":"Fiche suspecte : au moins une vérification échoue. Demande à l'élève de rejouer son code de campement devant toi.")+'</div>';
 }
 $("verif-btn").addEventListener("click",verifierFiche);
+/* =================== Certificats et vérification (commun aux deux sites) =================== */
+const CERT_SEL="esmo-us|certificat|2026";
+const b64e=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+const b64d=s=>JSON.parse(decodeURIComponent(escape(atob(s))));
+async function signeCert(p){return (await sha256hex(CERT_SEL+"|"+p)).slice(0,24);}
+async function creeCertificat(pref,meta,etatObj){const p=b64e({m:meta,e:etatObj});return pref+"."+p+"."+await signeCert(p);}
+const dateLongue=t=>new Date(t).toLocaleDateString("fr-CA",{day:"numeric",month:"long",year:"numeric"});
+async function verifieCertificats(texte,coherence){
+ const re=/(RHC1|SHC1)\.([A-Za-z0-9+/=]+)\.([0-9a-f]{24})/g,lignes=[],vus={};let m;
+ while((m=re.exec(texte))){
+  const L={pref:m[1],statut:"ok",notes:[]};
+  if(await signeCert(m[2])!==m[3]){L.statut="faux";L.notes.push("Le code a été modifié après sa création : certificat invalide.");lignes.push(L);continue;}
+  let o;try{o=b64d(m[2]);}catch(_){L.statut="faux";L.notes.push("Code illisible.");lignes.push(L);continue;}
+  L.m=o.m;L.e=o.e;
+  const cle=o.m.num||"?";vus[cle]=(vus[cle]||0)+1;
+  const pb=coherence?coherence(o.m.site,o.e,o.m):[];
+  if(pb.length){L.statut="doute";L.notes=L.notes.concat(pb);}
+  lignes.push(L);
+ }
+ const noms={};lignes.forEach(L=>{if(L.m){(noms[L.m.num]=noms[L.m.num]||new Set()).add((L.m.nom||"").toLowerCase());}});
+ lignes.forEach(L=>{if(!L.m||vus[L.m.num]<2)return;
+  if(noms[L.m.num].size>1){if(L.statut!=="faux")L.statut="doute";L.notes.push("Le numéro "+L.m.num+" apparaît sous des noms différents : un même voyage a sans doute été partagé entre élèves.");}
+  else L.notes.push("Ce certificat a été reçu plus d'une fois (même élève).");});
+ return lignes;
+}
+function tableauVerif(lignes){
+ if(!lignes.length)return "<p>Aucun code de vérification trouvé. Colle le certificat au complet, y compris la ligne qui commence par RHC1. ou SHC1.</p>";
+ const ico={ok:"✅ Authentique",doute:"⚠️ À vérifier",faux:"❌ Invalide"};
+ return `<table class="tab-verif"><thead><tr><th>Élève</th><th>Numéro</th><th>Émis le</th><th>Points</th><th>Statut</th></tr></thead><tbody>`+lignes.map(L=>`<tr class="v-${L.statut}"><td>${L.m?esc(L.m.nom):"—"}</td><td>${L.m?esc(L.m.num):"—"}</td><td>${L.m?dateLongue(L.m.emis):"—"}</td><td>${L.m?L.m.pts:"—"}</td><td><strong>${ico[L.statut]}</strong>${L.notes.length?"<br><small>"+L.notes.map(esc).join("<br>")+"</small>":""}</td></tr>`).join("")+`</tbody></table>`;
+}
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+/* ---- Sentiers : certificat de randonnée ---- */
+async function majCertificatSH(){
+  const z=$("cert-sommet");if(!z)return;
+  if(etat.points<OBJECTIF_PTS){z.innerHTML="<strong>Mon certificat de randonnée</strong><p style=\"margin:.4rem 0 0\">Ton certificat se débloque au sommet, à "+OBJECTIF_PTS+" points. Il te manque <strong>"+(OBJECTIF_PTS-etat.points)+"</strong> points.</p>";return;}
+  if(!etat.num)etat.num="SH-"+String(1000+Math.floor(Math.random()*9000))+"-"+String(Math.floor(Math.random()*10000)).padStart(4,"0");
+  const tr=compteDecouvertes(),meta={site:"SH",nom:etat.prenom||"Randonneur·euse",num:etat.num,pts:etat.points,emis:Date.now(),jours:etat.visites.length,trouv:tr,niv:etat.rando.reussis};
+  const code=await creeCertificat("SHC1",meta,etatVersCode());
+  const txt=["CERTIFICAT DE RANDONNÉE","Les sentiers de l'histoire · Histoire du Québec et du Canada, 3e secondaire","Chapitre 1 · Des origines à 1608","",
+   "Randonneur ou randonneuse : "+meta.nom,"N° de carnet : "+etat.num,(etat.depart?"Premier départ : "+dateLongue(etat.depart)+" · ":"")+"Certificat émis le "+dateLongue(meta.emis),
+   "Points : "+etat.points+" / "+OBJECTIF_PTS+" · Trouvailles : "+tr+"/"+DECOUVERTES.length+" · Niveaux réussis : "+etat.rando.reussis+"/8 · Jours de randonnée : "+etat.visites.length,"",
+   "Code de vérification (à ne pas modifier) :",code].join("\n");
+  z.innerHTML="<strong>Mon certificat de randonnée</strong><p style=\"margin:.4rem 0 .5rem\">Bravo, ton carnet est complet ! Envoie ce certificat à ton enseignant : il pourra vérifier qu'il est authentique.</p><textarea id=\"cert-txt\" readonly style=\"min-height:210px;width:100%;font-family:monospace;font-size:.85rem\"></textarea><p style=\"margin-top:.5rem;display:flex;gap:.5rem;flex-wrap:wrap\"><button class=\"btn\" id=\"cert-copier\">Copier le certificat</button><a class=\"btn contour\" id=\"cert-mail\">Envoyer par courriel</a></p>";
+  $("cert-txt").value=txt;
+  $("cert-copier").onclick=()=>{const t=$("cert-txt");t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).then(()=>toast("Certificat copié : colle-le dans un courriel ou sur Classroom.")).catch(()=>{document.execCommand("copy");toast("Certificat copié.");});};
+  $("cert-mail").href="mailto:?subject="+encodeURIComponent("Certificat de randonnée – "+meta.nom)+"&body="+encodeURIComponent(txt);
+}
+function coherenceSH(site,e,m){const pb=[];
+  if(site==="SH"){if(m.pts<750)pb.push("Le sommet (750 points) n'est pas atteint.");if((m.jours||0)<=1)pb.push("Tout le parcours a été fait en une seule journée : c'est possible, mais inhabituel.");}
+  if(site==="RH"){if(m.pts<1000)pb.push("Le terminus (1000 points) n'est pas atteint.");}
+  return pb;}
+$("prof-verif-certs").addEventListener("click",async()=>{const l=await verifieCertificats($("prof-certs").value,coherenceSH);$("prof-certs-res").innerHTML=tableauVerif(l);});
 </script>
 <div class="voile-carnet voile-revel" id="revelation" hidden role="dialog" aria-modal="true" aria-label="Nouvelle trouvaille">
   <div class="reveil-boite descend">
