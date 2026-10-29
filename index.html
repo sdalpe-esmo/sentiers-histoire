@@ -4110,7 +4110,7 @@ async function signeCert(p){return (await sha256hex(CERT_SEL+"|"+p)).slice(0,24)
 async function creeCertificat(pref,meta,etatObj){const p=b64e({m:meta,e:etatObj});return pref+"."+p+"."+await signeCert(p);}
 const dateLongue=t=>new Date(t).toLocaleDateString("fr-CA",{day:"numeric",month:"long",year:"numeric"});
 async function verifieCertificats(texte,coherence){
- const re=/(RHC1|SHC1)\.([A-Za-z0-9+/=]+)\.([0-9a-f]{24})/g,lignes=[],vus={};let m;
+ const re=/(RHC1|RHC2|SHC1)\.([A-Za-z0-9+/=]+)\.([0-9a-f]{24})/g,lignes=[],vus={};let m;
  while((m=re.exec(texte))){
   const L={pref:m[1],statut:"ok",notes:[]};
   if(await signeCert(m[2])!==m[3]){L.statut="faux";L.notes.push("Le code a été modifié après sa création : certificat invalide.");lignes.push(L);continue;}
@@ -4128,7 +4128,7 @@ async function verifieCertificats(texte,coherence){
  return lignes;
 }
 function tableauVerif(lignes){
- if(!lignes.length)return "<p>Aucun code de vérification trouvé. Colle le certificat au complet, y compris la ligne qui commence par RHC1. ou SHC1.</p>";
+ if(!lignes.length)return "<p>Aucun code de vérification trouvé. Colle le certificat au complet, y compris la ligne qui commence par RHC1., RHC2. ou SHC1.</p>";
  const ico={ok:"✅ Authentique",doute:"⚠️ À vérifier",faux:"❌ Invalide"};
  return `<table class="tab-verif"><thead><tr><th>Élève</th><th>Numéro</th><th>Émis le</th><th>Points</th><th>Statut</th></tr></thead><tbody>`+lignes.map(L=>`<tr class="v-${L.statut}"><td>${L.m?esc(L.m.nom):"–"}</td><td>${L.m?esc(L.m.num):"–"}</td><td>${L.m?dateLongue(L.m.emis):"–"}</td><td>${L.m?L.m.pts:"–"}</td><td><strong>${ico[L.statut]}</strong>${L.notes.length?"<br><small>"+L.notes.map(esc).join("<br>")+"</small>":""}</td></tr>`).join("")+`</tbody></table>`;
 }
@@ -4151,7 +4151,7 @@ async function majCertificatSH(){
 }
 function coherenceSH(site,e,m){const pb=[];
   if(site==="SH"){if(m.pts<750)pb.push("Le sommet (750 points) n'est pas atteint.");if((m.jours||0)<=1)pb.push("Tout le parcours a été fait en une seule journée : c'est possible, mais inhabituel.");}
-  if(site==="RH"){if(m.pts<1000)pb.push("Le terminus (1000 points) n'est pas atteint.");}
+  if(site==="RH"||site==="RH2"){if(m.pts<1000)pb.push("Le terminus (1000 points) n'est pas atteint.");}
   return pb;}
 $("prof-verif-certs").addEventListener("click",async()=>{const l=await verifieCertificats($("prof-certs").value,coherenceSH);$("prof-certs-res").innerHTML=tableauVerif(l);});
 </script>
